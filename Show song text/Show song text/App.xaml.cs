@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Show_song_text.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace Show_song_text
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new MainPageView();
         }
 
         protected override void OnStart()

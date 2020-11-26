@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Show song text.Android", "Show song text\Show song text.Android\Show song text.Android.csproj", "{249C0BDD-86F1-444D-90C8-3EC0353F1107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Show song text", "Show song text\Show song text\Show song text.csproj", "{1BE12EDF-F873-489E-B782-7C98377A7FFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show song text", "Show song text\Show song text\Show song text.csproj", "{1BE12EDF-F873-489E-B782-7C98377A7FFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

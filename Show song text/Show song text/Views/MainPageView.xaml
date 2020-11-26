@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage
+    x:Class="Show_song_text.Views.MainPageView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Show_song_text.Views"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    Title="MasterPage">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Master">
+            <ContentPage.BindingContext>
+                <vm:MainPageViewModel />
+            </ContentPage.BindingContext>
+            <ContentPage.Content>
+                <StackLayout>
+                    <ListView
+                        x:Name="MenuItemsListView"
+                        HasUnevenRows="true"
+                        ItemsSource="{Binding MenuListItems}"
+                        SeparatorVisibility="None"
+                        ItemSelected="OnMenuItemSelected">
+                        <ListView.Header>
+                            <Grid BackgroundColor="#03A9F4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="80" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Style="{DynamicResource SubtitleStyle}"
+                                    Text="{Binding }" />
+                            </Grid>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                                        <Label
+                                            FontSize="24"
+                                            Text="{Binding Title}"
+                                            VerticalOptions="FillAndExpand"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <pages:SongListView />
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

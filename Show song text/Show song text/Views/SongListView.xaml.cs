@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
-namespace Show_song_text
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace Show_song_text.Views
 {
-    public partial class MainPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SongListView : ContentPage
     {
-        public MainPage()
+        public SongListView()
         {
             InitializeComponent();
         }

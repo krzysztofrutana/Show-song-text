@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Show song text\Show song text.csproj">
-      <Project>{360FEF33-7C33-4FEF-A959-04F497F767C0}</Project>
+      <Project>{1BE12EDF-F873-489E-B782-7C98377A7FFD}</Project>
       <Name>Show song text</Name>
     </ProjectReference>
   </ItemGroup>
