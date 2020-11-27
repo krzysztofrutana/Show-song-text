@@ -1,4 +1,8 @@
-﻿using Show_song_text.Models;
+﻿using Show_song_text.Database.Persistence;
+using Show_song_text.Database.Repository;
+using Show_song_text.Models;
+using Show_song_text.Utils;
+using Show_song_text.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +19,26 @@ namespace Show_song_text.Views
     {
         public MainPageView()
         {
+            var songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
+            var pageService = new PageService();
+            ViewModel = new MainPageViewModel(songRepository, pageService);
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
-      
         }
         private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as MasterMenuItem;
-            if (item == null)
-                return;
+            //This method of start new page because I want have acces to menu button from page
+            MasterMenuItem masterMenuItem = e.SelectedItem as MasterMenuItem;
 
-            Type page = item.TargetType;
-
-            Detail = new NavigationPage((Page)Activator.CreateInstance(page));
+            Detail = new NavigationPage((Page)Activator.CreateInstance(masterMenuItem.TargetType));
             IsPresented = false;
+
+        }
+
+        public MainPageViewModel ViewModel
+        {
+            get { return BindingContext as MainPageViewModel; }
+            set { BindingContext = value; }
         }
     }
 }

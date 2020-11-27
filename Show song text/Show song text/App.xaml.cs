@@ -10,8 +10,7 @@ namespace Show_song_text
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPageView();
+            MainPage = new NavigationPage(new MainPageView());
         }
 
         protected override void OnStart()

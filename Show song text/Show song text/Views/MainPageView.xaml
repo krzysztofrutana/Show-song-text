@@ -5,20 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Show_song_text.Views"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
-    Title="MasterPage">
+    Title="MasterPage" IsPresented="{Binding IsPresent}">
     <MasterDetailPage.Master>
-        <ContentPage Title="Master">
-            <ContentPage.BindingContext>
-                <vm:MainPageViewModel />
-            </ContentPage.BindingContext>
+        <ContentPage Title="Master" NavigationPage.HasNavigationBar="False">
             <ContentPage.Content>
                 <StackLayout>
                     <ListView
                         x:Name="MenuItemsListView"
                         HasUnevenRows="true"
+                        ItemSelected="OnMenuItemSelected"
                         ItemsSource="{Binding MenuListItems}"
                         SeparatorVisibility="None"
-                        ItemSelected="OnMenuItemSelected">
+                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <ListView.Header>
                             <Grid BackgroundColor="#03A9F4">
                                 <Grid.ColumnDefinitions>
@@ -36,7 +34,7 @@
                                     Grid.Row="2"
                                     Grid.Column="1"
                                     Style="{DynamicResource SubtitleStyle}"
-                                    Text="{Binding }" />
+                                    Text="{Binding AppName}" />
                             </Grid>
                         </ListView.Header>
                         <ListView.ItemTemplate>
@@ -59,7 +57,7 @@
 
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage>
+        <NavigationPage >
             <x:Arguments>
                 <pages:SongListView />
             </x:Arguments>
