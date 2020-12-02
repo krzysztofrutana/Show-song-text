@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Show_song_text.Views.SongAddAndDetailView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rend="clr-namespace:Show_song_text.Renderers"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels">
+    <ContentPage.BindingContext>
+        <vm:SongAddAndDetailViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    HorizontalOptions="Start"
+                    Text="Opis" />
+                <ImageButton
+                    Grid.Column="1"
+                    BackgroundColor="OrangeRed"
+                    Command="{Binding DeleteSongCommand}"
+                    CornerRadius="40"
+                    HeightRequest="40"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding IsFloatingButtonVisible}"
+                    WidthRequest="40" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="Autor" />
+                <Editor
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    AutoSize="TextChanges"
+                    Text="{Binding Artist, Mode=TwoWay}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Tytuł" />
+                <Editor
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    AutoSize="TextChanges"
+                    Text="{Binding Title, Mode=TwoWay}" />
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    HorizontalOptions="Start"
+                    Text="Tekst i akordy" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="Tekst" />
+                <Editor
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    AutoSize="TextChanges"
+                    Text="{Binding Text, Mode=TwoWay}" />
+                <Button
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Command="{Binding SearchTextCommand}"
+                    Text="Szukaj tekstu" />
+                <Label
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Text="Akordy" />
+                <Editor
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    AutoSize="TextChanges"
+                    Text="{Binding Chords, Mode=TwoWay}" />
+                <Button
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Command="{Binding SaveCommand}"
+                    Text="Zapisz utwór" />
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

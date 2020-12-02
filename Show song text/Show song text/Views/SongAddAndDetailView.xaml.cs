@@ -1,5 +1,7 @@
 ﻿using Show_song_text.Database.Persistence;
 using Show_song_text.Database.Repository;
+using Show_song_text.Database.ViewModels;
+using Show_song_text.Interfaces;
 using Show_song_text.Utils;
 using Show_song_text.ViewModels;
 using System;
@@ -9,14 +11,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace Show_song_text.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SongListView : ContentPage
+    public partial class SongAddAndDetailView : ContentPage
     {
-        public SongListView()
+        public SongAddAndDetailView()
         {
             InitializeComponent();
         }

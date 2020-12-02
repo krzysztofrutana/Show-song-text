@@ -2,20 +2,42 @@
 <ContentPage
     x:Class="Show_song_text.Views.SongListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    Title="Lista utworów">
+    <ContentPage.BindingContext>
+        <vm:SongListViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
+        
         <StackLayout Orientation="Vertical">
-            <SearchBar Text="{Binding SearchBarText}" />
+            <StackLayout Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding ShowChooseOption}"/>
+                <SearchBar Text="{Binding SearchBarText}" />
+            </StackLayout>
             <ListView
                 HasUnevenRows="True"
-                ItemSelected="OnSongSelected"
-                ItemsSource="{Binding Songs}">
+                ItemsSource="{Binding Songs}"
+                SelectedItem="{Binding SelectedSong, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Detail="{Binding Artist}" Text="{Binding Title}" />
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}" IsVisible="{Binding IsCheckBoxVisible}" />
+                                <Grid Margin="10,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Text="{Binding Artist}" />
+                                    <Label Grid.Row="1" Text="{Binding Title}" />
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Text="Utwórz playlistę" IsVisible="{Binding ShowChooseOption}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

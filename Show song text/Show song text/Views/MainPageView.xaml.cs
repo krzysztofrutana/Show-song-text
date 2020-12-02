@@ -17,28 +17,29 @@ namespace Show_song_text.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPageView : MasterDetailPage
     {
+        public static List<Page> myNavigationStack;
+
         public MainPageView()
         {
-            var songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
-            var pageService = new PageService();
-            ViewModel = new MainPageViewModel(songRepository, pageService);
             NavigationPage.SetHasNavigationBar(this, false);
+            myNavigationStack = new List<Page>();
             InitializeComponent();
         }
-        private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            //This method of start new page because I want have acces to menu button from page
-            MasterMenuItem masterMenuItem = e.SelectedItem as MasterMenuItem;
 
-            Detail = new NavigationPage((Page)Activator.CreateInstance(masterMenuItem.TargetType));
-            IsPresented = false;
-
-        }
-
-        public MainPageViewModel ViewModel
-        {
-            get { return BindingContext as MainPageViewModel; }
-            set { BindingContext = value; }
-        }
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    Page current = ((NavigationPage)((MasterDetailPage)Application.Current.MainPage).Detail).CurrentPage;
+        //    var t = Detail.GetType();
+        //    if (Detail.Title == "Lista utworów")
+        //    {
+        //        return base.OnBackButtonPressed();
+        //    }
+        //    else if (myNavigationStack != null)
+        //    {
+        //        Detail = new NavigationPage(myNavigationStack.LastOrDefault());
+        //    }
+        //    return true;
+        //}
     }
+    
 }

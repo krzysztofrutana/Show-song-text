@@ -19,19 +19,32 @@ namespace Show_song_text.Utils
             return await MainPage.DisplayAlert(title, message, ok, cancel);
         }
 
-        public async Task PushAsync(Page page)
+        public void ChangePage(Page page)
         {
-            await MainPage.Navigation.PushAsync(page);
+            
+            MainPage.Detail = new NavigationPage(page);
+            MainPage.IsPresented = false;
         }
 
-        public async Task<Page> PopAsync()
+        public async Task ChangePageAsync(Page page)
+        {
+            await DetailPage.Navigation.PushAsync(page);
+            MainPage.IsPresented = false;
+        }
+
+        public async Task<Page> PreviousDetailPage()
         {
             return await MainPage.Navigation.PopAsync();
         }
 
-        private Page MainPage
+        private MasterDetailPage MainPage
         {
-            get { return Application.Current.MainPage; }
+            get { return (Application.Current.MainPage as MasterDetailPage); }
+        }
+
+        private NavigationPage DetailPage
+        {
+            get { return (NavigationPage)((MasterDetailPage)Application.Current.MainPage).Detail; }
         }
     }
 }

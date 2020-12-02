@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,8 @@ namespace Show_song_text.Database.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [ForeignKey(typeof(Playlist))]
+        public int PlaylistID { get; set; }
         [MaxLength(255)]
         public string Title { get; set; }
         [MaxLength(255)]
@@ -17,5 +20,7 @@ namespace Show_song_text.Database.Models
         public string Text { get; set; }
         [MaxLength(255)]
         public string Chords { get; set; }
+        public Boolean IsChecked { get; set; }
+        public Boolean IsCheckBoxVisible { get; set; }
     }
 }

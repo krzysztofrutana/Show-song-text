@@ -4,8 +4,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Show_song_text.Database.DOA;
+using Show_song_text.Database.Persistence;
+using Show_song_text.Database.Repository;
 using Show_song_text.Interfaces;
 using Show_song_text.Models;
+using Show_song_text.Utils;
 using Show_song_text.Views;
 using Xamarin.Forms;
 
@@ -13,78 +16,91 @@ namespace Show_song_text.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private readonly ISongDAO _songDAO;
+        // VARIABLE START
+
         private readonly IPageService _pageService;
+        // VARIABLE END
 
-        public ICommand SelectMenuItemCommand { get; private set; }
 
+        // PROPERTY START
         private List<MasterMenuItem> _MenuListItems;
 
         public List<MasterMenuItem> MenuListItems
         {
             get { return _MenuListItems; }
-            set { _MenuListItems = value;
+            set
+            {
+                _MenuListItems = value;
                 OnPropertyChanged(nameof(MenuListItems));
             }
         }
 
         private MasterMenuItem _selectedItem;
-        public MasterMenuItem SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
+        public MasterMenuItem SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnMenuItemSelected(value); OnPropertyChanged(nameof(SelectedItem)); } }
 
         private Boolean _isPresent;
 
         public Boolean IsPresent
         {
             get { return _isPresent; }
-            set { _isPresent = value;
+            set
+            {
+                _isPresent = value;
                 OnPropertyChanged(nameof(IsPresent));
             }
         }
 
-
         public string AppName { get; set; }
+        // PROPERTY END
 
-
-
-        public MainPageViewModel(ISongDAO songDAO, IPageService pageService)
+        // CONSTRUCTOR START
+        public MainPageViewModel()
         {
-            _pageService = pageService;
-            _songDAO = songDAO;
+            _pageService = new PageService();
 
-            SelectMenuItemCommand = new Command<MasterMenuItem>(async page => await SelectMenuItem(page));
+            MainPageView.myNavigationStack.Add(new SongListView());
 
             CreateMenuList();
             AppName = "Pomocnik wokalisty";
         }
+        // CONSTRUCTOR END
 
-        private async Task SelectMenuItem(MasterMenuItem masterMenuItem)
-        {
-            if(masterMenuItem == null)
-            {
-                return;
-            }
-            if(masterMenuItem.Title == "Lista utworów")
-            {
-                SelectedItem = null;
-                IsPresent = false;
-                return;
-            }
 
-            Type targetType = masterMenuItem.TargetType;
-
-            var page = (Page)Activator.CreateInstance(targetType);
-
-            await _pageService.PushAsync(page);
-            
-        }
-
+        // INITIALIZE METHOD START
         private void CreateMenuList()
         {
             MenuListItems = new List<MasterMenuItem>();
-            MenuListItems.Add(new MasterMenuItem() { Title = "Lista utworów", TargetType = typeof(SongListView)});
-            MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongDetailView) });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Lista utworów", TargetType = typeof(SongListView) });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongAddAndDetailView) });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Listy odtwarzania", TargetType = typeof(PlaylistListView) });
         }
-        
+        // INITIALIZE METHOD END
+
+        // PROPERTY METHOD START
+
+        private async void OnMenuItemSelected(MasterMenuItem masterMenuItem)
+        {
+            try
+            {
+                if(masterMenuItem.Title == "Dodaj utwór")
+                {
+                    Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
+                    await _pageService.ChangePageAsync(page);
+                }
+                else
+                {
+                    Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
+                    _pageService.ChangePage(page);
+                }
+            }
+            catch(Exception e)
+            {
+                await _pageService.DisplayAlert("Błąd", e.Message, "OK");
+            }
+
+        }
+
+        // PROPERTY METHOD END
 
     }
 }

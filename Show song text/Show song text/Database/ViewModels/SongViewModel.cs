@@ -19,10 +19,26 @@ namespace Show_song_text.Database.ViewModels
             Artist = song.Artist;
             Text = song.Text;
             Chords = song.Chords;
+            Playlist = song.PlaylistID;
+            IsCheckBoxVisible = song.IsCheckBoxVisible;
+
+
 
 
             
         }
+
+        private int _playlist;
+        public int Playlist
+        {
+            get { return _playlist; }
+            set
+            {
+                _playlist = value;
+                OnPropertyChanged(nameof(Playlist));
+            }
+        }
+
 
         private string _title;
         public string Title
@@ -67,6 +83,23 @@ namespace Show_song_text.Database.ViewModels
                 OnPropertyChanged(nameof(Chords));
             }
         }
+
+        private Boolean _isChecked;
+
+        public Boolean IsChecked
+        {
+            get { return _isChecked; }
+            set { _isChecked = value; }
+        }
+
+        private Boolean _isCheckBoxVisible;
+
+        public Boolean IsCheckBoxVisible
+        {
+            get { return _isCheckBoxVisible; }
+            set { _isCheckBoxVisible = value; }
+        }
+
 
 
         public string FullName

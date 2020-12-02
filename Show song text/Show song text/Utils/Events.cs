@@ -8,9 +8,12 @@ namespace Show_song_text.Utils
     {
         public static string SongAdded = "AddSong";
         public static string SongUpdated = "UpdateSong";
+        public static string SongDeleted = "DeleteSong";
         public static string ChangedArtist = "ArtistChange";
         public static string ChangedTitle = "TitleChange";
         public static string ChangedText = "TextChange";
         public static string ChangedChords = "ChordsChange";
+
+        public static string SendSong = "SendSong";
     }
 }
