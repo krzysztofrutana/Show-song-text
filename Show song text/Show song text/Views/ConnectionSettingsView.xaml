@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Show_song_text.Views.ConnectionSettingsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:Show_song_text.Converters"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:ConnectionSettingsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                <RadioButton
+                    GroupName="ServerClient"
+                    HorizontalOptions="Start"
+                    IsChecked="{Binding ServerSectionVisibility}"
+                    Text="Serwer" />
+                <RadioButton
+                    GroupName="ServerClient"
+                    HorizontalOptions="End"
+                    IsChecked="{Binding ClientSectionVisibility}"
+                    Text="Klient" />
+            </StackLayout>
+            <StackLayout IsVisible="{Binding ServerSectionVisibility}" Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="IP: " />
+                    <Label Text="{Binding IPServerAdress}" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Port: " />
+                    <Editor Text="{Binding ServerPort}" />
+                </StackLayout>
+                <Button
+                    Command="{Binding StartServerCommand}"
+                    IsVisible="{Binding ServerIsRunning, Converter={StaticResource InverseBoolConverter}}"
+                    Text="Uruchom serwer" />
+                <Label IsVisible="{Binding ServerIsRunning}" Text="Serwer uruchomiony" />
+                <StackLayout IsVisible="{Binding ServerIsRunning}" Orientation="Horizontal">
+                    <Label Text="Podłączone urządzenia: " />
+                    <Label Text="{Binding ClientConnectedCount}" />
+                </StackLayout>
+                <Button
+                    Command="{Binding StopServerCommand}"
+                    IsVisible="{Binding ServerIsRunning}"
+                    Text="Zatrzymaj serwer" />
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding ClientSectionVisibility}" Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="IP: " />
+                    <Editor Placeholder="Wpisz IP serwera" Text="{Binding IpAdressToConnect}" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Port: " />
+                    <Editor Text="{Binding PortToConnect}" AutoSize="TextChanges"  />
+                </StackLayout>
+                <Button
+                    Command="{Binding ConnectToServerCommand}"
+                    IsVisible="{Binding IsConnectToServer, Converter={StaticResource InverseBoolConverter}}"
+                    Text="Połącz" />
+                <Label IsVisible="{Binding IsConnectToServer}" Text="Połaczono z serwerem" />
+                <Button
+                    Command="{Binding StartPresentationForCLientCommand}"
+                    IsVisible="{Binding IsConnectToServer}"
+                    Text="Uruchom prezentacje" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

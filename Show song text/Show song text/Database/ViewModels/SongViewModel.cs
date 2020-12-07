@@ -21,11 +21,7 @@ namespace Show_song_text.Database.ViewModels
             Chords = song.Chords;
             Playlist = song.PlaylistID;
             IsCheckBoxVisible = song.IsCheckBoxVisible;
-
-
-
-
-            
+   
         }
 
         private int _playlist;
@@ -89,7 +85,9 @@ namespace Show_song_text.Database.ViewModels
         public Boolean IsChecked
         {
             get { return _isChecked; }
-            set { _isChecked = value; }
+            set { _isChecked = value;
+                OnPropertyChanged(nameof(IsCheckBoxVisible));
+            }
         }
 
         private Boolean _isCheckBoxVisible;
@@ -97,7 +95,9 @@ namespace Show_song_text.Database.ViewModels
         public Boolean IsCheckBoxVisible
         {
             get { return _isCheckBoxVisible; }
-            set { _isCheckBoxVisible = value; }
+            set { _isCheckBoxVisible = value;
+                OnPropertyChanged(nameof(IsCheckBoxVisible));
+            }
         }
 
 

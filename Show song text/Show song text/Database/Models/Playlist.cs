@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Show_song_text.Database.Models
 {
+    [Table("Playlist")]
     public class Playlist
     {
         [PrimaryKey, AutoIncrement]

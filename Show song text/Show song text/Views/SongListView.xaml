@@ -6,13 +6,13 @@
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     Title="Lista utworów">
     <ContentPage.BindingContext>
-        <vm:SongListViewModel/>
+        <vm:SongListViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        
+
         <StackLayout Orientation="Vertical">
             <StackLayout Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding ShowChooseOption}"/>
+                <CheckBox IsChecked="{Binding ShowChooseOption}" />
                 <SearchBar Text="{Binding SearchBarText}" />
             </StackLayout>
             <ListView
@@ -23,7 +23,10 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsChecked}" IsVisible="{Binding IsCheckBoxVisible}" />
+                                <CheckBox
+                                    CheckedChanged="CheckBox_CheckedChanged"
+                                    IsChecked="{Binding IsChecked}"
+                                    IsVisible="{Binding IsCheckBoxVisible}" />
                                 <Grid Margin="10,0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -37,7 +40,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Utwórz playlistę" IsVisible="{Binding ShowChooseOption}"/>
+            <Button
+                Command="{Binding CreatePlaylistCommand}"
+                IsVisible="{Binding ShowChooseOption}"
+                Text="Utwórz playlistę" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

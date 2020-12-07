@@ -12,6 +12,7 @@ namespace Show_song_text.Interfaces
         Task ChangePageAsync(Page page);
         Task<Page> PreviousDetailPage();
         Task<bool> DisplayAlert(string title, string message, string ok, string cancel);
+        Task<string> DisplayEntry(string title, string message);
         Task DisplayAlert(string title, string message, string ok);
     }
 }

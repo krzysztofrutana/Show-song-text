@@ -16,6 +16,8 @@ using HtmlAgilityPack;
 using System.Linq;
 using System.Globalization;
 using Show_song_text.Views;
+using System.Threading;
+using Show_song_text.PresentationServerUtilis;
 
 namespace Show_song_text.ViewModels
 {
@@ -107,7 +109,7 @@ namespace Show_song_text.ViewModels
         public SongAddAndDetailViewModel()
         {
             _pageService = new PageService();
-            songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>()); 
+            songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
 
             MessagingCenter.Subscribe<SongListViewModel, SongViewModel>
             (this, Events.SendSong, OnSongSended);
@@ -117,16 +119,18 @@ namespace Show_song_text.ViewModels
             SearchTextCommand = new Command(async () => await SearchText());
 
             IsFloatingButtonVisible = false;
-                Song = new Song
-                {
-                    Artist = Artist,
-                    Title = Title,
-                    Text = Text,
-                    Chords = Chords
-                };
+            Song = new Song
+            {
+                Artist = Artist,
+                Title = Title,
+                Text = Text,
+                Chords = Chords
+            };
 
-             
-       
+            //new Thread(new ThreadStart(delegate {
+            //    AsynchronousClient.StartClient();
+            //})).Start();
+
         }
         // CONSTRUCTOR END
 
@@ -145,7 +149,7 @@ namespace Show_song_text.ViewModels
 
         async Task Save()
         {
-            if (Song == null || Song.Id == 0 )
+            if (Song == null || Song.Id == 0)
             {
                 await songRepository.AddSong(Song);
                 MessagingCenter.Send(this, Events.SongAdded, Song);
@@ -183,10 +187,10 @@ namespace Show_song_text.ViewModels
             }
             catch (HttpRequestException)
             {
-                await _pageService.DisplayAlert("Nie znaleziono tekstu", "Nie udało sie znaleźć utworu dla: " + tempTitle + " " + tempArtist + " " + url,"OK");
+                await _pageService.DisplayAlert("Nie znaleziono tekstu", "Nie udało sie znaleźć utworu dla: " + tempTitle + " " + tempArtist + " " + url, "OK");
                 return;
             }
-             
+
 
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
@@ -243,10 +247,9 @@ namespace Show_song_text.ViewModels
             return newString;
         }
 
-        public static string DeleteLines(
-     string stringToRemoveLinesFrom,
-     int numberOfLinesToRemove,
-     bool startFromBottom = false)
+        public static string DeleteLines(string stringToRemoveLinesFrom,
+                                        int numberOfLinesToRemove,
+                                        bool startFromBottom = false)
         {
             string toReturn = "";
             string[] allLines = stringToRemoveLinesFrom.Split(
@@ -258,7 +261,6 @@ namespace Show_song_text.ViewModels
                 toReturn = String.Join(Environment.NewLine, allLines.Skip(numberOfLinesToRemove));
             return toReturn;
         }
-
         // OTHER METHOD END
     }
 }

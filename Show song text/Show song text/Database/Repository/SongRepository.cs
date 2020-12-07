@@ -15,7 +15,7 @@ namespace Show_song_text.Database.Repository
         public SongRepository(ISQLiteDb db)
         {
             _connection = db.GetConnection();
-            _connection.CreateTableAsync<Song>();
+            CreateTable();
         }
         public async Task AddSong(Song song)
         {
@@ -40,6 +40,11 @@ namespace Show_song_text.Database.Repository
         public async Task UpdateSong(Song song)
         {
             await _connection.UpdateAsync(song);
+        }
+
+        private async void CreateTable()
+        {
+            await _connection.CreateTableAsync<Song>();
         }
     }
 }

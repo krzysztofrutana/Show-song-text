@@ -6,6 +6,7 @@ using Show_song_text.Interfaces;
 using Show_song_text.Utils;
 using Show_song_text.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,12 +60,17 @@ namespace Show_song_text.ViewModels
         public ObservableCollection<SongViewModel> Songs { get; private set; }
             = new ObservableCollection<SongViewModel>();
 
+        public ObservableCollection<SongViewModel> SelectedSongs { get; private set; }
+            = new ObservableCollection<SongViewModel>();
+
+
 
         // PROPERTY SECTION END
 
         // VARIABLE SECTION START
 
         private readonly SongRepository songRepository;
+        private readonly PlaylistRepository playlistRepository;
         private readonly IPageService _pageService;
 
         // VARIABLE SEXTION END
@@ -74,6 +80,9 @@ namespace Show_song_text.ViewModels
         public ICommand AddSongCommand { get; private set; }
         public ICommand SelectSongCommand { get; private set; }
         public ICommand DeleteSongCommand { get; private set; }
+        public ICommand CreatePlaylistCommand { get; private set; }
+        public ICommand AddToPlaylistCommand { get; private set; }
+        public ICommand DeleteFromPlaylistCommand { get; private set; }
 
         // COMMAND SECTION END
 
@@ -82,10 +91,14 @@ namespace Show_song_text.ViewModels
         {
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
             _pageService = new PageService();
+            playlistRepository = new PlaylistRepository(DependencyService.Get<ISQLiteDb>());
 
             LoadSongsCommand = new Command(async () => await LoadSongs());
             AddSongCommand = new Command(async () => await AddSong());
             SelectSongCommand = new Command<SongViewModel>(async song => await SelectSong(song));
+            CreatePlaylistCommand = new Command(async () => await CreatePlaylist());
+            AddToPlaylistCommand = new Command<SongViewModel>(async song => await AddToPlaylist(song));
+            DeleteFromPlaylistCommand = new Command<SongViewModel>(async song => await DeleteFromPlaylist(song));
 
             MessagingCenter.Subscribe<SongAddAndDetailViewModel, Song>
                 (this, Events.SongAdded, OnSongAdded);
@@ -131,7 +144,37 @@ namespace Show_song_text.ViewModels
             SelectedSong = null;
         }
 
+        private async Task CreatePlaylist()
+        {
+            List<Song> songsList = new List<Song>();
+            foreach (SongViewModel songViewModel in SelectedSongs)
+            {
+                Song song = await songRepository.GetSong(songViewModel.Id);
+                songsList.Add(song);
+            }
+            string playlistName = await _pageService.DisplayEntry("Wpisz nazwę playlisty", "");
+            Playlist playlist = new Playlist()
+            {
+                Name = playlistName,
+                Songs = songsList
+            };
+            await playlistRepository.AddPlaylist(playlist);
+            int playlistID = playlist.Id;
+            await _pageService.DisplayAlert("Sukces", "Playlista utworzona", "Ok");
+            SetPlayListIDInSongs(playlistID, songsList);
+            UnCheckAllSongs();
+            SetCheckBoxVisibility(false);
+            ShowChooseOption = false;
+        }
 
+        private async Task AddToPlaylist(SongViewModel songViewModel)
+        {
+            SelectedSongs.Add(songViewModel);
+        }
+        private async Task DeleteFromPlaylist(SongViewModel songViewModel)
+        {
+            SelectedSongs.Remove(songViewModel);
+        }
 
         // COMMANDS METHODS SECTION END
 
@@ -182,6 +225,26 @@ namespace Show_song_text.ViewModels
         private void OnSongSelected(object page)
         {
             SelectSongCommand.Execute(page);
+        }
+
+        private void UnCheckAllSongs()
+        {
+            foreach(SongViewModel songViewModel in Songs)
+            {
+                if(songViewModel.IsChecked == true)
+                {
+                    songViewModel.IsChecked = false;
+                }
+            }
+        }
+
+        private async void SetPlayListIDInSongs(int playlistID, List<Song> songs)
+        {
+            foreach(Song song in songs)
+            {
+                song.PlaylistID = playlistID;
+                await songRepository.UpdateSong(song);
+            }
         }
         // PROPERTY METHOD SECTION END
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Show_song_text.Database.DOA;
@@ -8,6 +9,7 @@ using Show_song_text.Database.Persistence;
 using Show_song_text.Database.Repository;
 using Show_song_text.Interfaces;
 using Show_song_text.Models;
+using Show_song_text.PresentationServerUtilis;
 using Show_song_text.Utils;
 using Show_song_text.Views;
 using Xamarin.Forms;
@@ -19,6 +21,7 @@ namespace Show_song_text.ViewModels
         // VARIABLE START
 
         private readonly IPageService _pageService;
+        
         // VARIABLE END
 
 
@@ -62,6 +65,7 @@ namespace Show_song_text.ViewModels
 
             CreateMenuList();
             AppName = "Pomocnik wokalisty";
+
         }
         // CONSTRUCTOR END
 
@@ -73,6 +77,7 @@ namespace Show_song_text.ViewModels
             MenuListItems.Add(new MasterMenuItem() { Title = "Lista utworów", TargetType = typeof(SongListView) });
             MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongAddAndDetailView) });
             MenuListItems.Add(new MasterMenuItem() { Title = "Listy odtwarzania", TargetType = typeof(PlaylistListView) });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia połączeń", TargetType = typeof(ConnectionSettingsView) });
         }
         // INITIALIZE METHOD END
 

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Show_song_text.Views.SongTextPresentationView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Forms9Patch="clr-namespace:Forms9Patch;assembly=Forms9Patch"
+    xmlns:conv="clr-namespace:Show_song_text.Converters"
+    xmlns:utils="clr-namespace:Show_song_text.Utils"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:SongTextPresentationViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout IsVisible="{Binding IsConnectedToServer, Converter={StaticResource InverseBoolConverter}}" Orientation="Vertical">
+                <CarouselView
+                    CurrentItem="{Binding CurrentPage}"
+                    ItemsSource="{Binding Pages}"
+                    Position="{Binding Position, Mode=TwoWay}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="Grid" Padding="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Row="0"
+                                    Padding="0,0,0,10"
+                                    FontAttributes="Bold"
+                                    FontSize="22"
+                                    Text="{Binding Title}"
+                                    TextColor="Black" />
+                                <Forms9Patch:Label
+                                    Grid.Row="1"
+                                    AutoFit="Lines"
+                                    FontSize="70"
+                                    LineBreakMode="WordWrap"
+                                    Lines="40"
+                                    MinFontSize="15"
+                                    Text="{Binding Text}"
+                                    TextColor="Black" />
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <utils:CarouselIndicators
+                    IndicatorHeight="16"
+                    IndicatorWidth="16"
+                    ItemsSource="{Binding Pages}"
+                    Position="{Binding Position}"
+                    SelectedIndicator="selected_circle.png"
+                    UnselectedIndicator="unselected_circle.png" />
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsConnectedToServer}" Orientation="Vertical">
+                <Label
+                    Grid.Row="0"
+                    Padding="0,0,0,10"
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Tytuł"
+                    TextColor="Black" />
+                <Forms9Patch:Label
+                    Grid.Row="1"
+                    AutoFit="Lines"
+                    BackgroundColor="White"
+                    FontSize="70"
+                    LineBreakMode="WordWrap"
+                    Lines="40"
+                    MinFontSize="15"
+                    Text="{Binding TextOfSongWhennConnectToServer}"
+                    TextColor="Black" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

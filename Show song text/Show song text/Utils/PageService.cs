@@ -19,6 +19,11 @@ namespace Show_song_text.Utils
             return await MainPage.DisplayAlert(title, message, ok, cancel);
         }
 
+        public async Task<string> DisplayEntry(string title, string message)
+        {
+            return await MainPage.DisplayPromptAsync(title, message);
+        }
+
         public void ChangePage(Page page)
         {
             
@@ -34,7 +39,7 @@ namespace Show_song_text.Utils
 
         public async Task<Page> PreviousDetailPage()
         {
-            return await MainPage.Navigation.PopAsync();
+            return await DetailPage.Navigation.PopAsync();
         }
 
         private MasterDetailPage MainPage

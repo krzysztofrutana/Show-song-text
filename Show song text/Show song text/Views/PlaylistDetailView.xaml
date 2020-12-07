@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Show_song_text.Views.PlaylistDetailView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    Title="Szczegóły playlisty">
+    <ContentPage.BindingContext>
+        <vm:PlaylistDetailViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Text="Opis" />
+            <ImageButton
+                Grid.Column="1"
+                BackgroundColor="OrangeRed"
+                Command="{Binding DeletePlaylistCommand}"
+                CornerRadius="40"
+                HeightRequest="40"
+                HorizontalOptions="End"
+                WidthRequest="40" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="Nazwa" />
+            <Editor
+                Grid.Row="1"
+                Grid.Column="1"
+                AutoSize="TextChanges"
+                Text="{Binding Name, Mode=TwoWay}" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="Utwory" />
+            <ListView
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="True"
+                ItemsSource="{Binding SongsList}"
+                Visual="Material">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}" />
+                                <Grid Margin="10,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Text="{Binding Artist}" />
+                                    <Label Grid.Row="1" Text="{Binding Title}" />
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Command="{Binding SaveCommand}"
+                Text="Zapisz playlistę" />
+            <Button
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Command="{Binding StartPresentationCommand}"
+                Text="Zacznij prezentację" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

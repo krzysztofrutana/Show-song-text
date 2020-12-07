@@ -2,11 +2,32 @@
 <ContentPage
     x:Class="Show_song_text.Views.PlaylistListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels">
+    <ContentPage.BindingContext>
+        <vm:PlaylistListViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <SearchBar />
-
+            <ListView
+                HasUnevenRows="True"
+                ItemsSource="{Binding Playlists}"
+                SelectedItem="{Binding SelectedPlaylist, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Grid Margin="10,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Text="{Binding Name}" />
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

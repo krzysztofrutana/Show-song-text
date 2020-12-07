@@ -9,11 +9,23 @@ namespace Show_song_text.Utils
         public static string SongAdded = "AddSong";
         public static string SongUpdated = "UpdateSong";
         public static string SongDeleted = "DeleteSong";
-        public static string ChangedArtist = "ArtistChange";
-        public static string ChangedTitle = "TitleChange";
-        public static string ChangedText = "TextChange";
-        public static string ChangedChords = "ChordsChange";
-
         public static string SendSong = "SendSong";
+
+        public static string SendPlaylist = "SendPlaylist";
+        public static string PlaylistUpdated = "UpdatePlaylist";
+        public static string PlaylistDeleted = "DeletePlaylist";
+
+        public static string SendPlaylistToPresentation = "SendPlaylistToPresentation";
+
+        public static string ServerIsRunning = "ServerIsRunning";
+        public static string ClientConnected = "ClientConnected";
+        public static string ClientDisconnected = "ClientDisconnected";
+
+        public static string SendedText = "SendedText";
+
+        public static string ConnectToServer = "ConnectToServer";
+
+
+
     }
 }

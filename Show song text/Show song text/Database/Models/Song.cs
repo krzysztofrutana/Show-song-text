@@ -3,9 +3,11 @@ using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace Show_song_text.Database.Models
 {
+    [Table("Song")]
     public class Song
     {
         [PrimaryKey, AutoIncrement]
