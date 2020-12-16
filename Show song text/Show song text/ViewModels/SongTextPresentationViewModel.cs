@@ -14,6 +14,9 @@ using System.Threading;
 using System.IO;
 using Show_song_text.PresentationServerUtilis;
 using Show_song_text.Interfaces;
+using Show_song_text.Database.Repository;
+using System.Linq;
+using Show_song_text.Database.Persistence;
 
 namespace Show_song_text.ViewModels
 {
@@ -32,28 +35,11 @@ namespace Show_song_text.ViewModels
             set
             {
                 _Name = value;
-                Playlist.Name = value;
                 OnPropertyChanged(nameof(Name));
             }
         }
 
-        private List<Song> _SongsList;
-        public List<Song> SongsList
-        {
-            get
-            {
-                return _SongsList;
-
-            }
-            set
-            {
-                _SongsList = value;
-                Playlist.Songs = value;
-                OnPropertyChanged(nameof(SongsList));
-            }
-        }
-
-        
+        public ObservableCollection<SongViewModel> SongsList { get; private set; } = new ObservableCollection<SongViewModel>();
 
         private PresentationPageModel _CurrentPage;
         public PresentationPageModel CurrentPage
@@ -66,7 +52,8 @@ namespace Show_song_text.ViewModels
             set
             {
                 _CurrentPage = value;
-                SendText(value.Text);
+                String textToSend = value.Title + '|' + value.Text;
+                SendText(textToSend);
                 OnPropertyChanged(nameof(CurrentPage));
             }
         }
@@ -87,7 +74,7 @@ namespace Show_song_text.ViewModels
         }
 
         private string _TextOfSongWhennConnectToServer;
-        public string TextOfSongWhennConnectToServer
+        public string TextOfSongWhenConnectedToServer
         {
             get
             {
@@ -97,7 +84,22 @@ namespace Show_song_text.ViewModels
             set
             {
                 _TextOfSongWhennConnectToServer = value;
-                OnPropertyChanged(nameof(TextOfSongWhennConnectToServer));
+                OnPropertyChanged(nameof(TextOfSongWhenConnectedToServer));
+            }
+        }
+
+        private string _TitleOfSongWhennConnectToServer;
+        public string TitleOfSongWhenConnectedToServer
+        {
+            get
+            {
+                return _TitleOfSongWhennConnectToServer;
+
+            }
+            set
+            {
+                _TitleOfSongWhennConnectToServer = value;
+                OnPropertyChanged(nameof(TitleOfSongWhenConnectedToServer));
             }
         }
         //PROPERTIES SECTION END
@@ -105,11 +107,14 @@ namespace Show_song_text.ViewModels
         // VARIABLE SECTION START
         private readonly IAsyncSocketListener asyncSocketListener;
         private readonly IAsyncClient asyncClient;
+        private readonly SongRepository songRepository;
         // VARIABLE SECTION END
 
         // CONSTRUCTOR START
         public SongTextPresentationViewModel()
         {
+            songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
+
             MessagingCenter.Subscribe<PlaylistDetailViewModel, PlaylistViewModel>
            (this, Events.SendPlaylistToPresentation, OnPlaylistSended);
 
@@ -125,11 +130,35 @@ namespace Show_song_text.ViewModels
         // CONSTRUCTOR END
 
         // MESSAGING CENTER METHOD START
-        void OnPlaylistSended(PlaylistDetailViewModel source, PlaylistViewModel playlistViewModel)
+        async void OnPlaylistSended(PlaylistDetailViewModel source, PlaylistViewModel playlistViewModel)
         {
             Playlist = playlistViewModel;
             Name = Playlist.Name;
-            SongsList = Playlist.Songs;
+            ObservableCollection<SongViewModel> tempList = new ObservableCollection<SongViewModel>();
+            foreach (Song songTemp in Playlist.Songs)
+            {
+                if (Playlist.CustomSongsOrder)
+                {
+                    Song tempSong = await songRepository.GetSongWithChildren(songTemp.Id);
+                    tempSong.IsCheckBoxVisible = false;
+                    tempList.Add(new SongViewModel(tempSong));
+                }
+                else
+                {
+                    songTemp.IsCheckBoxVisible = false;
+                    tempList.Add(new SongViewModel(songTemp));
+                }
+            }
+            if (Playlist.CustomSongsOrder)
+            {
+                tempList = new ObservableCollection<SongViewModel>(tempList.OrderBy(s => s.Positions.Where(p => p.PlaylistId == Playlist.Id).FirstOrDefault().PositionOnPlaylist));
+            }
+
+            foreach (SongViewModel song in tempList)
+            {
+                SongsList.Add(song);
+            }
+
             PreparePresentation();
         }
 
@@ -141,16 +170,24 @@ namespace Show_song_text.ViewModels
 
         void OnTextRecive(AsyncClient source, string text)
         {
-            TextOfSongWhennConnectToServer = text;
+            if(text != "")
+            {
+                string[] songTitleAndText = text.Split('|');
+                if(songTitleAndText != null)
+                {
+                    TitleOfSongWhenConnectedToServer = songTitleAndText[0];
+                    TextOfSongWhenConnectedToServer = songTitleAndText[1];
+                } 
+            } 
         }
         // MESSAGING CENTER METHOD END
 
         // PROPERTY METHOD START
         void PreparePresentation()
         {
-            foreach(Song song in SongsList)
+            foreach(SongViewModel song in SongsList)
             {
-                string[] result = song.Text.Split(System.Environment.NewLine.ToCharArray());
+                string[] result = song.Text.Split(Environment.NewLine.ToCharArray());
                 int songTextLines = result.Length;
                 if(songTextLines <= 25)
                 {
@@ -211,7 +248,10 @@ namespace Show_song_text.ViewModels
         void SendText(string text)
         {
             if(text != "")
-            asyncSocketListener.Send(1, text, false);
+            {
+                asyncSocketListener.Send(text, false);
+            }
+                
         }
 
         // TEXT SHARE METHOD END

@@ -158,35 +158,39 @@ namespace Show_song_text.PresentationServerUtilis
 
         /* Send(int id, String msg, bool close) use bool to close the connection after the message sent. */
         #region Send data
-        public void Send(int id, string msg, bool close)
+        public void Send(string msg, bool close)
         {
-            var state = this.GetClient(id);
+            foreach (var id in this.clients.Keys)
+            {
+                var state = this.GetClient(id);
 
-            if (state == null)
-            {
-                throw new Exception("Client does not exist.");
-            }
+                if (state == null)
+                {
+                    throw new Exception("Client does not exist.");
+                }
 
-            if (!this.IsConnected(state.Id))
-            {
-                throw new Exception("Destination socket is not connected.");
-            }
+                if (!this.IsConnected(state.Id))
+                {
+                    throw new Exception("Destination socket is not connected.");
+                }
 
-            try
-            {
-                var send = Encoding.UTF8.GetBytes(msg);
+                try
+                {
+                    var send = Encoding.UTF8.GetBytes(msg);
 
-                state.Close = close;
-                state.Listener.BeginSend(send, 0, send.Length, SocketFlags.None, this.SendCallback, state);
+                    state.Close = close;
+                    state.Listener.BeginSend(send, 0, send.Length, SocketFlags.None, this.SendCallback, state);
+                }
+                catch (SocketException)
+                {
+                    // TODO:
+                }
+                catch (ArgumentException)
+                {
+                    // TODO:
+                }
             }
-            catch (SocketException)
-            {
-                // TODO:
-            }
-            catch (ArgumentException)
-            {
-                // TODO:
-            }
+            
         }
 
         private void SendCallback(IAsyncResult result)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Show_song_text.ViewModels
         // VARIABLE START
 
         private readonly IPageService _pageService;
-        
+
         // VARIABLE END
 
 
@@ -39,7 +40,7 @@ namespace Show_song_text.ViewModels
         }
 
         private MasterMenuItem _selectedItem;
-        public MasterMenuItem SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnMenuItemSelected(value); OnPropertyChanged(nameof(SelectedItem)); } }
+        public MasterMenuItem SelectedItem { get { return _selectedItem; } set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); OnMenuItemSelected(value); } }
 
         private Boolean _isPresent;
 
@@ -60,8 +61,6 @@ namespace Show_song_text.ViewModels
         public MainPageViewModel()
         {
             _pageService = new PageService();
-
-            MainPageView.myNavigationStack.Add(new SongListView());
 
             CreateMenuList();
             AppName = "Pomocnik wokalisty";
@@ -87,23 +86,32 @@ namespace Show_song_text.ViewModels
         {
             try
             {
-                if(masterMenuItem.Title == "Dodaj utwór")
+                if (masterMenuItem != null)
                 {
-                    Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
-                    await _pageService.ChangePageAsync(page);
-                }
-                else
-                {
-                    Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
-                    _pageService.ChangePage(page);
+                    if (masterMenuItem.Title == "Dodaj utwór")
+                    {
+                        Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
+                        await _pageService.ChangePageAsync(page);
+                        SelectedItem = null;
+                    }
+                    else
+                    {
+                        Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
+                        _pageService.ChangePage(page);
+                        SelectedItem = null;
+                    }
                 }
             }
-            catch(Exception e)
+            catch (TargetInvocationException e)
+            {
+                await _pageService.DisplayAlert("Błąd", e.InnerException.Message, "OK");
+            }
+            catch (Exception e)
             {
                 await _pageService.DisplayAlert("Błąd", e.Message, "OK");
             }
-
         }
+
 
         // PROPERTY METHOD END
 

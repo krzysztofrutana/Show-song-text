@@ -77,9 +77,7 @@ namespace Show_song_text.ViewModels
         
         // COMMAND SECTION START
         public ICommand LoadSongsCommand { get; private set; }
-        public ICommand AddSongCommand { get; private set; }
         public ICommand SelectSongCommand { get; private set; }
-        public ICommand DeleteSongCommand { get; private set; }
         public ICommand CreatePlaylistCommand { get; private set; }
         public ICommand AddToPlaylistCommand { get; private set; }
         public ICommand DeleteFromPlaylistCommand { get; private set; }
@@ -94,7 +92,6 @@ namespace Show_song_text.ViewModels
             playlistRepository = new PlaylistRepository(DependencyService.Get<ISQLiteDb>());
 
             LoadSongsCommand = new Command(async () => await LoadSongs());
-            AddSongCommand = new Command(async () => await AddSong());
             SelectSongCommand = new Command<SongViewModel>(async song => await SelectSong(song));
             CreatePlaylistCommand = new Command(async () => await CreatePlaylist());
             AddToPlaylistCommand = new Command<SongViewModel>(async song => await AddToPlaylist(song));
@@ -130,10 +127,6 @@ namespace Show_song_text.ViewModels
             AllSongsCopy = Songs;
         }
 
-        private async Task AddSong()
-        {
-            await _pageService.ChangePageAsync(new SongAddAndDetailView());
-        }
 
         private async Task SelectSong(SongViewModel song)
         {
@@ -156,12 +149,12 @@ namespace Show_song_text.ViewModels
             Playlist playlist = new Playlist()
             {
                 Name = playlistName,
-                Songs = songsList
+                Songs = songsList,
+                CustomSongsOrder = false
             };
             await playlistRepository.AddPlaylist(playlist);
-            int playlistID = playlist.Id;
+            var songtenp = await songRepository.GetSongWithChildren(songsList[0].Id);
             await _pageService.DisplayAlert("Sukces", "Playlista utworzona", "Ok");
-            SetPlayListIDInSongs(playlistID, songsList);
             UnCheckAllSongs();
             SetCheckBoxVisibility(false);
             ShowChooseOption = false;
@@ -212,6 +205,7 @@ namespace Show_song_text.ViewModels
                 Songs = AllSongsCopy;
             var songs = AllSongsCopy.Where(s => s.Title.ToLower().Contains(text.ToLower()) || s.Artist.ToLower().Contains(text.ToLower()));
             Songs = new ObservableCollection<SongViewModel>(songs);
+            OnPropertyChanged(nameof(Songs));
         }
 
         private void SetCheckBoxVisibility(Boolean status)
@@ -235,15 +229,6 @@ namespace Show_song_text.ViewModels
                 {
                     songViewModel.IsChecked = false;
                 }
-            }
-        }
-
-        private async void SetPlayListIDInSongs(int playlistID, List<Song> songs)
-        {
-            foreach(Song song in songs)
-            {
-                song.PlaylistID = playlistID;
-                await songRepository.UpdateSong(song);
             }
         }
         // PROPERTY METHOD SECTION END

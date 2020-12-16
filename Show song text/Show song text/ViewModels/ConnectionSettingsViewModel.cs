@@ -107,9 +107,9 @@ namespace Show_song_text.ViewModels
             }
         }
 
-        private int _PortToConnect;
+        private int? _PortToConnect = null;
 
-        public int PortToConnect
+        public int? PortToConnect
         {
             get { return _PortToConnect; }
             set
@@ -188,9 +188,12 @@ namespace Show_song_text.ViewModels
             asyncSocketListener.Dispose();
         }
 
-        private void ConnectToServer()
+        private async void ConnectToServer()
         {
-            asyncClient.StartClient(PortToConnect, IPAddress.Parse(IpAdressToConnect));
+            if (PortToConnect != null)
+                asyncClient.StartClient((int)PortToConnect, IPAddress.Parse(IpAdressToConnect));
+            else
+                await _pageService.DisplayAlert("Puste pola", "Proszę wpisać numer portu", "OK");
         }
 
         async Task StartPresentationForCLient()

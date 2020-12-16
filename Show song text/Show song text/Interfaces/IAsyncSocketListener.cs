@@ -24,7 +24,7 @@ namespace Show_song_text.Interfaces
 
         void ReceiveCallback(IAsyncResult result);
 
-        void Send(int id, string msg, bool close);
+        void Send(string msg, bool close);
 
         void Close(int id);
 
