@@ -1,8 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Show_song_text.App">
+<Application
+    x:Class="Show_song_text.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <ResourceDictionary Source="Styles/AppStyle.xaml" />
+        <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles/CheckboxStyle.xaml" />
+        <ResourceDictionary Source="Styles/EditorStyle.xaml" />
+        <ResourceDictionary Source="Styles/LabelStyle.xaml" />
+        <ResourceDictionary Source="Styles/ListViewItemsStyle.xaml" />
+        <ResourceDictionary Source="Styles/MenuItemStyle.xaml" />
+        <ResourceDictionary Source="Styles/RadioButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles/RoundedViewStyle.xaml" />
     </Application.Resources>
 </Application>

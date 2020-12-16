@@ -1,34 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="Show_song_text.Views.SongListView"
+    x:Class="Show_song_text.Views.AddSongToPlaylistView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
-    Title="Lista utworów">
+    Title="Wybierz utwory">
     <ContentPage.BindingContext>
-        <vm:SongListViewModel />
+        <vm:AddSongToPlaylistViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="AUto" />
             </Grid.RowDefinitions>
-            <StackLayout Grid.Row="0" Orientation="Horizontal">
-                <CheckBox
-                    Margin="20,0,0,0"
-                    IsChecked="{Binding ShowChooseOption}"
-                    Style="{StaticResource CheckboxNormal}" />
-                <SearchBar Text="{Binding SearchBarText}" TextColor="{StaticResource TextColor}" />
-            </StackLayout>
+            <SearchBar
+                Grid.Row="0"
+                Text="{Binding SearchBarText}"
+                TextColor="{StaticResource TextColor}" />
             <rounded:RoundedCornerView Grid.Row="1">
                 <ListView
                     HasUnevenRows="True"
-                    ItemsSource="{Binding Songs, Mode=TwoWay}"
-                    SelectedItem="{Binding SelectedSong, Mode=TwoWay}">
+                    ItemSelected="ListView_ItemSelected"
+                    ItemsSource="{Binding Songs, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -74,9 +70,8 @@
             <Button
                 Grid.Row="2"
                 Margin="0,0,0,10"
-                Command="{Binding CreatePlaylistCommand}"
-                IsVisible="{Binding ShowChooseOption}"
-                Text="Utwórz playlistę"
+                Command="{Binding AddSongsToPlaylistCommand}"
+                Text="Dodaj zaznaczone"
                 VerticalOptions="End">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">

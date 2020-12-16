@@ -1,0 +1,15 @@
+﻿
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="RadioButton">
+        <Setter Property="FontSize" Value="Subtitle" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource AppBackgroundColor}" />
+    </Style>
+</ResourceDictionary>

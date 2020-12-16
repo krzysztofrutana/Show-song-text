@@ -17,29 +17,13 @@ namespace Show_song_text.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPageView : MasterDetailPage
     {
-        public static List<Page> myNavigationStack;
 
         public MainPageView()
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            myNavigationStack = new List<Page>();
             InitializeComponent();
-        }
 
-        //protected override bool OnBackButtonPressed()
-        //{
-        //    Page current = ((NavigationPage)((MasterDetailPage)Application.Current.MainPage).Detail).CurrentPage;
-        //    var t = Detail.GetType();
-        //    if (Detail.Title == "Lista utworów")
-        //    {
-        //        return base.OnBackButtonPressed();
-        //    }
-        //    else if (myNavigationStack != null)
-        //    {
-        //        Detail = new NavigationPage(myNavigationStack.LastOrDefault());
-        //    }
-        //    return true;
-        //}
+        }
     }
     
 }

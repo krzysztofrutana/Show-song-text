@@ -3,6 +3,7 @@
     x:Class="Show_song_text.Views.PlaylistDetailView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     Title="Szczegóły playlisty">
     <ContentPage.BindingContext>
@@ -10,13 +11,11 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
 
-        <Grid>
+        <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="37" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -25,67 +24,292 @@
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Column="0"
-                HorizontalOptions="Start"
-                Text="Opis" />
-            <ImageButton
-                Grid.Column="1"
-                BackgroundColor="OrangeRed"
-                Command="{Binding DeletePlaylistCommand}"
-                CornerRadius="40"
-                HeightRequest="40"
-                HorizontalOptions="End"
-                WidthRequest="40" />
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                Text="Nazwa" />
+                Style="{StaticResource LabelNormal}"
+                Text="Nazwa: " />
             <Editor
-                Grid.Row="1"
                 Grid.Column="1"
+                Margin="0,0,5,0"
                 AutoSize="TextChanges"
                 Text="{Binding Name, Mode=TwoWay}" />
             <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource LabelNormal}"
+                Text="Utwory:"
+                VerticalOptions="EndAndExpand" />
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                HorizontalOptions="EndAndExpand"
+                Orientation="Horizontal">
+                <ImageButton
+                    Margin="0,0,5,0"
+                    Padding="5"
+                    Command="{Binding AddSongsToPlaylistCommand}"
+                    HeightRequest="37"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding AllowEditPlaylist}"
+                    Source="plus.png"
+                    VerticalOptions="Center"
+                    WidthRequest="37">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+                <ImageButton
+                    Margin="5,0,0,0"
+                    Padding="5"
+                    Command="{Binding DeleteSongsFromPlaylistCommand}"
+                    HeightRequest="37"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding AllowEditPlaylist}"
+                    Source="minus.png"
+                    VerticalOptions="Center"
+                    WidthRequest="37">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+                <ImageButton
+                    Margin="5,0,0,0"
+                    Padding="5"
+                    Command="{Binding MoveUpCommand}"
+                    HeightRequest="37"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding AllowEditPlaylist}"
+                    Source="upArrow.png"
+                    VerticalOptions="Center"
+                    WidthRequest="37">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+                <ImageButton
+                    Margin="5,0,0,0"
+                    Padding="5"
+                    Command="{Binding MoveDownCommand}"
+                    HeightRequest="37"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding AllowEditPlaylist}"
+                    Source="downArrow.png"
+                    VerticalOptions="Center"
+                    WidthRequest="37">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+            </StackLayout>
+            <controls:RoundedCornerView
                 Grid.Row="2"
                 Grid.Column="0"
-                Text="Utwory" />
-            <ListView
+                Grid.ColumnSpan="2">
+                <ListView
+                    CachingStrategy="RecycleElement"
+                    HasUnevenRows="True"
+                    ItemSelected="ListView_ItemSelected"
+                    ItemsSource="{Binding SongsList, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:DragAndDropCellView>
+                                <StackLayout Margin="10,10,10,10" Orientation="Horizontal">
+                                    <CheckBox
+                                        CheckedChanged="CheckBox_CheckedChanged"
+                                        IsChecked="{Binding IsChecked}"
+                                        IsVisible="{Binding IsCheckBoxVisible}"
+                                        Style="{StaticResource CheckboxListViewItem}" />
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="30"
+                                            Source="note.png"
+                                            VerticalOptions="FillAndExpand" />
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelArtistListViewItem}"
+                                            Text="{Binding Artist}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelTitleListViewItem}"
+                                            Text="{Binding Title}" />
+                                    </Grid>
+                                </StackLayout>
+                            </controls:DragAndDropCellView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </controls:RoundedCornerView>
+            <StackLayout
                 Grid.Row="3"
-                Grid.Column="0"
                 Grid.ColumnSpan="2"
-                CachingStrategy="RecycleElement"
-                HasUnevenRows="True"
-                ItemsSource="{Binding SongsList}"
-                Visual="Material">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsChecked}" />
-                                <Grid Margin="10,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Text="{Binding Artist}" />
-                                    <Label Grid.Row="1" Text="{Binding Title}" />
-                                </Grid>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button
-                Grid.Row="4"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Command="{Binding SaveCommand}"
-                Text="Zapisz playlistę" />
-            <Button
-                Grid.Row="5"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Command="{Binding StartPresentationCommand}"
-                Text="Zacznij prezentację" />
+                Margin="0,0,0,10"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal"
+                Spacing="35">
+                <ImageButton
+                    Padding="14"
+                    Command="{Binding SaveCommand}"
+                    HeightRequest="60"
+                    Source="save.png"
+                    WidthRequest="60">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+
+                <ImageButton
+                    Padding="14"
+                    Command="{Binding DeletePlaylistCommand}"
+                    HeightRequest="60"
+                    HorizontalOptions="End"
+                    Source="delete.png"
+                    WidthRequest="60">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+
+
+                <ImageButton
+                    Padding="14"
+                    Command="{Binding ShowEditOptionsCommand}"
+                    HeightRequest="60"
+                    Source="edit.png"
+                    WidthRequest="60">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+
+                <ImageButton
+                    Padding="14"
+                    Command="{Binding StartPresentationCommand}"
+                    HeightRequest="60"
+                    Source="presentation.png"
+                    WidthRequest="60">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </ImageButton>
+            </StackLayout>
+
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -3,31 +3,39 @@
     x:Class="Show_song_text.Views.PlaylistListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:Show_song_text.ViewModels">
+    xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    Title="Listy odtwarzania">
     <ContentPage.BindingContext>
         <vm:PlaylistListViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
+        <rounded:RoundedCornerView BackgroundColor="White">
             <ListView
                 HasUnevenRows="True"
-                ItemsSource="{Binding Playlists}"
+                ItemsSource="{Binding Playlists, Mode=TwoWay}"
                 SelectedItem="{Binding SelectedPlaylist, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Grid Margin="10,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Text="{Binding Name}" />
-                                </Grid>
+                            <StackLayout Margin="10,10,10,10" Orientation="Horizontal">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="40"
+                                    Source="playlist.png"
+                                    VerticalOptions="FillAndExpand" />
+                                <Label
+                                    Grid.Row="0"
+                                    Margin="0"
+                                    Padding="10,5,10,5"
+                                    FontSize="Large"
+                                    Style="{StaticResource LabelArtistListViewItem}"
+                                    Text="{Binding Name}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
+        </rounded:RoundedCornerView>
     </ContentPage.Content>
 </ContentPage>

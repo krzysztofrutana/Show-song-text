@@ -24,7 +24,7 @@
                     Position="{Binding Position, Mode=TwoWay}">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <Grid x:Name="Grid" Padding="10,10,10,10">
+                            <Grid Padding="10,10,10,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
@@ -34,17 +34,16 @@
                                     Padding="0,0,0,10"
                                     FontAttributes="Bold"
                                     FontSize="22"
-                                    Text="{Binding Title}"
-                                    TextColor="Black" />
+                                    Text="{Binding Title}" />
                                 <Forms9Patch:Label
                                     Grid.Row="1"
-                                    AutoFit="Lines"
-                                    FontSize="70"
+                                    AutoFit="None"
+                                    FontSize="40"
                                     LineBreakMode="WordWrap"
-                                    Lines="40"
+                                    Lines="0"
                                     MinFontSize="15"
                                     Text="{Binding Text}"
-                                    TextColor="Black" />
+                                    VerticalOptions="Fill" />
                             </Grid>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
@@ -57,25 +56,27 @@
                     SelectedIndicator="selected_circle.png"
                     UnselectedIndicator="unselected_circle.png" />
             </StackLayout>
-            <StackLayout IsVisible="{Binding IsConnectedToServer}" Orientation="Vertical">
+            <Grid Padding="10,10,10,10" IsVisible="{Binding IsConnectedToServer}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
                 <Label
                     Grid.Row="0"
                     Padding="0,0,0,10"
                     FontAttributes="Bold"
                     FontSize="22"
-                    Text="Tytuł"
-                    TextColor="Black" />
+                    Text="{Binding Title}" />
                 <Forms9Patch:Label
                     Grid.Row="1"
-                    AutoFit="Lines"
-                    BackgroundColor="White"
-                    FontSize="70"
+                    AutoFit="None"
+                    FontSize="40"
                     LineBreakMode="WordWrap"
-                    Lines="40"
+                    Lines="0"
                     MinFontSize="15"
-                    Text="{Binding TextOfSongWhennConnectToServer}"
-                    TextColor="Black" />
-            </StackLayout>
+                    Text="{Binding TextOfSongWhenConnectedToServer}"
+                    VerticalOptions="Fill" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

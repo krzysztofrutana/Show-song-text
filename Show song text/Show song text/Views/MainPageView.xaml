@@ -16,12 +16,13 @@
                 <StackLayout>
                     <ListView
                         x:Name="MenuItemsListView"
+                        BackgroundColor="{StaticResource NavigationBarColor}"
                         HasUnevenRows="true"
                         ItemsSource="{Binding MenuListItems}"
                         SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                         SeparatorVisibility="None">
                         <ListView.Header>
-                            <Grid BackgroundColor="#03A9F4">
+                            <Grid BackgroundColor="{StaticResource NavigationBarColor}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="*" />

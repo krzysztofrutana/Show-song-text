@@ -1,0 +1,19 @@
+﻿
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Thickness x:Key="PageMargin">20</Thickness>
+    <!--  Implicit styles  -->
+    <Style TargetType="{x:Type NavigationPage}">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationBarColor}" />
+        <Setter Property="BarTextColor" Value="{StaticResource TextColor}" />
+    </Style>
+
+    <Style ApplyToDerivedTypes="True" TargetType="{x:Type ContentPage}">
+        <Setter Property="BackgroundColor" Value="{StaticResource AppBackgroundColor}" />
+    </Style>
+
+</ResourceDictionary>

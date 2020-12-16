@@ -1,0 +1,43 @@
+﻿
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="FontSize">
+            <Setter.Value>
+                <OnIdiom
+                    x:TypeArguments="x:Double"
+                    Phone="15"
+                    Tablet="18" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+
+        <Setter Property="WidthRequest" Value="200" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="BorderRadius">
+            <Setter.Value>
+                <OnIdiom
+                    x:TypeArguments="x:Int32"
+                    Phone="15"
+                    Tablet="25" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ImageButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="CornerRadius" Value="90" />
+
+    </Style>
+</ResourceDictionary>

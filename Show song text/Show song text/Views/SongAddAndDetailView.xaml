@@ -3,8 +3,9 @@
     x:Class="Show_song_text.Views.SongAddAndDetailView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:rend="clr-namespace:Show_song_text.Renderers"
-    xmlns:vm="clr-namespace:Show_song_text.ViewModels">
+    xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    Title="{Binding PageTitle}">
     <ContentPage.BindingContext>
         <vm:SongAddAndDetailViewModel />
     </ContentPage.BindingContext>
@@ -15,82 +16,165 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label
-                    Grid.Column="0"
-                    HorizontalOptions="Start"
-                    Text="Opis" />
-                <ImageButton
-                    Grid.Column="1"
-                    BackgroundColor="OrangeRed"
-                    Command="{Binding DeleteSongCommand}"
-                    CornerRadius="40"
-                    HeightRequest="40"
-                    HorizontalOptions="End"
-                    IsVisible="{Binding IsFloatingButtonVisible}"
-                    WidthRequest="40" />
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Text="Autor" />
-                <Editor
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    AutoSize="TextChanges"
-                    Text="{Binding Artist, Mode=TwoWay}" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Text="Tytuł" />
-                <Editor
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    AutoSize="TextChanges"
-                    Text="{Binding Title, Mode=TwoWay}" />
-                <Label
+                <rounded:RoundedCornerView Grid.Row="0">
+                    <Grid Margin="10,10,10,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource LabelNormalBold}"
+                            Text="Autor: " />
+                        <Editor
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            AutoSize="TextChanges"
+                            Text="{Binding Artist, Mode=TwoWay}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource LabelNormalBold}"
+                            Text="Tytuł:" />
+                        <Editor
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            AutoSize="TextChanges"
+                            Text="{Binding Title, Mode=TwoWay}" />
+
+                    </Grid>
+                </rounded:RoundedCornerView>
+                <rounded:RoundedCornerView Grid.Row="1">
+                    <Grid Margin="10,10,10,10" VerticalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,10,0,0"
+                            Style="{StaticResource LabelNormalBold}"
+                            Text="Tekst:"
+                            VerticalOptions="Start" />
+                        <Editor
+                            Grid.Column="1"
+                            AutoSize="TextChanges"
+                            Text="{Binding Text, Mode=TwoWay}" />
+
+                        <ImageButton
+                            Grid.Column="2"
+                            Margin="5,5,5,5"
+                            Padding="5"
+                            Command="{Binding SearchTextCommand}"
+                            HeightRequest="40"
+                            Source="search.png"
+                            VerticalOptions="Start"
+                            WidthRequest="40">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="Scale" Value="1" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Property="Scale" Value="0.8" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ImageButton>
+                    </Grid>
+                </rounded:RoundedCornerView>
+
+                <rounded:RoundedCornerView Grid.Row="2">
+                    <Grid Margin="10,10,10,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Style="{StaticResource LabelNormalBold}"
+                            Text="Akordy:" />
+                        <Editor
+                            Grid.Column="1"
+                            AutoSize="TextChanges"
+                            Text="{Binding Chords, Mode=TwoWay}" />
+                    </Grid>
+
+                </rounded:RoundedCornerView>
+                <StackLayout
                     Grid.Row="3"
-                    Grid.Column="0"
-                    HorizontalOptions="Start"
-                    Text="Tekst i akordy" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Text="Tekst" />
-                <Editor
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    AutoSize="TextChanges"
-                    Text="{Binding Text, Mode=TwoWay}" />
-                <Button
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Command="{Binding SearchTextCommand}"
-                    Text="Szukaj tekstu" />
-                <Label
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    Text="Akordy" />
-                <Editor
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    AutoSize="TextChanges"
-                    Text="{Binding Chords, Mode=TwoWay}" />
-                <Button
-                    Grid.Row="7"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Command="{Binding SaveCommand}"
-                    Text="Zapisz utwór" />
+                    Margin="10,10,10,10"
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal"
+                    Spacing="20"
+                    VerticalOptions="End">
+                    <ImageButton
+                        Padding="14"
+                        Command="{Binding SaveCommand}"
+                        HeightRequest="60"
+                        Source="save.png"
+                        WidthRequest="60">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="0.8" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
+
+                    <ImageButton
+                        Padding="14"
+                        Command="{Binding DeleteSongCommand}"
+                        HeightRequest="60"
+                        IsVisible="{Binding IsDeleteButtonVisible}"
+                        Source="delete.png"
+                        WidthRequest="60">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="0.8" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
+                </StackLayout>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

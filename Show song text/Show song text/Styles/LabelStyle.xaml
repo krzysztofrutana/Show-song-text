@@ -1,0 +1,23 @@
+﻿
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="LabelNormal" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Padding" Value="10,0,0,0" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+    </Style>
+
+    <Style x:Key="LabelNormalBold" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Padding" Value="10,0,0,0" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+    </Style>
+</ResourceDictionary>
