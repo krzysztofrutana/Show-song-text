@@ -25,6 +25,8 @@ namespace Show_song_text.Utils
 
         public static string ConnectToServer = "ConnectToServer";
 
+        public static string AddSongsToPlaylist = "AddSongsToPlaylist";
+
 
 
     }

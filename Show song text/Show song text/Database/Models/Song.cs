@@ -12,8 +12,10 @@ namespace Show_song_text.Database.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [ForeignKey(typeof(Playlist))]
-        public int PlaylistID { get; set; }
+        [ManyToMany(typeof(SongPlaylist))]
+        public List<Playlist> Playlists { get; set; }
+        [ManyToMany(typeof(SongPosition))]
+        public List<Position> Positions { get; set; }
         [MaxLength(255)]
         public string Title { get; set; }
         [MaxLength(255)]

@@ -15,16 +15,19 @@ namespace Show_song_text.Database.Repository
         public SongRepository(ISQLiteDb db)
         {
             _connection = db.GetConnection();
-            CreateTable();
+            _connection.CreateTableAsync<Song>().Wait();
+            _connection.CreateTableAsync<Position>().Wait();
+            _connection.CreateTableAsync<SongPlaylist>().Wait();
+            _connection.CreateTableAsync<SongPosition>().Wait();
         }
         public async Task AddSong(Song song)
         {
-            await _connection.InsertAsync(song);
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertWithChildrenAsync(_connection, song, false);
         }
 
         public async Task DeleteSong(Song song)
         {
-            await _connection.DeleteAsync(song);
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.DeleteAsync(_connection, song, false);
         }
 
         public async Task<IEnumerable<Song>> GetAllSongAsync()
@@ -32,19 +35,25 @@ namespace Show_song_text.Database.Repository
             return await _connection.Table<Song>().ToListAsync();
         }
 
+        public async Task<IEnumerable<Song>> GetAllSongWithChildrenAsync()
+        {
+            return await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<Song>(_connection);
+        }
+
         public async Task<Song> GetSong(int id)
         {
             return await _connection.FindAsync<Song>(id); 
         }
 
-        public async Task UpdateSong(Song song)
+        public async Task<Song> GetSongWithChildren(int id)
         {
-            await _connection.UpdateAsync(song);
+            return await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetWithChildrenAsync<Song>(_connection, id, true);
         }
 
-        private async void CreateTable()
+        public async Task UpdateSong(Song song)
         {
-            await _connection.CreateTableAsync<Song>();
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(_connection, song);
         }
+
     }
 }

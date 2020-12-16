@@ -15,6 +15,7 @@ namespace Show_song_text.Database.ViewModels
             Id = playlist.Id;
             Name = playlist.Name;
             Songs = playlist.Songs;
+            CustomSongsOrder = playlist.CustomSongsOrder;
            
         }
 
@@ -37,6 +38,17 @@ namespace Show_song_text.Database.ViewModels
             {
                 _songs = value;
                 OnPropertyChanged(nameof(Songs));
+            }
+        }
+
+        private Boolean _customSongsOrder;
+        public Boolean CustomSongsOrder
+        {
+            get { return _customSongsOrder; }
+            set
+            {
+                _customSongsOrder = value;
+                OnPropertyChanged(nameof(CustomSongsOrder));
             }
         }
 

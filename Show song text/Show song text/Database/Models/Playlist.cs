@@ -13,7 +13,8 @@ namespace Show_song_text.Database.Models
         public int Id { get; set; }
         [MaxLength(255)]
         public string Name { get; set; }
-        [OneToMany]
+        [ManyToMany(typeof(SongPlaylist))]
         public List<Song> Songs { get; set; }
+        public Boolean CustomSongsOrder { get; set; }
     }
 }

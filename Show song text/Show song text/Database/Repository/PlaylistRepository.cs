@@ -1,6 +1,7 @@
 ﻿using Show_song_text.Database.DAO;
 using Show_song_text.Database.Models;
 using Show_song_text.Database.Persistence;
+using SQLiteNetExtensionsAsync;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,20 @@ namespace Show_song_text.Database.Repository
         public PlaylistRepository(ISQLiteDb db)
         {
             _connection = db.GetConnection();
-            CreateTable();
+            _connection.CreateTableAsync<Playlist>().Wait();
+            _connection.CreateTableAsync<Position>().Wait();
+            _connection.CreateTableAsync<SongPlaylist>().Wait();
+            _connection.CreateTableAsync<SongPosition>().Wait();
         }
         public async Task AddPlaylist(Playlist playlist)
         {
 
-            await _connection.InsertAsync(playlist);
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertWithChildrenAsync(_connection, playlist, false);
         }
 
         public async Task DeletePlaylist(Playlist playlist)
         {
-            await _connection.DeleteAsync(playlist);
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.DeleteAsync(_connection, playlist, false);
         }
 
         public async Task<IEnumerable<Playlist>> GetAllPlaylistAsync()
@@ -35,14 +39,7 @@ namespace Show_song_text.Database.Repository
 
         public async Task<IEnumerable<Playlist>> GetaAllPlaylistWithChildrenAsync()
         {
-            var playlists = await GetAllPlaylistAsync();
-            foreach(Playlist playlist in playlists)
-            {
-                var query = await _connection.QueryAsync<Song>("select * from Song where PlaylistID = ?", playlist.Id);
-                playlist.Songs = query;
-            }
-
-            return playlists;
+            return await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<Playlist>(_connection, null, true);
         }
 
         public async Task<Playlist> GetPlaylist(int id)
@@ -52,20 +49,13 @@ namespace Show_song_text.Database.Repository
 
         public async Task<Playlist> GetPlaylistWithSongs(int id)
         {
-            Playlist playlist = await _connection.FindAsync<Playlist>(id);
-            var query = await _connection.QueryAsync<Song>("select * from Song where PlaylistID = ?", playlist.Id);
-            playlist.Songs = query;
-            return playlist;
+            return await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetWithChildrenAsync<Playlist>(_connection, id, true);
+
         }
 
         public async Task UpdatePlaylist(Playlist playlist)
         {
-            await _connection.UpdateAsync(playlist);
-        }
-
-        private async void CreateTable()
-        {
-            await _connection.CreateTableAsync<Playlist>();
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(_connection, playlist);
         }
     }
 }
