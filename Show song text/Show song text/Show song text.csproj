@@ -13,17 +13,47 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\delete.png" />
+    <None Remove="Resources\Icons\downArrow.png" />
+    <None Remove="Resources\Icons\edit.png" />
+    <None Remove="Resources\Icons\minus.png" />
+    <None Remove="Resources\Icons\note.png" />
+    <None Remove="Resources\Icons\playlist.png" />
+    <None Remove="Resources\Icons\plus.png" />
+    <None Remove="Resources\Icons\presentation.png" />
+    <None Remove="Resources\Icons\save.png" />
+    <None Remove="Resources\Icons\search.png" />
+    <None Remove="Resources\Icons\selected_circle.png" />
+    <None Remove="Resources\Icons\unselected_circle.png" />
+    <None Remove="Resources\Icons\upArrow.png" />
     <None Remove="ViewModels\MainPageViewModel.cs~RF14f34754.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Icons\delete.png" />
+    <EmbeddedResource Include="Resources\Icons\downArrow.png" />
+    <EmbeddedResource Include="Resources\Icons\edit.png" />
+    <EmbeddedResource Include="Resources\Icons\minus.png" />
+    <EmbeddedResource Include="Resources\Icons\note.png" />
+    <EmbeddedResource Include="Resources\Icons\playlist.png" />
+    <EmbeddedResource Include="Resources\Icons\plus.png" />
+    <EmbeddedResource Include="Resources\Icons\presentation.png" />
+    <EmbeddedResource Include="Resources\Icons\save.png" />
+    <EmbeddedResource Include="Resources\Icons\search.png" />
+    <EmbeddedResource Include="Resources\Icons\selected_circle.png" />
+    <EmbeddedResource Include="Resources\Icons\unselected_circle.png" />
+    <EmbeddedResource Include="Resources\Icons\upArrow.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Forms9Patch" Version="2.3.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.28" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-    <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+    <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.1142" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.Toolkit.Effects" Version="1.0.0" />
+    <PackageReference Include="XF.Material" Version="1.5.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +75,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Styles\ButtonStyle.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AddSongToPlaylistView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\ConnectionSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -69,7 +105,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CustomRenderers\" />
     <Folder Include="Tests\ViewModels\" />
   </ItemGroup>
 </Project>

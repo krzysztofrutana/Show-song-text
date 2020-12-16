@@ -24,6 +24,11 @@ namespace Show_song_text.Utils
             return await MainPage.DisplayPromptAsync(title, message);
         }
 
+        public async Task<string> DisplayPositionToChoose(string title, string concel, string destruction, string[] options)
+        {
+            return await MainPage.DisplayActionSheet(title, concel, destruction, options);
+        }
+
         public void ChangePage(Page page)
         {
             
