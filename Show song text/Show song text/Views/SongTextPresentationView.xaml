@@ -19,6 +19,7 @@
         <StackLayout Orientation="Vertical">
             <StackLayout IsVisible="{Binding IsConnectedToServer, Converter={StaticResource InverseBoolConverter}}" Orientation="Vertical">
                 <CarouselView
+                    x:Name="carousel_view"
                     CurrentItem="{Binding CurrentPage}"
                     ItemsSource="{Binding Pages}"
                     Position="{Binding Position, Mode=TwoWay}">
@@ -35,15 +36,14 @@
                                     FontAttributes="Bold"
                                     FontSize="22"
                                     Text="{Binding Title}" />
-                                <Forms9Patch:Label
+                                <Label
+                                    x:Name="Label_Text_Server"
                                     Grid.Row="1"
-                                    AutoFit="None"
-                                    FontSize="40"
+                                    FontSize="20"
                                     LineBreakMode="WordWrap"
-                                    Lines="0"
-                                    MinFontSize="15"
                                     Text="{Binding Text}"
                                     VerticalOptions="Fill" />
+
                             </Grid>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
@@ -56,6 +56,10 @@
                     SelectedIndicator="selected_circle.png"
                     UnselectedIndicator="unselected_circle.png" />
             </StackLayout>
+            <Label
+                x:Name="ghostLabel"
+                IsVisible="false"
+                LineBreakMode="WordWrap" />
             <Grid Padding="10,10,10,10" IsVisible="{Binding IsConnectedToServer}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -67,15 +71,14 @@
                     FontAttributes="Bold"
                     FontSize="22"
                     Text="{Binding Title}" />
-                <Forms9Patch:Label
-                    Grid.Row="1"
-                    AutoFit="None"
-                    FontSize="40"
-                    LineBreakMode="WordWrap"
-                    Lines="0"
-                    MinFontSize="15"
-                    Text="{Binding TextOfSongWhenConnectedToServer}"
-                    VerticalOptions="Fill" />
+                <StackLayout x:Name="SL_Text_Client" Grid.Row="1">
+                    <Label
+                        x:Name="Label_Text_Client"
+                        FontSize="{Binding FontSize}"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding TextOfSongWhenConnectedToServer}"
+                        VerticalOptions="Fill" />
+                </StackLayout>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

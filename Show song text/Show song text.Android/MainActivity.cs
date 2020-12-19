@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.Runtime.Remoting.Contexts;
+using Android.Content.Res;
 
 namespace Show_song_text.Droid
 {
@@ -32,6 +34,16 @@ namespace Show_song_text.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        protected override void AttachBaseContext(Android.Content.Context @base)
+        {
+            var configuration = new Configuration(@base.Resources.Configuration);
+
+            configuration.FontScale = 1f;
+            var config = Application.Context.CreateConfigurationContext(configuration);
+
+            base.AttachBaseContext(@base);
         }
     }
 }

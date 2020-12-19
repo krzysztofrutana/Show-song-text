@@ -17,6 +17,9 @@ using Show_song_text.Interfaces;
 using Show_song_text.Database.Repository;
 using System.Linq;
 using Show_song_text.Database.Persistence;
+using System.Windows.Input;
+using XamarinLabelFontSizer;
+using Show_song_text.Views;
 
 namespace Show_song_text.ViewModels
 {
@@ -68,7 +71,9 @@ namespace Show_song_text.ViewModels
         public Boolean IsConnectedToServer
         {
             get { return _IsConnectedToServer; }
-            set { _IsConnectedToServer = value;
+            set
+            {
+                _IsConnectedToServer = value;
                 OnPropertyChanged(nameof(IsConnectedToServer));
             }
         }
@@ -102,6 +107,19 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(TitleOfSongWhenConnectedToServer));
             }
         }
+
+        private double _FontSize;
+
+        public double FontSize
+        {
+            get { return _FontSize; }
+            set
+            {
+                _FontSize = value;
+                OnPropertyChanged(nameof(FontSize));
+            }
+        }
+
         //PROPERTIES SECTION END
 
         // VARIABLE SECTION START
@@ -110,10 +128,18 @@ namespace Show_song_text.ViewModels
         private readonly SongRepository songRepository;
         // VARIABLE SECTION END
 
+        // COMANDS START
+
+        public ICommand SetFontSizeCommand { get; private set; }
+
+        // COMMANDS END
+
         // CONSTRUCTOR START
         public SongTextPresentationViewModel()
         {
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
+
+            SetFontSizeCommand = new Command<double>(size => SetFontSize(size));
 
             MessagingCenter.Subscribe<PlaylistDetailViewModel, PlaylistViewModel>
            (this, Events.SendPlaylistToPresentation, OnPlaylistSended);
@@ -126,6 +152,8 @@ namespace Show_song_text.ViewModels
 
             asyncSocketListener = AsyncSocketListener.Instance;
             asyncClient = AsyncClient.Instance;
+
+            FontSize = 20;
         }
         // CONSTRUCTOR END
 
@@ -158,7 +186,6 @@ namespace Show_song_text.ViewModels
             {
                 SongsList.Add(song);
             }
-
             PreparePresentation();
         }
 
@@ -170,76 +197,48 @@ namespace Show_song_text.ViewModels
 
         void OnTextRecive(AsyncClient source, string text)
         {
-            if(text != "")
+            if (text != "")
             {
                 string[] songTitleAndText = text.Split('|');
-                if(songTitleAndText != null)
+                if (songTitleAndText != null)
                 {
                     TitleOfSongWhenConnectedToServer = songTitleAndText[0];
                     TextOfSongWhenConnectedToServer = songTitleAndText[1];
-                } 
-            } 
+                }
+            }
         }
         // MESSAGING CENTER METHOD END
 
         // PROPERTY METHOD START
-        void PreparePresentation()
+        public void PreparePresentation()
         {
-            foreach(SongViewModel song in SongsList)
+            if (SongsList.Count > 0)
             {
-                string[] result = song.Text.Split(Environment.NewLine.ToCharArray());
-                int songTextLines = result.Length;
-                if(songTextLines <= 25)
+                Label testLabel = SongTextPresentationView.GetGhostLabelIstance();
+                foreach (SongViewModel song in SongsList)
                 {
-                    string[] temp = new string[songTextLines];
-                        for (int j = 0; j < songTextLines; j++)
-                        {
-                                temp[j] = result[j];
+                    string[] allText = song.Text.Split(Environment.NewLine.ToCharArray());
+                    int linesLeft = allText.Length;
+                    List<string> leftText = allText.ToList();
 
-                        }
-                        string pageText = string.Join(Environment.NewLine.ToString(), temp);
-                        var t = new PresentationPageModel() { Title = song.Artist + " - " + song.Title, Text = pageText };
-                        try
-                        {
-                            Pages.Add(t);
-                        }
-                        catch (Exception e)
-                        {
 
-                            Console.WriteLine(e.Message);
-                        }
-                }
-                else
-                {
-                    for (int i = 0; i < songTextLines; i++)
+
+                    while (linesLeft > 0)
                     {
-                        if (i % 20 == 0)
+                        int linesFitted = GetFitPageModel(leftText.ToArray(), testLabel, song.Title);
+                        if (linesFitted != -1)
                         {
-                            string[] temp = new string[20];
-                            for (int j = 0; j < 20; j++)
-                            {
-                                if (i + j < songTextLines)
-                                {
-                                    temp[j] = result[i + j];
-                                }
-
-                            }
-                            string pageText = string.Join(Environment.NewLine.ToString(), temp);
-                            var t = new PresentationPageModel() { Title = song.Artist + " - " + song.Title, Text = pageText };
-                            try
-                            {
-                                Pages.Add(t);
-                            }
-                            catch (Exception e)
-                            {
-
-                                Console.WriteLine(e.Message);
-                            }
-
+                            linesLeft -= linesFitted +1;
+                            leftText.RemoveRange(0, linesFitted + 1);
                         }
                     }
+
+            
                 }
             }
+
+
+
         }
         // PROPERTY METHOD END
 
@@ -247,14 +246,77 @@ namespace Show_song_text.ViewModels
 
         void SendText(string text)
         {
-            if(text != "")
+            if (text != "")
             {
                 asyncSocketListener.Send(text, false);
             }
-                
+
         }
 
         // TEXT SHARE METHOD END
 
+        // COMMAND METHOD START
+
+        private void SetFontSize(double size)
+        {
+            FontSize = size;
+        }
+        // COMMAND METHOD END
+
+        // OTHER METHOD START
+
+        private Boolean CheckIfFit(Label label)
+        {
+            FontCalc lowerFontCalc = new FontCalc(label, FontSize, App.ScreenWidth * 0.9, App.ScreenHeight - 120);
+            if (lowerFontCalc.TextHeight > App.ScreenHeight - 120)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private int GetFitPageModel(string[] textToFit, Label testLabel, string songTitle)
+        {
+
+            int songTextLines = textToFit.Length;
+
+            int linesCount = songTextLines;
+            PresentationPageModel presentationPageModel = new PresentationPageModel();
+            for (int i = songTextLines - 1; i >= 0; i--)
+            {
+                string[] temp = new string[i + 1];
+                for (int j = 0; j <= i; j++)
+                {
+                    temp[j] = textToFit[j];
+                    temp[j] = temp[j].Trim();
+
+                }
+                testLabel.Text = string.Join(Environment.NewLine.ToString(), temp);
+                Boolean isFit = CheckIfFit(testLabel);
+                if (isFit)
+                {
+                    linesCount = i;
+                    presentationPageModel.Title = songTitle;
+                    presentationPageModel.Text = testLabel.Text;
+                    Pages.Add(presentationPageModel);
+                    break;
+
+                }
+            }
+            if (!String.IsNullOrEmpty(presentationPageModel.Text) && !String.IsNullOrEmpty(presentationPageModel.Title))
+            {
+                return linesCount;
+            }
+            else
+            {
+                return -1;
+            }
+
+
+        }
+        // OTHER METHOD END
     }
 }

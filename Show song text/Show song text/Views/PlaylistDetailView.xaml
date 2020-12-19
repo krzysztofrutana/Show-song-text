@@ -163,7 +163,7 @@
                     ItemsSource="{Binding SongsList, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <controls:DragAndDropCellView>
+                            <ViewCell>
                                 <StackLayout Margin="10,10,10,10" Orientation="Horizontal">
                                     <CheckBox
                                         CheckedChanged="CheckBox_CheckedChanged"
@@ -198,7 +198,7 @@
                                             Text="{Binding Title}" />
                                     </Grid>
                                 </StackLayout>
-                            </controls:DragAndDropCellView>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
