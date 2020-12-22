@@ -28,7 +28,7 @@ namespace Show_song_text.Views
 
         }
 
-        public static Label GetGhostLabelIstance()
+        public static Label GetGhostLabelInstance()
         {
             return label;
         }

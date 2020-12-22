@@ -5,6 +5,9 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyName>Show song text</AssemblyName>
     <RootNamespace>Show_song_text</RootNamespace>
+    <Authors>Krzysztof Rutana</Authors>
+    <Product />
+    <PackageId>Pomocnik wokalisty</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,13 +16,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\connectionSettings.png" />
     <None Remove="Resources\Icons\delete.png" />
     <None Remove="Resources\Icons\downArrow.png" />
     <None Remove="Resources\Icons\edit.png" />
+    <None Remove="Resources\Icons\logo.png" />
     <None Remove="Resources\Icons\minus.png" />
     <None Remove="Resources\Icons\note.png" />
     <None Remove="Resources\Icons\playlist.png" />
     <None Remove="Resources\Icons\plus.png" />
+    <None Remove="Resources\Icons\plusRed.png" />
     <None Remove="Resources\Icons\presentation.png" />
     <None Remove="Resources\Icons\save.png" />
     <None Remove="Resources\Icons\search.png" />
@@ -30,13 +36,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Icons\connectionSettings.png" />
     <EmbeddedResource Include="Resources\Icons\delete.png" />
     <EmbeddedResource Include="Resources\Icons\downArrow.png" />
     <EmbeddedResource Include="Resources\Icons\edit.png" />
+    <EmbeddedResource Include="Resources\Icons\logo.png" />
     <EmbeddedResource Include="Resources\Icons\minus.png" />
     <EmbeddedResource Include="Resources\Icons\note.png" />
     <EmbeddedResource Include="Resources\Icons\playlist.png" />
     <EmbeddedResource Include="Resources\Icons\plus.png" />
+    <EmbeddedResource Include="Resources\Icons\plusRed.png" />
     <EmbeddedResource Include="Resources\Icons\presentation.png" />
     <EmbeddedResource Include="Resources\Icons\save.png" />
     <EmbeddedResource Include="Resources\Icons\search.png" />

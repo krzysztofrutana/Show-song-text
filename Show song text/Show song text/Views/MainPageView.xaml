@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Show_song_text.Views"
+    xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     Title="MasterPage"
     IsPresented="{Binding IsPresent}">
@@ -13,48 +14,71 @@
                 <vm:MainPageViewModel />
             </ContentPage.BindingContext>
             <ContentPage.Content>
-                <StackLayout>
-                    <ListView
-                        x:Name="MenuItemsListView"
-                        BackgroundColor="{StaticResource NavigationBarColor}"
-                        HasUnevenRows="true"
-                        ItemsSource="{Binding MenuListItems}"
-                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                        SeparatorVisibility="None">
-                        <ListView.Header>
-                            <Grid BackgroundColor="{StaticResource NavigationBarColor}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="10" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30" />
-                                    <RowDefinition Height="80" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                </Grid.RowDefinitions>
-                                <Label
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Style="{DynamicResource SubtitleStyle}"
-                                    Text="{Binding AppName}" />
-                            </Grid>
-                        </ListView.Header>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
-                                        <Label
-                                            FontSize="24"
-                                            Text="{Binding Title}"
-                                            VerticalOptions="FillAndExpand"
-                                            VerticalTextAlignment="Center" />
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                <StackLayout Orientation="Vertical">
+                    <Grid BackgroundColor="{StaticResource NavigationBarColor}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Image
+                            Grid.Column="1"
+                            Margin="0,10,0,0"
+                            Aspect="AspectFit"
+                            HorizontalOptions="Center"
+                            Source="logo.png"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LabelNormalBold}"
+                            Text="{Binding AppName}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontSize="Caption"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LabelNormal}"
+                            Text="by Krzysztof Rutana" />
+                    </Grid>
+                    <rounded:RoundedCornerView>
+                        <ListView
+                            x:Name="MenuItemsListView"
+                            BackgroundColor="{StaticResource NavigationBarColor}"
+                            HasUnevenRows="true"
+                            ItemsSource="{Binding MenuListItems}"
+                            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                            SeparatorVisibility="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Margin="15,10" HorizontalOptions="FillAndExpand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Grid.Column="0" Source="{Binding OptionIcon}" />
+                                            <Label
+                                                Grid.Column="1"
+                                                Margin="15,5,0,5"
+                                                FontSize="20"
+                                                Text="{Binding Title}"
+                                                VerticalOptions="FillAndExpand"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </rounded:RoundedCornerView>
                 </StackLayout>
             </ContentPage.Content>
         </ContentPage>

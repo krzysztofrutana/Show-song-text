@@ -214,7 +214,7 @@ namespace Show_song_text.ViewModels
         {
             if (SongsList.Count > 0)
             {
-                Label testLabel = SongTextPresentationView.GetGhostLabelIstance();
+                Label testLabel = SongTextPresentationView.GetGhostLabelInstance();
                 foreach (SongViewModel song in SongsList)
                 {
                     string[] allText = song.Text.Split(Environment.NewLine.ToCharArray());

@@ -73,10 +73,10 @@ namespace Show_song_text.ViewModels
         private void CreateMenuList()
         {
             MenuListItems = new List<MasterMenuItem>();
-            MenuListItems.Add(new MasterMenuItem() { Title = "Lista utworów", TargetType = typeof(SongListView) });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongAddAndDetailView) });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Listy odtwarzania", TargetType = typeof(PlaylistListView) });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia połączeń", TargetType = typeof(ConnectionSettingsView) });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Lista utworów", TargetType = typeof(SongListView), OptionIcon="note.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongAddAndDetailView), OptionIcon = "plusRed.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Listy odtwarzania", TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia połączeń", TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
         }
         // INITIALIZE METHOD END
 

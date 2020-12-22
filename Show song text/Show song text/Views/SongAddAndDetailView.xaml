@@ -60,7 +60,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
                             Grid.Column="0"
@@ -104,18 +104,41 @@
 
                 <rounded:RoundedCornerView Grid.Row="2">
                     <Grid Margin="10,10,10,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="200" />
+                        </Grid.RowDefinitions>
                         <Label
-                            Grid.Column="0"
+                            Grid.Row="0"
                             Style="{StaticResource LabelNormalBold}"
-                            Text="Akordy:" />
-                        <Editor
-                            Grid.Column="1"
-                            AutoSize="TextChanges"
-                            Text="{Binding Chords, Mode=TwoWay}" />
+                            Text="Playlisty:" />
+                        <ListView
+                            Grid.Row="1"
+                            HasUnevenRows="True"
+                            ItemSelected="ListView_ItemSelected"
+                            ItemsSource="{Binding Playlists, Mode=TwoWay}"
+                            VerticalOptions="FillAndExpand">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Margin="10,10,10,10" Orientation="Horizontal">
+                                            <Image
+                                                Aspect="AspectFit"
+                                                HeightRequest="40"
+                                                Source="playlist.png"
+                                                VerticalOptions="FillAndExpand" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Margin="0"
+                                                Padding="10,5,10,5"
+                                                FontSize="Medium"
+                                                Style="{StaticResource LabelArtistListViewItem}"
+                                                Text="{Binding Name}" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
 
                 </rounded:RoundedCornerView>

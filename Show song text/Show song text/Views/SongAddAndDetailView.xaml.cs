@@ -23,5 +23,10 @@ namespace Show_song_text.Views
         {
             InitializeComponent();
         }
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var list = (ListView)sender;
+            list.SelectedItem = null;
+        }
     }
 }

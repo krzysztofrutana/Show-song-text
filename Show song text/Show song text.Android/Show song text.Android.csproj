@@ -121,10 +121,6 @@
       <Project>{1BE12EDF-F873-489E-B782-7C98377A7FFD}</Project>
       <Name>Show song text</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\kris2\Desktop\Xamarin-Label-FontSizer-master\Label_FontSizer\Label_FontSizer.csproj">
-      <Project>{577f5d20-e037-4baf-97ee-10112dd85e7d}</Project>
-      <Name>Label_FontSizer</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\selected_circle.png" />
@@ -161,6 +157,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\upArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\connectionSettings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\plusRed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

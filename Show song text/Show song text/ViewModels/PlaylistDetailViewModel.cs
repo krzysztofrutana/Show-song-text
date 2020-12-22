@@ -117,6 +117,10 @@ namespace Show_song_text.ViewModels
             MessagingCenter.Subscribe<PlaylistListViewModel, PlaylistViewModel>
             (this, Events.SendPlaylist, OnPlaylistSended);
 
+            // TODO
+            //MessagingCenter.Subscribe<SongAddAndDetailViewModel, PlaylistViewModel>
+            //(this, Events.SendPlaylist, OnPlaylistSended); 
+
             MessagingCenter.Subscribe<AddSongToPlaylistViewModel, ObservableCollection<SongViewModel>>
             (this, Events.AddSongsToPlaylist, OnSongsAdded);
 
@@ -270,7 +274,7 @@ namespace Show_song_text.ViewModels
 
         }
         // MESSAGE CENTER START
-        private async void OnPlaylistSended(PlaylistListViewModel source, PlaylistViewModel playlistViewModel)
+        private async void OnPlaylistSended(object source, PlaylistViewModel playlistViewModel)
         {
 
             if (playlistViewModel != null)
@@ -282,9 +286,18 @@ namespace Show_song_text.ViewModels
                 {
                     if (Playlist.CustomSongsOrder)
                     {
-                        Song tempSong = await songRepository.GetSongWithChildren(songTemp.Id);
-                        tempSong.IsCheckBoxVisible = false;
-                        tempList.Add(new SongViewModel(tempSong));
+                        try
+                        {
+                            Song tempSong = await songRepository.GetSongWithChildren(songTemp.Id);
+                            tempSong.IsCheckBoxVisible = false;
+                            tempList.Add(new SongViewModel(tempSong));
+                        }
+                        catch (Exception e)
+                        {
+
+                            Console.WriteLine(e.Message);
+                        }
+                        
                     }
                     else
                     {
@@ -303,6 +316,7 @@ namespace Show_song_text.ViewModels
                 }
             }
             MessagingCenter.Unsubscribe<PlaylistListViewModel, PlaylistViewModel>(this, Events.SendPlaylist);
+            //MessagingCenter.Unsubscribe<SongAddAndDetailView, PlaylistViewModel>(this, Events.SendPlaylist);  // TODO
         }
 
         private async void OnSongsAdded(AddSongToPlaylistViewModel source, ObservableCollection<SongViewModel> songs)

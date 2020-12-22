@@ -7,6 +7,7 @@ namespace Show_song_text.Models
     public class MasterMenuItem
     {
         public string Title { get; set; }
+        public string OptionIcon { get; set; }
 
         public Type TargetType { get; set; }
     }
