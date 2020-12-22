@@ -37,7 +37,7 @@
 The application allows you to add songs and create songs playlist. You can get text from tekstowo.pl to current songs (searching by title or artist name or both). 
 From playlist view you can run presentation of songs text by order in playlist. Text size is set to 20, but number of lines is calculated for device. 
 You can use one devices as server to set text presentation and changing pages and other devices in band can connect to server (server client socket solution) 
-and text will automaticaly send to clients. Any clients will be see this same text in this same time like server devices.
+and text will automaticaly send to clients. Any clients will see the same text in the same time like server device.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
