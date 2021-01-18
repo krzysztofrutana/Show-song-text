@@ -27,6 +27,8 @@ namespace Show_song_text.ViewModels
     {
         // PROPERTY START
         public PlaylistViewModel Playlist { get; private set; }
+        public SongViewModel Song { get; private set; }
+
         private string _Name;
         public string Name
         {
@@ -150,6 +152,8 @@ namespace Show_song_text.ViewModels
             MessagingCenter.Subscribe<AsyncClient, string>
             (this, Events.SendedText, OnTextRecive);
 
+            MessagingCenter.Subscribe<SongListViewModel, SongViewModel>
+           (this, Events.SendSongToPresentation, OnSongSended);
             asyncSocketListener = AsyncSocketListener.Instance;
             asyncClient = AsyncClient.Instance;
 
@@ -186,6 +190,15 @@ namespace Show_song_text.ViewModels
             {
                 SongsList.Add(song);
             }
+            PreparePresentation();
+        }
+
+        async void OnSongSended(SongListViewModel source, SongViewModel songViewModel)
+        {
+            Song = songViewModel;
+            
+            SongsList.Add(Song);
+
             PreparePresentation();
         }
 

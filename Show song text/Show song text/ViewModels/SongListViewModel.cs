@@ -81,6 +81,7 @@ namespace Show_song_text.ViewModels
         public ICommand CreatePlaylistCommand { get; private set; }
         public ICommand AddToPlaylistCommand { get; private set; }
         public ICommand DeleteFromPlaylistCommand { get; private set; }
+        public ICommand StartSongPresentationCommand { get; private set; }
 
         // COMMAND SECTION END
 
@@ -96,6 +97,7 @@ namespace Show_song_text.ViewModels
             CreatePlaylistCommand = new Command(async () => await CreatePlaylist());
             AddToPlaylistCommand = new Command<SongViewModel>(async song => await AddToPlaylist(song));
             DeleteFromPlaylistCommand = new Command<SongViewModel>(async song => await DeleteFromPlaylist(song));
+            StartSongPresentationCommand = new Command<int>(async id => await StartPresentation(id));
 
             MessagingCenter.Subscribe<SongAddAndDetailViewModel, Song>
                 (this, Events.SongAdded, OnSongAdded);
@@ -167,6 +169,13 @@ namespace Show_song_text.ViewModels
         private async Task DeleteFromPlaylist(SongViewModel songViewModel)
         {
             SelectedSongs.Remove(songViewModel);
+        }
+
+        private async Task StartPresentation(int id)
+        {
+            SongViewModel song = Songs.Where(s => s.Id == id).FirstOrDefault();
+            await _pageService.ChangePageAsync(new SongTextPresentationView());
+            MessagingCenter.Send(this, Events.SendSongToPresentation, song);
         }
 
         // COMMANDS METHODS SECTION END

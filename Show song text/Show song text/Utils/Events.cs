@@ -16,6 +16,7 @@ namespace Show_song_text.Utils
         public static string PlaylistDeleted = "DeletePlaylist";
 
         public static string SendPlaylistToPresentation = "SendPlaylistToPresentation";
+        public static string SendSongToPresentation = "SendSongToPresentation";
 
         public static string ServerIsRunning = "ServerIsRunning";
         public static string ClientConnected = "ClientConnected";

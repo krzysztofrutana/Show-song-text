@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    x:Name="SongList"
     Title="Lista utworów">
     <ContentPage.BindingContext>
         <vm:SongListViewModel />
@@ -57,14 +58,41 @@
                                         <Label
                                             Grid.Row="0"
                                             Grid.Column="1"
+                                            HorizontalOptions="StartAndExpand"
                                             Style="{StaticResource LabelArtistListViewItem}"
                                             Text="{Binding Artist}" />
                                         <Label
                                             Grid.Row="1"
                                             Grid.Column="1"
+                                            HorizontalOptions="StartAndExpand"
                                             Style="{StaticResource LabelTitleListViewItem}"
                                             Text="{Binding Title}" />
                                     </Grid>
+                                    <ImageButton
+                                        Padding="14"
+                                        Command="{Binding BindingContext.StartSongPresentationCommand, Source={x:Reference SongList}}"
+                                        CommandParameter="{Binding Id}"
+                                        HeightRequest="50"
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="presentation.png"
+                                        WidthRequest="60">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Scale" Value="1" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                                <VisualState x:Name="Pressed">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Scale" Value="0.8" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </ImageButton>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

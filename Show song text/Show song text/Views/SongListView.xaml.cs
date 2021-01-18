@@ -35,5 +35,6 @@ namespace Show_song_text.Views
                 viewModel.DeleteFromPlaylistCommand.Execute(selectedSong);
             }
         }
+
     }
 }

@@ -26,7 +26,6 @@ namespace Show_song_text.ViewModels
     {
         // VARIABLE  START
         private readonly SongRepository songRepository;
-        private readonly PlaylistRepository playlistRepository;
         private readonly IPageService _pageService;
         // VARIABLE  END
 
@@ -160,7 +159,6 @@ namespace Show_song_text.ViewModels
         {
             _pageService = new PageService();
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
-            playlistRepository = new PlaylistRepository(DependencyService.Get<ISQLiteDb>());
 
             MessagingCenter.Subscribe<SongListViewModel, SongViewModel>
             (this, Events.SendSong, OnSongSended);
@@ -254,7 +252,10 @@ namespace Show_song_text.ViewModels
             {
                 case 1:
                     Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind);
-                    break;
+                    if(Text == null)
+                        goto case 2;
+                    else
+                        break;
                 case 2:
                     List<FindedSongObject> artistSongs = await TekstowoHelper.SearchArtistSongs(songToFind);
                     if (artistSongs.Count == 0)

@@ -116,8 +116,4 @@
   <ItemGroup>
     <Folder Include="Tests\ViewModels\" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\kris2\Desktop\Xamarin-Label-FontSizer-master\Label_FontSizer\Label_FontSizer.csproj" />
-  </ItemGroup>
 </Project>

@@ -39,7 +39,7 @@ namespace Show_song_text.Utils
             catch (HttpRequestException)
             {
                 
-                await _pageService.DisplayAlert("Nie znaleziono tekstu", "Nie udało sie znaleźć utworu dla: " + songToFind.Title + " " + songToFind.Artist, "OK");
+                await _pageService.DisplayAlert("Nie znaleziono tekstu", "Nie udało sie znaleźć utworu dla: " + songToFind.Title + " " + songToFind.Artist + "\nProszę ręcznie wybrać artyste i utwór.", "OK");
                 return null;
             }
             finally
@@ -179,6 +179,7 @@ namespace Show_song_text.Utils
             try
             {
                 songToFind.WorkingArtist = songToFind.WorkingArtist.Replace("_", "+");
+                songToFind.WorkingArtist = songToFind.WorkingArtist.Replace("/", "_");
                 if (!String.IsNullOrEmpty(songToFind.WorkingArtist))
                 {
                     url = $"https://www.tekstowo.pl/szukaj,wykonawca,{songToFind.WorkingArtist},tytul.html";
@@ -473,24 +474,23 @@ namespace Show_song_text.Utils
                 List<FindedSongObject> songs = new List<FindedSongObject>();
                 foreach (var div in findedSongs)
                 {
-                    string[] divArtistSongNameDotSplit = div.InnerText.Split('.');
                     int indexStartLink = div.InnerHtml.IndexOf("<a href") + 10;
                     int indexEndLink = div.InnerHtml.IndexOf("class=\"title\" title=") - 2;
-                    int indexStringToFindStart = div.InnerHtml.IndexOf("<span class=\"rank\">") + "<span class=\"rank\">".Length;
-                    int indextStringToFindEnd = div.InnerHtml.IndexOf("</span>");
-                    string stringToFind = div.InnerHtml.Substring(indexStringToFindStart, indextStringToFindEnd - indexStringToFindStart);
+                    int indexStartArtistTitle = div.InnerHtml.IndexOf("class=\"title\" title=\"") + 21;
+                    string tempArtistTitle = div.InnerHtml.Substring(indexStartArtistTitle);
+                    int indexEndTitle = tempArtistTitle.IndexOf("\">");
+                    string artistTitle = tempArtistTitle.Substring(0, indexEndTitle);
                     string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
-                    if (!String.IsNullOrEmpty(divArtistSongNameDotSplit[1]) && divArtistSongNameDotSplit[1].Contains(ReverseReplaceCodeOfCharOnSpeciaChar(songToFind.Artist)) && !String.IsNullOrEmpty(link))
+                    if (!String.IsNullOrEmpty(artistTitle) && artistTitle.Contains(ReverseReplaceCodeOfCharOnSpeciaChar(songToFind.Artist)) && !String.IsNullOrEmpty(link))
                     {
-                        Console.WriteLine(divArtistSongNameDotSplit[1]);
-                        string fullSongName = divArtistSongNameDotSplit[1].Replace("\n", "").Replace("\r", "").Trim();
-                        fullSongName = fullSongName.Substring(0, fullSongName.Length - stringToFind.Length).Trim();
+                        Console.WriteLine(artistTitle);
+                        string fullSongName = artistTitle.Trim();
                         string[] fullSongNameSplit = fullSongName.Split('-');
                         songs.Add(new FindedSongObject()
                         {
-                            FullSongName = fullSongName,
+                            FullSongName = ReplaceCodeOfCharOnSpeciaChar(fullSongName),
                             Artist = ReplaceCodeOfCharOnSpeciaChar(fullSongNameSplit[0].Trim()),
-                            Title = fullSongNameSplit[1].Trim(),
+                            Title = ReplaceCodeOfCharOnSpeciaChar(fullSongNameSplit[1].Trim()),
                             LinkToSong = link
                         });
                     }

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Show song text.Android", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Show song text", "Show song text\Show song text\Show song text.csproj", "{1BE12EDF-F873-489E-B782-7C98377A7FFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Label_FontSizer", "Show song text\Label_FontSizer\Label_FontSizer.csproj", "{092B54D7-65F5-4A88-8448-E6378CC185FD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{1BE12EDF-F873-489E-B782-7C98377A7FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BE12EDF-F873-489E-B782-7C98377A7FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BE12EDF-F873-489E-B782-7C98377A7FFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{092B54D7-65F5-4A88-8448-E6378CC185FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{092B54D7-65F5-4A88-8448-E6378CC185FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{092B54D7-65F5-4A88-8448-E6378CC185FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{092B54D7-65F5-4A88-8448-E6378CC185FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
