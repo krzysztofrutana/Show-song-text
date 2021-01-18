@@ -59,8 +59,8 @@ and text will automaticaly send to clients. Any clients will see the same text i
 <p align="center">
   <a href="https://github.com/krzysztofrutana/Show-song-text">
     <img src="https://i.ibb.co/h9Bvn0P/Menu.png" width="400">
-    <img src="https://i.ibb.co/pf4PQdn/Song-List2.png" width="400">
-    <img src="https://i.ibb.co/qFn6y9V/SongList.png" width="400">  
+    <img src="https://i.ibb.co/XYQz8yw/2.png" width="400">
+    <img src="https://i.ibb.co/XYQz8yw/3.png" width="400">  
     <img src="https://i.ibb.co/v3BNvcG/AddSong5.png" width="400">   
   </a>
 
