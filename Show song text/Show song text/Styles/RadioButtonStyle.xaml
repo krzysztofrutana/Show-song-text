@@ -11,5 +11,6 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
         <Setter Property="BackgroundColor" Value="{StaticResource AppBackgroundColor}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
     </Style>
 </ResourceDictionary>

@@ -72,10 +72,10 @@
                                         Padding="14"
                                         Command="{Binding BindingContext.StartSongPresentationCommand, Source={x:Reference SongList}}"
                                         CommandParameter="{Binding Id}"
-                                        HeightRequest="50"
+                                        HeightRequest="40"
                                         HorizontalOptions="EndAndExpand"
                                         Source="presentation.png"
-                                        WidthRequest="60">
+                                        WidthRequest="50">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
                                                 <VisualState x:Name="Normal">

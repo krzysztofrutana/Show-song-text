@@ -6,8 +6,10 @@
     <AssemblyName>Show song text</AssemblyName>
     <RootNamespace>Show_song_text</RootNamespace>
     <Authors>Krzysztof Rutana</Authors>
-    <Product />
+    <Product>Singer's assistant</Product>
     <PackageId>Pomocnik wokalisty</PackageId>
+    <PackageIcon>logo.png</PackageIcon>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,6 +35,10 @@
     <None Remove="Resources\Icons\unselected_circle.png" />
     <None Remove="Resources\Icons\upArrow.png" />
     <None Remove="ViewModels\MainPageViewModel.cs~RF14f34754.TMP" />
+    <None Include="Resources\Icons\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

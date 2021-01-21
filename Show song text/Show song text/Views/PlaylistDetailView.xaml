@@ -209,7 +209,7 @@
                 Margin="0,0,0,10"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal"
-                Spacing="35">
+                Spacing="20">
                 <ImageButton
                     Padding="14"
                     Command="{Binding SaveCommand}"

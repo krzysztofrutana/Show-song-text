@@ -22,6 +22,7 @@
     <item name="android:colorActivatedHighlight">@color/ListViewSelected</item>
     <item name="android:activatedBackgroundIndicator">@color/ListViewSelected</item>
     <item name="android:textColor">@android:color/black</item>
+    <item name="android:textColorPrimary">@android:color/black</item>
   </style>
 
   <color name="ListViewSelected">#FD4747</color>
