@@ -46,6 +46,12 @@ namespace Show_song_text.Droid.CustomRenderer
                 InitializeScrollbars(a);
                 a.Recycle();
             }
+
+            if (Control != null)
+            {
+                //Control.SetBackground(null);
+                Control.SetBackgroundResource(Resource.Drawable.et_underline_selector);
+            }
         }
      
     }

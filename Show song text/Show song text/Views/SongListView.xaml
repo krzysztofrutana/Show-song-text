@@ -69,13 +69,14 @@
                                             Text="{Binding Title}" />
                                     </Grid>
                                     <ImageButton
-                                        Padding="14"
+                                        Margin="0,12,0,12"
+                                        Padding="10"
                                         Command="{Binding BindingContext.StartSongPresentationCommand, Source={x:Reference SongList}}"
                                         CommandParameter="{Binding Id}"
-                                        HeightRequest="40"
+                                        HeightRequest="20"
                                         HorizontalOptions="EndAndExpand"
                                         Source="presentation.png"
-                                        WidthRequest="50">
+                                        WidthRequest="40">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
                                                 <VisualState x:Name="Normal">

@@ -93,6 +93,7 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
+                    Margin="0,20,0,0"
                     Command="{Binding StartServerCommand}"
                     IsVisible="{Binding ServerIsRunning, Converter={StaticResource InverseBoolConverter}}"
                     Text="Uruchom serwer">
@@ -213,6 +214,7 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
+                    Margin="0,20,0,0"
                     Command="{Binding ConnectToServerCommand}"
                     IsVisible="{Binding IsConnectToServer, Converter={StaticResource InverseBoolConverter}}"
                     Text="Połącz">
