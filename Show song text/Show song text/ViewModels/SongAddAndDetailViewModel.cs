@@ -19,6 +19,7 @@ using Show_song_text.Views;
 using System.Threading;
 using Show_song_text.PresentationServerUtilis;
 using Show_song_text.Models;
+using Show_song_text.Helpers;
 
 namespace Show_song_text.ViewModels
 {
@@ -199,7 +200,7 @@ namespace Show_song_text.ViewModels
             {
                 if (String.IsNullOrWhiteSpace(Song.Title) && String.IsNullOrWhiteSpace(Song.Artist))
                 {
-                    await _pageService.DisplayAlert("Bład", "Wprowadź nazwę i autora.", "OK");
+                    await _pageService.DisplayAlert("Błąd", "Wprowadź nazwę i autora.", "OK");
                     return;
                 }
                 else
