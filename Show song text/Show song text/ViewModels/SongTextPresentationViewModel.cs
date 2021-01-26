@@ -238,9 +238,10 @@ namespace Show_song_text.ViewModels
 
                     while (linesLeft > 0)
                     {
-                        int linesFitted = GetFitPageModel(leftText.ToArray(), testLabel, song.Title);
+                        int linesFitted = PresentationPageHelper.GetFitPageModel(leftText.ToArray(), testLabel, song.Title, FontSize);
                         if (linesFitted != -1)
                         {
+                            Pages.Add(PresentationPageHelper.presentationPageModel);
                             linesLeft -= linesFitted +1;
                             leftText.RemoveRange(0, linesFitted + 1);
                         }
@@ -276,74 +277,5 @@ namespace Show_song_text.ViewModels
         }
         // COMMAND METHOD END
 
-        // OTHER METHOD START
-
-        private Boolean CheckIfFit(Label label, int textLinesQuantity)
-        {
-            FontCalc lowerFontCalc = new FontCalc(label, FontSize, App.ScreenWidth * 0.9, App.ScreenHeight - 120);
-            if (lowerFontCalc.TextHeight  > App.ScreenHeight - 120)
-            {
-                return false;
-            }
-            else
-            {
-                if (textLinesQuantity < 15) 
-                {
-                    SetFontSize(23);
-                    return true; 
-                }
-                else
-                {
-                    return true;
-                }
-                
-            }
-        }
-
-        private int GetFitPageModel(string[] textToFit, Label testLabel, string songTitle)
-        {
-
-            int songTextLines = textToFit.Length;
-
-            int linesCount = songTextLines;
-            PresentationPageModel presentationPageModel = new PresentationPageModel();
-            for (int i = songTextLines - 1; i >= 0; i--)
-            {
-                string[] temp = new string[i + 1];
-                for (int j = 0; j <= i; j++)
-                {
-                    temp[j] = textToFit[j];
-                    temp[j] = temp[j].Trim();
-
-                }
-                testLabel.Text = string.Join(Environment.NewLine.ToString(), temp);
-                Boolean isFit = CheckIfFit(testLabel, temp.Length);
-                if (isFit)
-                {
-                    linesCount = i;
-                    presentationPageModel.Title = songTitle;
-                    presentationPageModel.Text = testLabel.Text;
-                    if(FontSize != 20)
-                    {
-                        presentationPageModel.FontSize = FontSize;
-                        SetFontSize(20);
-                    }
-                    Pages.Add(presentationPageModel);
-                    break;
-
-                }
-            }
-            if (!String.IsNullOrEmpty(presentationPageModel.Text) && !String.IsNullOrEmpty(presentationPageModel.Title))
-            {
-                return linesCount;
-            }
-            else
-            {
-                return -1;
-            }
-
-
-        }
-        // OTHER METHOD END
     }
 }
