@@ -17,7 +17,7 @@ namespace XamarinLabelFontSizer
             // Recalculate the Label height.
             label.FontSize = fontSize;
             SizeRequest sizeRequest =
-                label.Measure(containerWidth, containerHeight);
+                label.Measure(containerWidth, Double.PositiveInfinity);
 
             // Save that height.
             TextHeight = sizeRequest.Request.Height;

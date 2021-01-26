@@ -20,7 +20,14 @@
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="HorizontalOptions" Value="Center" />
 
-        <Setter Property="WidthRequest" Value="200" />
+        <Setter Property="WidthRequest">
+            <Setter.Value>
+                <OnIdiom
+                    x:TypeArguments="x:Double"
+                    Phone="200"
+                    Tablet="250" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="HeightRequest" Value="60" />
         <Setter Property="BorderRadius">
             <Setter.Value>

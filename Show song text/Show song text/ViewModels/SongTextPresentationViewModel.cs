@@ -278,16 +278,25 @@ namespace Show_song_text.ViewModels
 
         // OTHER METHOD START
 
-        private Boolean CheckIfFit(Label label)
+        private Boolean CheckIfFit(Label label, int textLinesQuantity)
         {
             FontCalc lowerFontCalc = new FontCalc(label, FontSize, App.ScreenWidth * 0.9, App.ScreenHeight - 120);
-            if (lowerFontCalc.TextHeight > App.ScreenHeight - 120)
+            if (lowerFontCalc.TextHeight  > App.ScreenHeight - 120)
             {
                 return false;
             }
             else
             {
-                return true;
+                if (textLinesQuantity < 15) 
+                {
+                    SetFontSize(23);
+                    return true; 
+                }
+                else
+                {
+                    return true;
+                }
+                
             }
         }
 
@@ -308,12 +317,17 @@ namespace Show_song_text.ViewModels
 
                 }
                 testLabel.Text = string.Join(Environment.NewLine.ToString(), temp);
-                Boolean isFit = CheckIfFit(testLabel);
+                Boolean isFit = CheckIfFit(testLabel, temp.Length);
                 if (isFit)
                 {
                     linesCount = i;
                     presentationPageModel.Title = songTitle;
                     presentationPageModel.Text = testLabel.Text;
+                    if(FontSize != 20)
+                    {
+                        presentationPageModel.FontSize = FontSize;
+                        SetFontSize(20);
+                    }
                     Pages.Add(presentationPageModel);
                     break;
 
