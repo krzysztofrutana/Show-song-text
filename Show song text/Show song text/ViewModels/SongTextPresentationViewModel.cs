@@ -20,6 +20,7 @@ using Show_song_text.Database.Persistence;
 using System.Windows.Input;
 using XamarinLabelFontSizer;
 using Show_song_text.Views;
+using Show_song_text.Helpers;
 
 namespace Show_song_text.ViewModels
 {
@@ -130,18 +131,11 @@ namespace Show_song_text.ViewModels
         private readonly SongRepository songRepository;
         // VARIABLE SECTION END
 
-        // COMANDS START
-
-        public ICommand SetFontSizeCommand { get; private set; }
-
-        // COMMANDS END
 
         // CONSTRUCTOR START
         public SongTextPresentationViewModel()
         {
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
-
-            SetFontSizeCommand = new Command<double>(size => SetFontSize(size));
 
             MessagingCenter.Subscribe<PlaylistDetailViewModel, PlaylistViewModel>
            (this, Events.SendPlaylistToPresentation, OnPlaylistSended);
@@ -157,7 +151,7 @@ namespace Show_song_text.ViewModels
             asyncSocketListener = AsyncSocketListener.Instance;
             asyncClient = AsyncClient.Instance;
 
-            FontSize = 20;
+            FontSize = Double.Parse(Settings.FontSize);
         }
         // CONSTRUCTOR END
 
@@ -215,8 +209,37 @@ namespace Show_song_text.ViewModels
                 string[] songTitleAndText = text.Split('|');
                 if (songTitleAndText != null)
                 {
-                    TitleOfSongWhenConnectedToServer = songTitleAndText[0];
-                    TextOfSongWhenConnectedToServer = songTitleAndText[1];
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Label testLabel = SongTextPresentationView.GetGhostLabelInstance();
+                        TitleOfSongWhenConnectedToServer = songTitleAndText[0];
+                        TextOfSongWhenConnectedToServer = songTitleAndText[1];
+                        testLabel.Text = TextOfSongWhenConnectedToServer;
+                        testLabel.FontSize = FontSize;
+                        // Calculate the height of the rendered text.
+                        FontCalc lowerFontCalc = new FontCalc(testLabel, 10, App.ScreenWidth);
+                        FontCalc upperFontCalc = new FontCalc(testLabel, 100, App.ScreenWidth);
+
+                        while (upperFontCalc.FontSize - lowerFontCalc.FontSize > 1)
+                        {
+                            // Get the average font size of the upper and lower bounds.
+                            double fontSize = (lowerFontCalc.FontSize + upperFontCalc.FontSize) / 2;
+
+                            // Check the new text height against the container height.
+                            FontCalc newFontCalc = new FontCalc(testLabel, fontSize, App.ScreenWidth);
+
+                            if (newFontCalc.TextHeight > App.ScreenHeight - 120)
+                            {
+                                upperFontCalc = newFontCalc;
+                            }
+                            else
+                            {
+                                lowerFontCalc = newFontCalc;
+                            }
+
+                        }
+                        FontSize = lowerFontCalc.FontSize;
+                    });
                 }
             }
         }
@@ -268,14 +291,6 @@ namespace Show_song_text.ViewModels
         }
 
         // TEXT SHARE METHOD END
-
-        // COMMAND METHOD START
-
-        private void SetFontSize(double size)
-        {
-            FontSize = size;
-        }
-        // COMMAND METHOD END
 
     }
 }
