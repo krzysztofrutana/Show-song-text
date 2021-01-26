@@ -148,18 +148,25 @@ namespace Show_song_text.ViewModels
                 songsList.Add(song);
             }
             string playlistName = await _pageService.DisplayEntry("Wpisz nazwę playlisty", "");
-            Playlist playlist = new Playlist()
+            if (String.IsNullOrEmpty(playlistName))
             {
-                Name = playlistName,
-                Songs = songsList,
-                CustomSongsOrder = false
-            };
-            await playlistRepository.AddPlaylist(playlist);
-            var songtenp = await songRepository.GetSongWithChildren(songsList[0].Id);
-            await _pageService.DisplayAlert("Sukces", "Playlista utworzona", "Ok");
-            UnCheckAllSongs();
-            SetCheckBoxVisibility(false);
-            ShowChooseOption = false;
+                await _pageService.DisplayAlert("Błąd", "Nazwa playlisty nie może być pusta", "OK");
+            }
+            else
+            {
+                Playlist playlist = new Playlist()
+                {
+                    Name = playlistName,
+                    Songs = songsList,
+                    CustomSongsOrder = false
+                };
+                await playlistRepository.AddPlaylist(playlist);
+                var songtenp = await songRepository.GetSongWithChildren(songsList[0].Id);
+                await _pageService.DisplayAlert("Sukces", "Playlista utworzona", "Ok");
+                UnCheckAllSongs();
+                SetCheckBoxVisibility(false);
+                ShowChooseOption = false;
+            } 
         }
 
         private async Task AddToPlaylist(SongViewModel songViewModel)

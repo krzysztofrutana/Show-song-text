@@ -278,8 +278,11 @@ namespace Show_song_text.Utils
                     }
                 }
 
-
-                songToFind.Artist = await _pageService.DisplayPositionToChoose("Wybierz artystę:", "Anuluj", null, artistsList.Keys.ToArray());
+                string choosenArtist = await _pageService.DisplayPositionToChoose("Wybierz artystę:", "Anuluj", null, artistsList.Keys.ToArray());
+                if (choosenArtist.Equals("Anuluj")){
+                    return null;
+                }
+                songToFind.Artist = choosenArtist;
                 songToFind.LinkToArtistSongs = artistsList[songToFind.Artist];
                 songToFind.WorkingArtist = NormalizeTextWithoutPolishSpecialChar(songToFind.Artist.ToLower().Replace(" ", "_"));
             }
@@ -394,6 +397,10 @@ namespace Show_song_text.Utils
                 }
             }
             string choosenSong = await _pageService.DisplayPositionToChoose("Wybierz utwór:", "Anuluj", null, listOfSongs.Keys.ToArray());
+            if (choosenSong.Equals("Anuluj"))
+            {
+                return null;
+            }
             string[] choosenSongSplit = choosenSong.Split('-');
             songToFind.Artist = choosenSongSplit[0].Trim();
             songToFind.Title = choosenSongSplit[1].Trim();
