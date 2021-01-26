@@ -77,6 +77,7 @@ namespace Show_song_text.ViewModels
             MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongAddAndDetailView), OptionIcon = "plusRed.png" });
             MenuListItems.Add(new MasterMenuItem() { Title = "Listy odtwarzania", TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" });
             MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia połączeń", TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia", TargetType = typeof(SettingsView), OptionIcon = "settings.png" });
         }
         // INITIALIZE METHOD END
 
