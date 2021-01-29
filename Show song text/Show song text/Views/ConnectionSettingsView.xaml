@@ -56,16 +56,12 @@
                     HorizontalOptions="Center"
                     Orientation="Horizontal">
                     <Label
-                        Padding="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
                         HorizontalOptions="End"
+                        Style="{StaticResource LabelConnectionSettings}"
                         Text="IP: " />
                     <Label
-                        Padding="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
                         HorizontalOptions="StartAndExpand"
+                        Style="{StaticResource LabelConnectionSettings}"
                         Text="{Binding IPServerAdress}" />
                 </StackLayout>
                 <StackLayout
@@ -77,9 +73,8 @@
                     <Label
                         Grid.Row="1"
                         Grid.Column="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
                         HorizontalOptions="End"
+                        Style="{StaticResource LabelConnectionSettings}"
                         Text="Port: "
                         VerticalOptions="Center" />
                     <Editor
@@ -119,10 +114,9 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
                     HorizontalOptions="Center"
                     IsVisible="{Binding ServerIsRunning}"
+                    Style="{StaticResource LabelConnectionSettings}"
                     Text="Serwer uruchomiony" />
 
                 <StackLayout
@@ -132,16 +126,14 @@
                     HorizontalOptions="CenterAndExpand"
                     Orientation="Horizontal">
                     <Label
-                        FontAttributes="Bold"
-                        FontSize="Medium"
                         HorizontalTextAlignment="End"
                         IsVisible="{Binding ServerIsRunning}"
+                        Style="{StaticResource LabelConnectionSettings}"
                         Text="Podłączone urządzenia:" />
                     <Label
-                        FontAttributes="Bold"
-                        FontSize="Medium"
                         HorizontalTextAlignment="Start"
                         IsVisible="{Binding ServerIsRunning}"
+                        Style="{StaticResource LabelConnectionSettings}"
                         Text="{Binding ClientConnectedCount}" />
                 </StackLayout>
                 <Button
@@ -186,9 +178,8 @@
                 <Label
                     Grid.Row="0"
                     Grid.Column="0"
-                    Padding="10,0,0,0"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
+                    Margin="10,0,0,0"
+                    Style="{StaticResource LabelConnectionSettings}"
                     Text="IP: "
                     VerticalOptions="Center" />
                 <Editor
@@ -200,8 +191,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="10,0,0,0"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
+                    Style="{StaticResource LabelConnectionSettings}"
                     Text="Port: "
                     VerticalOptions="Center" />
                 <Editor
@@ -240,10 +230,9 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
                     HorizontalOptions="Center"
                     IsVisible="{Binding IsConnectToServer}"
+                    Style="{StaticResource LabelConnectionSettings}"
                     Text="Połączono z serwerem"
                     VerticalOptions="Center" />
                 <Button

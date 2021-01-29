@@ -37,6 +37,7 @@
                     Tablet="25" />
             </Setter.Value>
         </Setter>
+        <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
     </Style>
 
     <Style TargetType="ImageButton">

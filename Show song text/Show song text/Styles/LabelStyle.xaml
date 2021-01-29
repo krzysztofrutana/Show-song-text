@@ -20,4 +20,19 @@
         <Setter Property="FontSize" Value="Medium" />
         <Setter Property="TextColor" Value="{StaticResource TextColor}" />
     </Style>
+
+    <Style x:Key="LabelConnectionSettings" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="Medium" />
+    </Style>
+
+    <Style x:Key="LabelSettings" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="Medium" />
+    </Style>
+
+
 </ResourceDictionary>

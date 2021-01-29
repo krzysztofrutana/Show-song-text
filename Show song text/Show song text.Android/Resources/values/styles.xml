@@ -21,8 +21,18 @@
     <item name="android:colorFocusedHighlight">@color/ListViewSelected</item>
     <item name="android:colorActivatedHighlight">@color/ListViewSelected</item>
     <item name="android:activatedBackgroundIndicator">@color/ListViewSelected</item>
-    <item name="android:textColor">@android:color/black</item>
-    <item name="android:textColorPrimary">@android:color/black</item>
+
+    <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+  </style>
+
+  <!--AlertDialog Colors-->
+  <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+    <!--buttons-->
+    <item name="colorAccent">@color/ListViewSelected</item>
+    <!--title-->
+    <item name="android:textColor">@color/ListViewSelected</item>
+    <!--text-->
+
   </style>
 
   <color name="ListViewSelected">#FD4747</color>

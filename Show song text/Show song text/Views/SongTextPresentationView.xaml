@@ -35,13 +35,15 @@
                                     Padding="0,0,0,10"
                                     FontAttributes="Bold"
                                     FontSize="22"
-                                    Text="{Binding Title}" />
+                                    Text="{Binding Title}"
+                                    TextColor="{StaticResource TextColor}" />
                                 <Label
                                     x:Name="Label_Text_Server"
                                     Grid.Row="1"
                                     FontSize="{Binding FontSize}"
                                     LineBreakMode="WordWrap"
                                     Text="{Binding Text}"
+                                    TextColor="{StaticResource TextColor}"
                                     VerticalOptions="Fill" />
 
                             </Grid>
@@ -72,13 +74,15 @@
                     Padding="0,0,0,10"
                     FontAttributes="Bold"
                     FontSize="22"
-                    Text="{Binding TitleOfSongWhenConnectedToServer}" />
+                    Text="{Binding TitleOfSongWhenConnectedToServer}"
+                    TextColor="{StaticResource TextColor}" />
                 <StackLayout x:Name="SL_Text_Client" Grid.Row="1">
                     <Label
                         x:Name="Label_Text_Client"
                         FontSize="{Binding FontSize}"
                         LineBreakMode="WordWrap"
                         Text="{Binding TextOfSongWhenConnectedToServer}"
+                        TextColor="{StaticResource TextColor}"
                         VerticalOptions="Fill" />
                 </StackLayout>
             </Grid>

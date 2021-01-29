@@ -70,6 +70,7 @@
                                                 Grid.Column="1"
                                                 Margin="15,5,0,5"
                                                 FontSize="20"
+                                                Style="{StaticResource LabelMenuItem}"
                                                 Text="{Binding Title}"
                                                 VerticalOptions="FillAndExpand"
                                                 VerticalTextAlignment="Center" />

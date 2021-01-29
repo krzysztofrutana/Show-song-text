@@ -21,14 +21,14 @@
 
             <Label
                 Grid.Column="0"
-                FontAttributes="Bold"
-                FontSize="Medium"
+                Style="{StaticResource LabelSettings}"
                 Text="Wielkość czcionki:"
                 VerticalOptions="CenterAndExpand" />
             <Entry
                 Grid.Column="1"
                 HorizontalTextAlignment="End"
                 Text="{Binding FontSize, Mode=TwoWay}"
+                TextColor="{StaticResource TextColor}"
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="40" />
         </Grid>
