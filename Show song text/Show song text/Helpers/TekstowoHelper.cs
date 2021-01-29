@@ -277,17 +277,29 @@ namespace Show_song_text.Helpers
                             artistsList.Add(item.Key, item.Value);
                         }
                     }
+                    else
+                    {
+                        await _pageService.DisplayAlert("Nie znaleziono pasujących artystów", "Sprawdź jeszcze raz nazwę i spróbuj ponownie.", "OK");
+                        return null;
+                    }
                 }
-
-                string choosenArtist = await _pageService.DisplayPositionToChoose("Wybierz artystę:", "Anuluj", null, artistsList.Keys.ToArray());
-                if (choosenArtist.Equals("Anuluj")){
+                if(artistsList.Count > 0)
+                {
+                    string choosenArtist = await _pageService.DisplayPositionToChoose("Wybierz artystę:", "Anuluj", null, artistsList.Keys.ToArray());
+                    if (choosenArtist.Equals("Anuluj"))
+                    {
+                        return null;
+                    }
+                    songToFind.Artist = choosenArtist;
+                    songToFind.LinkToArtistSongs = artistsList[songToFind.Artist];
+                    songToFind.WorkingArtist = NormalizeTextWithoutPolishSpecialChar(songToFind.Artist.ToLower().Replace(" ", "_"));
+                }
+                else
+                {
                     return null;
                 }
-                songToFind.Artist = choosenArtist;
-                songToFind.LinkToArtistSongs = artistsList[songToFind.Artist];
-                songToFind.WorkingArtist = NormalizeTextWithoutPolishSpecialChar(songToFind.Artist.ToLower().Replace(" ", "_"));
+                
             }
-
             return songToFind;
         }
 
