@@ -25,12 +25,7 @@ namespace Show_song_text.ViewModels
 {
     public class SongAddAndDetailViewModel : ViewModelBase
     {
-        // VARIABLE  START
-        private readonly SongRepository songRepository;
-        private readonly IPageService _pageService;
-        // VARIABLE  END
-
-        // PROPERTY START
+        #region Property
         public Song Song { get; private set; }
         private string _title;
         public string Title
@@ -144,18 +139,23 @@ namespace Show_song_text.ViewModels
             }
         }
 
-        // PROPERTY END
+        #endregion
 
-        // COMMAND STRART
+        #region Variable
+        private readonly SongRepository songRepository;
+        private readonly IPageService _pageService;
+        #endregion
+
+        #region Commands
         public ICommand SaveCommand { get; private set; }
         public ICommand DeleteSongCommand { get; private set; }
 
         public ICommand SearchTextCommand { get; set; }
         public ICommand SelectPlaylistCommand { get; private set; }
-        // COMMAND END
+        #endregion
 
 
-        // CONSTRUCTOR START
+        #region Constructor
         public SongAddAndDetailViewModel()
         {
             _pageService = new PageService();
@@ -174,9 +174,9 @@ namespace Show_song_text.ViewModels
             PageTitle = "Dodaj utwór";
 
         }
-        // CONSTRUCTOR END
+        #endregion
 
-        // COMMAND METHOD START
+        #region Commands methods
         private async Task DeleteSong()
         {
             if (await _pageService.DisplayAlert("Ostrzeżenie", $"Jesteś pewny, że chcesz usunąć {Song.Artist} {Song.Title}?", "Tak", "Nie"))
@@ -325,12 +325,10 @@ namespace Show_song_text.ViewModels
 
 
         }
+        #endregion
 
-        // COMMAND METHOD END
 
-
-        // MESSAGE CENTER START
-
+        #region Message center methods
         private async void OnSongSended(SongListViewModel source, SongViewModel song)
         {
             if (song != null)
@@ -346,17 +344,14 @@ namespace Show_song_text.ViewModels
             PageTitle = "Podgląd utworu";
             MessagingCenter.Unsubscribe<SongListViewModel, SongViewModel>(this, Events.SendSong);
         }
+        #endregion
 
-        // MESSAGE CENTER END
-
-        
-
-        // PROPERTY METHOD START
+        #region Property methods
         private void OnPlaylistSelected(object page)
         {
             SelectPlaylistCommand.Execute(page);
         }
-        // PROPERTY METHOD END
+        #endregion
 
 
     }

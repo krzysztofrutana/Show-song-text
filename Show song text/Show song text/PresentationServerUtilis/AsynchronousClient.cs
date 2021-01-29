@@ -45,6 +45,8 @@ namespace Show_song_text.PresentationServerUtilis
                 return instance;
             }
         }
+
+        #region Connection
         public void StartClient(int port, IPAddress ip)
         {
             var endpoint = new IPEndPoint(ip, port);
@@ -95,8 +97,9 @@ namespace Show_song_text.PresentationServerUtilis
                 ItsConenctedToServer = Settings.ClientIsConnected = false;
             }
         }
+        #endregion
 
-
+        #region Check connection
         public bool IsConnected()
         {
             try
@@ -129,7 +132,7 @@ namespace Show_song_text.PresentationServerUtilis
             }
         }
 
-        
+        #endregion
 
         #region Receive data
         public void Receive()
@@ -243,6 +246,7 @@ namespace Show_song_text.PresentationServerUtilis
         }
         #endregion
 
+        #region Close connection
         private void Close()
         {
             try
@@ -275,6 +279,7 @@ namespace Show_song_text.PresentationServerUtilis
             this.connected.Dispose();
             ShowConsoleMessage("Dispose", "Dispose event", false);
         }
+        #endregion
 
         private void ShowConsoleMessage(string method, string text, bool exeption)
         {
@@ -288,6 +293,7 @@ namespace Show_song_text.PresentationServerUtilis
             }
 
         }
+       
     }
 
 }

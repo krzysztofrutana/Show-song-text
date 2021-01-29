@@ -18,7 +18,7 @@ namespace Show_song_text.ViewModels
 {
     public class PlaylistListViewModel : ViewModelBase
     {
-        // PROPERTY SECTION START
+        #region Property
         public ObservableCollection<PlaylistViewModel> Playlists { get; private set; }
             = new ObservableCollection<PlaylistViewModel>();
 
@@ -34,22 +34,19 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(SelectedPlaylist));
             }
         }
+        #endregion
 
-
-        // PROPERTY SECTION END
-
-        // VARIABLE SECTION START
-
+        #region Variables
         private readonly PlaylistRepository playlistRepository;
         private readonly IPageService _pageService;
+        #endregion
 
-        // VARIABLE SEXTION END
-
-        // COMMAND SECTION START
+        #region Commands
         public ICommand LoadPlaylistsCommand { get; private set; }
         public ICommand SelectPlaylistCommand { get; private set; }
+        #endregion
 
-        // CONSTRUCTOR START
+        #region Constructor
         public PlaylistListViewModel()
         {
             playlistRepository = new PlaylistRepository(DependencyService.Get<ISQLiteDb>());
@@ -66,9 +63,9 @@ namespace Show_song_text.ViewModels
 
             LoadPlaylistsCommand.Execute(null);
         }
-        // CONSTRUCTOR END
+        #endregion
 
-        // COMMAND METHOD SECTIONS START
+        #region Commands methods
         private async Task LoadPlaylists()
         {
             if (Playlists != null && Playlists.Count > 0)
@@ -87,9 +84,9 @@ namespace Show_song_text.ViewModels
             MessagingCenter.Send(this, Events.SendPlaylist, playlist);
             SelectedPlaylist = null;
         }
-        // COMMAND METHOD SECTIONS END
+        #endregion
 
-        // MESSAGE CENTER METHOD SECTION START
+        #region Message center methods
         private void OnPlaylistUpdated(PlaylistDetailViewModel source, Playlist playlist)
         {
             var playlistInList = Playlists.Single(p => p.Id == playlist.Id);
@@ -106,16 +103,14 @@ namespace Show_song_text.ViewModels
             OnPropertyChanged(nameof(Playlists));
 
         }
+        #endregion
 
-        // MESSAGE CENTER METHOD SECTION END
-
-        // PROPERTY METHOD START
+        #region Property methods
         private void OnPlaylistSelected(object page)
         {
             SelectPlaylistCommand.Execute(page);
         }
-
-        // PROPERTY METHOD END
+        #endregion
 
     }
 }

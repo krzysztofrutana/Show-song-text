@@ -18,7 +18,7 @@ namespace Show_song_text.ViewModels
     
     public class SongListViewModel : ViewModelBase
     {
-        // PROPERTY SECTION START
+        #region Property
         private ObservableCollection<SongViewModel> AllSongsCopy { get; set; } = new ObservableCollection<SongViewModel>();
 
         private String _searchBarText;
@@ -62,30 +62,24 @@ namespace Show_song_text.ViewModels
 
         public ObservableCollection<SongViewModel> SelectedSongs { get; private set; }
             = new ObservableCollection<SongViewModel>();
+        #endregion
 
-
-
-        // PROPERTY SECTION END
-
-        // VARIABLE SECTION START
-
+        #region Variables
         private readonly SongRepository songRepository;
         private readonly PlaylistRepository playlistRepository;
         private readonly IPageService _pageService;
+        #endregion
 
-        // VARIABLE SEXTION END
-        
-        // COMMAND SECTION START
+        #region Commands
         public ICommand LoadSongsCommand { get; private set; }
         public ICommand SelectSongCommand { get; private set; }
         public ICommand CreatePlaylistCommand { get; private set; }
         public ICommand AddToPlaylistCommand { get; private set; }
         public ICommand DeleteFromPlaylistCommand { get; private set; }
         public ICommand StartSongPresentationCommand { get; private set; }
+        #endregion
 
-        // COMMAND SECTION END
-
-        // CONSTRUCTOR
+        #region Constructor
         public SongListViewModel()
         {
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
@@ -113,10 +107,9 @@ namespace Show_song_text.ViewModels
             SetCheckBoxVisibility(false);
 
         }
+        #endregion
 
-        // CONSTRUCTION
-
-        // COMMAND METHOD SECTIONS TART
+        #region Commands methods
         private async Task LoadSongs()
         {
             if(Songs != null && Songs.Count  > 0)
@@ -184,10 +177,9 @@ namespace Show_song_text.ViewModels
             await _pageService.ChangePageAsync(new SongTextPresentationView());
             MessagingCenter.Send(this, Events.SendSongToPresentation, song);
         }
+        #endregion
 
-        // COMMANDS METHODS SECTION END
-
-        // MESSAGE CENTER METHOD SECTION START
+        #region Message center methods
         private void OnSongAdded(SongAddAndDetailViewModel source, Song song)
         {
             Songs.Add(new SongViewModel(song));
@@ -211,10 +203,9 @@ namespace Show_song_text.ViewModels
             OnPropertyChanged(nameof(Songs));
 
         }
+        #endregion
 
-        // MESSAGE CENTER METHOD SECTION END
-
-        // PROPERTY METHOD SECTION START
+        #region Property methods
         public void OnSearchBarTextChanged(String text)
         {
             if (text == "")
@@ -247,6 +238,6 @@ namespace Show_song_text.ViewModels
                 }
             }
         }
-        // PROPERTY METHOD SECTION END
+        #endregion
     }
 }

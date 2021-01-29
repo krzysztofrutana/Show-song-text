@@ -16,13 +16,13 @@ namespace Show_song_text.ViewModels
 {
     public class ConnectionSettingsViewModel : ViewModelBase
     {
-        // VARIABLE START
+        #region Variable
         private readonly IPageService _pageService;
         private readonly IAsyncSocketListener asyncSocketListener;
         private readonly IAsyncClient asyncClient;
-        // VARIABLE END
+        #endregion
 
-        // PROPERTY START
+        #region Property
         private string _IPServerAdress;
 
         public string IPServerAdress
@@ -130,18 +130,17 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(IsConnectToServer));
             }
         }
+        #endregion
 
-        // PROPERTY END
-
-        // COMMANDS START
+        #region Commands
         public ICommand StartServerCommand { get; private set; }
         public ICommand StopServerCommand { get; private set; }
         public ICommand ConnectToServerCommand { get; private set; }
         public ICommand StartPresentationForCLientCommand { get; private set; }
         public ICommand DisconnectWithServerCommand { get; private set; }
-        // COMMANDS END
+        #endregion
 
-        // CONSTRUCTOR START
+        #region Constructor
         public ConnectionSettingsViewModel()
         {
             _pageService = new PageService();
@@ -188,9 +187,9 @@ namespace Show_song_text.ViewModels
             (this, Events.ConnectToServer, OnConnectToServer);
 
         }
-        // CONSTRUCTOR END
+        #endregion
 
-        // COMMAND METHOD START
+        #region Command methods
         private void StartServer()
         {
             new Thread(new ThreadStart(delegate
@@ -234,9 +233,9 @@ namespace Show_song_text.ViewModels
             asyncClient.Send("<EOC>", true);
             asyncClient.DisconnectWithServer();
         }
-        // COMMAND METHOD END
+        #endregion
 
-        // MESSAGING CENTER METHOD START
+        #region Message center methods
         private void OnServerIsRunning(AsyncSocketListener source, Boolean isRunnning)
         {
             ServerIsRunning = isRunnning;
@@ -256,6 +255,6 @@ namespace Show_song_text.ViewModels
         {
             IsConnectToServer = isConnected;
         }
-        // MESSAGING CENTER METHOD END
+        #endregion
     }
 }

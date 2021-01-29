@@ -9,8 +9,7 @@ namespace Show_song_text.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        // PROPERTY SECTION START
-        //private string fontSize = Settings.FontSize.ToString();
+        #region Property
         public String FontSize { 
             get
             {
@@ -25,24 +24,17 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(FontSize));
             }
         }
-        // PROPERTY SECTION END
+        #endregion
 
-        // COMMAND SECTION START
-        public ICommand SaveSettingsCommand { get; private set; }
-        // COMMAND SECTION END
+        #region Commands
 
-        // CONSTRUCTOR START
+        #endregion
+
+        #region Constructor
         public SettingsViewModel()
         {
-            SaveSettingsCommand = new Command(() => SaveSettings());
+          
         }
-        // CONSTRUCTION END
-
-        // COMMAND METHOD START
-        private void SaveSettings()
-        {
-            //Settings.FontSize = Double.Parse(FontSize);
-        }
-        // COMMAND METHOD END
+        #endregion
     }
 }

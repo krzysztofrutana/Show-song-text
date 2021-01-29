@@ -19,14 +19,12 @@ namespace Show_song_text.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        // VARIABLE START
-
+        #region Variables
         private readonly IPageService _pageService;
+        #endregion
 
-        // VARIABLE END
 
-
-        // PROPERTY START
+        #region Property
         private List<MasterMenuItem> _MenuListItems;
 
         public List<MasterMenuItem> MenuListItems
@@ -55,9 +53,9 @@ namespace Show_song_text.ViewModels
         }
 
         public string AppName { get; set; }
-        // PROPERTY END
+        #endregion
 
-        // CONSTRUCTOR START
+        #region Constructor
         public MainPageViewModel()
         {
             _pageService = new PageService();
@@ -66,10 +64,10 @@ namespace Show_song_text.ViewModels
             AppName = "Pomocnik wokalisty";
 
         }
-        // CONSTRUCTOR END
+        #endregion
 
 
-        // INITIALIZE METHOD START
+        #region Initialize
         private void CreateMenuList()
         {
             MenuListItems = new List<MasterMenuItem>();
@@ -79,10 +77,9 @@ namespace Show_song_text.ViewModels
             MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia połączeń", TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
             MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia", TargetType = typeof(SettingsView), OptionIcon = "settings.png" });
         }
-        // INITIALIZE METHOD END
+        #endregion
 
-        // PROPERTY METHOD START
-
+        #region Property methods
         private async void OnMenuItemSelected(MasterMenuItem masterMenuItem)
         {
             try
@@ -112,9 +109,7 @@ namespace Show_song_text.ViewModels
                 await _pageService.DisplayAlert("Błąd", e.Message, "OK");
             }
         }
-
-
-        // PROPERTY METHOD END
+        #endregion
 
     }
 }

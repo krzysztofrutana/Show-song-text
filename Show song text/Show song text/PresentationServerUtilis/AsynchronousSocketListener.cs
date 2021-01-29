@@ -46,7 +46,7 @@ namespace Show_song_text.PresentationServerUtilis
             }
         }
 
-        /* Starts the AsyncSocketListener */
+        #region Start server listenning and connection
         public void StartListening(int port)
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -84,26 +84,8 @@ namespace Show_song_text.PresentationServerUtilis
             }
         }
 
-        /* Gets a socket from the clients dictionary by his Id. */
-        private IStateObject GetClient(int id)
-        {
-            IStateObject state;
-            ShowConsoleMessage("GetClient","Get client state", false);
-
-            return this.clients.TryGetValue(id, out state) ? state : null;
-        }
-
-        /* Checks if the socket is connected. */
-        public bool IsConnected(int id)
-        {
-            var state = this.GetClient(id);
-
-            return !(state.Listener.Poll(1000, SelectMode.SelectRead) && state.Listener.Available == 0);
-        }
-
         /* Add a socket to the clients dictionary. Lock clients temporary to handle multiple access.
          * ReceiveCallback raise a event, after the message receive complete. */
-        #region Receive data
         public void OnClientConnect(IAsyncResult result)
         {
             this.mre.Set();
@@ -138,7 +120,28 @@ namespace Show_song_text.PresentationServerUtilis
                 ShowConsoleMessage("OnClientConnect", e.Message, true);
             }
         }
+        #endregion
 
+        #region Check if clients existing and connected
+        /* Gets a socket from the clients dictionary by his Id. */
+        private IStateObject GetClient(int id)
+        {
+            IStateObject state;
+            ShowConsoleMessage("GetClient", "Get client state", false);
+
+            return this.clients.TryGetValue(id, out state) ? state : null;
+        }
+
+        /* Checks if the socket is connected. */
+        public bool IsConnected(int id)
+        {
+            var state = this.GetClient(id);
+
+            return !(state.Listener.Poll(1000, SelectMode.SelectRead) && state.Listener.Available == 0);
+        }
+        #endregion
+
+        #region Recive message
         public void ReceiveCallback(IAsyncResult result)
         {
             try
@@ -187,7 +190,7 @@ namespace Show_song_text.PresentationServerUtilis
         #endregion
 
         /* Send(int id, String msg, bool close) use bool to close the connection after the message sent. */
-        #region Send data
+        #region Send message
         public void Send(string msg, bool close)
         {
             foreach (var id in this.clients.Keys)
@@ -303,6 +306,7 @@ namespace Show_song_text.PresentationServerUtilis
         }
         #endregion
 
+        #region Close connection
         public void Close(int id)
         {
             var state = this.GetClient(id);
@@ -355,6 +359,7 @@ namespace Show_song_text.PresentationServerUtilis
             ShowConsoleMessage("StopListening", "Listener succesfull closed", false);
         }
 
+        #endregion
 
         private void ShowConsoleMessage(string method, string text, bool exeption)
         {

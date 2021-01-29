@@ -19,7 +19,7 @@ namespace Show_song_text.ViewModels
 {
     public class PlaylistDetailViewModel : ViewModelBase
     {
-        // PROPERTY START
+        #region Property
         public Playlist Playlist { get; private set; }
         private string _Name;
         public string Name
@@ -49,8 +49,6 @@ namespace Show_song_text.ViewModels
             }
         }
 
-
-
         public ObservableCollection<SongViewModel> SongsList { get; private set; } = new ObservableCollection<SongViewModel>();
 
         public ObservableCollection<SongViewModel> SelectedSongs { get; private set; }
@@ -68,17 +66,16 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(AllowEditPlaylist));
             }
         }
+        #endregion
 
-        //PROPERTIES SECTION END
-
-        // VARIABLE SECTION START
+        #region Variable
         private readonly PlaylistRepository playlistRepository;
         private readonly IPageService _pageService;
         private readonly SongRepository songRepository;
         private readonly PositionRepository positionRepository;
-        // VARIABLE SEXTION END
+        #endregion
 
-        // COMMAND START
+        #region Commands
         public ICommand SaveCommand { get; private set; }
         public ICommand DeletePlaylistCommand { get; private set; }
         public ICommand StartPresentationCommand { get; private set; }
@@ -89,10 +86,9 @@ namespace Show_song_text.ViewModels
         public ICommand UnselectAsToDeleteCommand { get; private set; }
         public ICommand MoveUpCommand { get; private set; }
         public ICommand MoveDownCommand { get; private set; }
+        #endregion
 
-        // COMMAND STOP
-
-        // CONSTRUCTOR START
+        #region Constructor
         public PlaylistDetailViewModel()
         {
             playlistRepository = new PlaylistRepository(DependencyService.Get<ISQLiteDb>());
@@ -126,9 +122,9 @@ namespace Show_song_text.ViewModels
 
             AllowEditPlaylist = false;
         }
-        // CONSTRUCTOR END
+        #endregion
 
-        // COMMAND METHOD START
+        #region Commands methods
         private async Task DeletePlaylist()
         {
             if (await _pageService.DisplayAlert("Ostrzeżenie", $"Jesteś pewny, że chcesz usunąć {Playlist.Name}?", "Tak", "Nie"))
@@ -273,7 +269,9 @@ namespace Show_song_text.ViewModels
             }
 
         }
-        // MESSAGE CENTER START
+        #endregion
+
+        #region Message center methods
         private async void OnPlaylistSended(object source, PlaylistViewModel playlistViewModel)
         {
 
@@ -328,6 +326,6 @@ namespace Show_song_text.ViewModels
             }
             MessagingCenter.Unsubscribe<AddSongToPlaylistViewModel, ObservableCollection<SongViewModel>>(this, Events.AddSongsToPlaylist);
         }
-        // MESSAGE CENTER END
+        #endregion
     }
 }

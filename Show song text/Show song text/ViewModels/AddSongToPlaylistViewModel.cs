@@ -16,7 +16,7 @@ namespace Show_song_text.ViewModels
 {
     public class AddSongToPlaylistViewModel : ViewModelBase
     {
-        // PROPERTY SECTION START
+        #region Property
         private ObservableCollection<SongViewModel> AllSongsCopy { get; set; } = new ObservableCollection<SongViewModel>();
 
         private String _searchBarText;
@@ -40,23 +40,22 @@ namespace Show_song_text.ViewModels
         public ObservableCollection<SongViewModel> SelectedSongs { get; private set; }
             = new ObservableCollection<SongViewModel>();
 
-        // PROPERTY END
+        #endregion
 
-        // VARIABLE SECTION START
 
+        #region Variable
         private readonly SongRepository songRepository;
         private readonly IPageService _pageService;
+        #endregion
 
-        // VARIABLE SEXTION END
-
-        // COMMAND START
+        #region Command
         public ICommand LoadSongsCommand { get; private set; }
         public ICommand SelectSongCommand { get; private set; }
         public ICommand UnselectSongCommand { get; private set; }
         public ICommand AddSongsToPlaylistCommand { get; private set; }
-        //COMMAND END
+        #endregion
 
-        // CONSTRUCTOR START
+        #region Constructor
         public AddSongToPlaylistViewModel()
         {
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
@@ -69,9 +68,9 @@ namespace Show_song_text.ViewModels
 
             LoadSongsCommand.Execute(null);
         }
-        // CONSTRUCTOR END
+        #endregion
 
-        // COMMAND METHOD START
+        #region Command methods
         private async Task LoadSongs()
         {
             if (Songs != null && Songs.Count > 0)
@@ -100,10 +99,10 @@ namespace Show_song_text.ViewModels
             MessagingCenter.Send(this, Events.AddSongsToPlaylist, SelectedSongs);
             await _pageService.PreviousDetailPage();
         }
-        // COMMAND METHOD END
+        #endregion
 
 
-        // PROPERTY METHOD SECTION START
+        #region Property methods
         public void OnSearchBarTextChanged(String text)
         {
             if (text == "")
@@ -112,7 +111,7 @@ namespace Show_song_text.ViewModels
             Songs = new ObservableCollection<SongViewModel>(songs);
             OnPropertyChanged(nameof(Songs));
         }
-        // PROPERTY METHOD SECTION STOP
+        #endregion
     }
 
 }
