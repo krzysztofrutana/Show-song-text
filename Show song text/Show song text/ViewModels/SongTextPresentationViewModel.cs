@@ -26,7 +26,7 @@ namespace Show_song_text.ViewModels
 {
     public class SongTextPresentationViewModel : ViewModelBase
     {
-        // PROPERTY START
+        #region Property
         public PlaylistViewModel Playlist { get; private set; }
         public SongViewModel Song { get; private set; }
 
@@ -123,16 +123,16 @@ namespace Show_song_text.ViewModels
             }
         }
 
-        //PROPERTIES SECTION END
+        #endregion
 
-        // VARIABLE SECTION START
+        #region Variable
         private readonly IAsyncSocketListener asyncSocketListener;
         private readonly IAsyncClient asyncClient;
         private readonly SongRepository songRepository;
-        // VARIABLE SECTION END
+        #endregion
 
 
-        // CONSTRUCTOR START
+        #region Constructor
         public SongTextPresentationViewModel()
         {
             songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
@@ -153,9 +153,9 @@ namespace Show_song_text.ViewModels
 
             FontSize = Double.Parse(Settings.FontSize);
         }
-        // CONSTRUCTOR END
+        #endregion
 
-        // MESSAGING CENTER METHOD START
+        #region Message center method
         async void OnPlaylistSended(PlaylistDetailViewModel source, PlaylistViewModel playlistViewModel)
         {
             Playlist = playlistViewModel;
@@ -199,7 +199,7 @@ namespace Show_song_text.ViewModels
         void OnConnectToServer(ConnectionSettingsViewModel source, Boolean isConnected)
         {
             IsConnectedToServer = true;
-            asyncClient.Receive();
+            
         }
 
         void OnTextRecive(AsyncClient source, string text)
@@ -216,36 +216,44 @@ namespace Show_song_text.ViewModels
                         TextOfSongWhenConnectedToServer = songTitleAndText[1];
                         testLabel.Text = TextOfSongWhenConnectedToServer;
                         testLabel.FontSize = FontSize;
-                        // Calculate the height of the rendered text.
-                        FontCalc lowerFontCalc = new FontCalc(testLabel, 10, App.ScreenWidth);
-                        FontCalc upperFontCalc = new FontCalc(testLabel, 100, App.ScreenWidth);
-
-                        while (upperFontCalc.FontSize - lowerFontCalc.FontSize > 1)
+                        FontCalc checkIfShortText = new FontCalc(testLabel, 25, App.ScreenWidth);
+                        if(checkIfShortText.TextHeight < App.ScreenHeight * 0.5)
                         {
-                            // Get the average font size of the upper and lower bounds.
-                            double fontSize = (lowerFontCalc.FontSize + upperFontCalc.FontSize) / 2;
-
-                            // Check the new text height against the container height.
-                            FontCalc newFontCalc = new FontCalc(testLabel, fontSize, App.ScreenWidth);
-
-                            if (newFontCalc.TextHeight > App.ScreenHeight - 120)
-                            {
-                                upperFontCalc = newFontCalc;
-                            }
-                            else
-                            {
-                                lowerFontCalc = newFontCalc;
-                            }
-
+                            FontSize = checkIfShortText.FontSize;
                         }
-                        FontSize = lowerFontCalc.FontSize;
+                        else
+                        {
+                            // Calculate the height of the rendered text.
+                            FontCalc lowerFontCalc = new FontCalc(testLabel, 10, App.ScreenWidth);
+                            FontCalc upperFontCalc = new FontCalc(testLabel, 100, App.ScreenWidth);
+
+                            while (upperFontCalc.FontSize - lowerFontCalc.FontSize > 1)
+                            {
+                                // Get the average font size of the upper and lower bounds.
+                                double fontSize = (lowerFontCalc.FontSize + upperFontCalc.FontSize) / 2;
+
+                                // Check the new text height against the container height.
+                                FontCalc newFontCalc = new FontCalc(testLabel, fontSize, App.ScreenWidth);
+
+                                if (newFontCalc.TextHeight > App.ScreenHeight * 0.85)
+                                {
+                                    upperFontCalc = newFontCalc;
+                                }
+                                else
+                                {
+                                    lowerFontCalc = newFontCalc;
+                                }
+
+                            }
+                            FontSize = lowerFontCalc.FontSize;
+                        }  
                     });
                 }
             }
         }
-        // MESSAGING CENTER METHOD END
+        #endregion
 
-        // PROPERTY METHOD START
+        #region Property methods
         public void PreparePresentation()
         {
             if (SongsList.Count > 0)
@@ -277,10 +285,10 @@ namespace Show_song_text.ViewModels
 
 
         }
-        // PROPERTY METHOD END
+        #endregion
 
-        // TEXT SHARE METHOD START
 
+        #region Share text method
         void SendText(string text)
         {
             if (text != "")
@@ -290,7 +298,7 @@ namespace Show_song_text.ViewModels
 
         }
 
-        // TEXT SHARE METHOD END
+        #endregion
 
     }
 }

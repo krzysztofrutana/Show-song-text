@@ -16,16 +16,13 @@ namespace Show_song_text.Helpers
         public static Boolean CheckIfFit(Label label, double fontSize)
         {
             FontCalc lowerFontCalc = new FontCalc(label, fontSize, App.ScreenWidth * 0.9);
-            if (lowerFontCalc.TextHeight > App.ScreenHeight - 120)
+            if (lowerFontCalc.TextHeight > App.ScreenHeight * 0.85)
             {
                 return false;
             }
             else
             {
-                {
-                    return true;
-                }
-
+                return true;
             }
         }
 
