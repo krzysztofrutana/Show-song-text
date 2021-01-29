@@ -1,6 +1,7 @@
 ﻿using Show_song_text.PresentationServerUtilis;
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 
 /*
@@ -12,9 +13,6 @@ namespace Show_song_text.Interfaces
 {
     public interface IAsyncSocketListener : IDisposable
     {
-        event MessageReceivedHandler MessageReceived;
-
-        event MessageSubmittedHandler MessageSubmitted;
 
         void StartListening(int port);
 
@@ -27,6 +25,8 @@ namespace Show_song_text.Interfaces
         void Send(string msg, bool close);
 
         void Close(int id);
+
+        void StopListening();
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using Show_song_text.Interfaces;
+﻿using Show_song_text.Helpers;
+using Show_song_text.Interfaces;
 using Show_song_text.PresentationServerUtilis;
 using Show_song_text.Utils;
 using Show_song_text.Views;
@@ -137,27 +138,42 @@ namespace Show_song_text.ViewModels
         public ICommand StopServerCommand { get; private set; }
         public ICommand ConnectToServerCommand { get; private set; }
         public ICommand StartPresentationForCLientCommand { get; private set; }
+        public ICommand DisconnectWithServerCommand { get; private set; }
         // COMMANDS END
 
         // CONSTRUCTOR START
         public ConnectionSettingsViewModel()
         {
             _pageService = new PageService();
+            asyncSocketListener = AsyncSocketListener.Instance;
+            asyncClient = AsyncClient.Instance;
 
-            ServerIsRunning = false;
-            IsConnectToServer = false;
-            ServerPort = 11000;
-            ClientConnectedCount = 0;
+
+            if (asyncClient.IsConnected() == true)
+            {
+                Settings.ClientIsConnected = true;
+            }
+            else
+            {
+                Settings.ClientIsConnected = false;
+            }
+
+
+            ServerIsRunning = Settings.ServerIsRunning;
+            IsConnectToServer = Settings.ClientIsConnected;
+            ServerPort = Settings.ServerPort ;
+            ClientConnectedCount = Settings.ServerClientConnectedQty;
 
             StartServerCommand = new Command(() => StartServer());
             StopServerCommand = new Command(() => StopServer());
             ConnectToServerCommand = new Command(() => ConnectToServer());
             StartPresentationForCLientCommand = new Command(async () => await StartPresentationForCLient());
+            DisconnectWithServerCommand = new Command(() => DisconnectWithServer());
 
-            asyncSocketListener = AsyncSocketListener.Instance;
+            
             IPServerAdress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
-            asyncClient = AsyncClient.Instance;
+            
 
             MessagingCenter.Subscribe<AsyncSocketListener, Boolean>
             (this, Events.SendPlaylist, OnServerIsRunning);
@@ -179,27 +195,44 @@ namespace Show_song_text.ViewModels
         {
             new Thread(new ThreadStart(delegate
             {
+                Settings.ServerIsRunning = true;
+                Settings.ServerPort = ServerPort;
                 asyncSocketListener.StartListening(ServerPort);
             })).Start();
         }
 
         private void StopServer()
         {
-            asyncSocketListener.Dispose();
+            Settings.ServerIsRunning = false;
+            Settings.ServerPort = 11000;
+            asyncSocketListener.StopListening();
+
         }
 
         private async void ConnectToServer()
         {
             if (PortToConnect != null)
+            {
+                Settings.ConnectedServerIP = IpAdressToConnect;
+                Settings.ConnectedServerPort = (int)PortToConnect;
                 asyncClient.StartClient((int)PortToConnect, IPAddress.Parse(IpAdressToConnect));
+                asyncClient.Receive();
+            }
             else
+            {
                 await _pageService.DisplayAlert("Puste pola", "Proszę wpisać numer portu", "OK");
+            }       
         }
 
         async Task StartPresentationForCLient()
         {
             await _pageService.ChangePageAsync(new SongTextPresentationView());
             MessagingCenter.Send(this, Events.ConnectToServer, true);
+        }
+        private async void DisconnectWithServer()
+        {
+            asyncClient.Send("<EOC>", true);
+            asyncClient.DisconnectWithServer();
         }
         // COMMAND METHOD END
 
@@ -211,12 +244,12 @@ namespace Show_song_text.ViewModels
 
         private void OnClientConnected(AsyncSocketListener source, int clientConnected)
         {
-            ClientConnectedCount += clientConnected;
+            ClientConnectedCount = Settings.ServerClientConnectedQty;
         }
 
         private void OnClientDisconnected(AsyncSocketListener source, int clientDisconnected)
         {
-            ClientConnectedCount -= clientDisconnected;
+            ClientConnectedCount = Settings.ServerClientConnectedQty;
         }
 
         private void OnConnectToServer(AsyncClient source, Boolean isConnected)

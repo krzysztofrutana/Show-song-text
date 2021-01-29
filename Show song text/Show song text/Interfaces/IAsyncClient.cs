@@ -13,12 +13,6 @@ namespace Show_song_text.Interfaces
 {
     public interface IAsyncClient : IDisposable
     {
-        event ConnectedHandler Connected;
-
-        event ClientMessageReceivedHandler MessageReceived;
-
-        event ClientMessageSubmittedHandler MessageSubmitted;
-
         void StartClient(int port, IPAddress ip);
 
         bool IsConnected();
@@ -26,5 +20,6 @@ namespace Show_song_text.Interfaces
         void Receive();
 
         void Send(string msg, bool close);
+        void DisconnectWithServer();
     }
 }

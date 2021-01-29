@@ -7,6 +7,8 @@ using Show_song_text.Interfaces;
 using Show_song_text.Models;
 using Xamarin.Forms;
 using Show_song_text.Utils;
+using Show_song_text.Helpers;
+using System.Net.NetworkInformation;
 
 /*
  * Thanks for Jesse C. Slicer and Jamal for this soluion from https://codereview.stackexchange.com/questions/24758/tcp-async-socket-server-client-communication
@@ -15,27 +17,21 @@ using Show_song_text.Utils;
 
 namespace Show_song_text.PresentationServerUtilis
 {
-    public delegate void ConnectedHandler(IAsyncClient a);
-    public delegate void ClientMessageReceivedHandler(IAsyncClient a, string msg);
-    public delegate void ClientMessageSubmittedHandler(IAsyncClient a, bool close);
 
     public sealed class AsyncClient : IAsyncClient
     {
 
         private Socket listener;
-        private bool close;
 
         private static readonly IAsyncClient instance = new AsyncClient();
 
         private readonly ManualResetEvent connected = new ManualResetEvent(false);
-        private readonly ManualResetEvent sent = new ManualResetEvent(false);
-        private readonly ManualResetEvent received = new ManualResetEvent(false);
 
-        public event ConnectedHandler Connected;
+        public Boolean ItsConenctedToServer = false;
 
-        public event ClientMessageReceivedHandler MessageReceived;
+        private static string TAG = "AsyncClient";
 
-        public event ClientMessageSubmittedHandler MessageSubmitted;
+        private static readonly ILogInterface Log = DependencyService.Get<ILogInterface>();
 
 
         private AsyncClient()
@@ -57,24 +53,21 @@ namespace Show_song_text.PresentationServerUtilis
             {
                 this.listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 this.listener.BeginConnect(endpoint, this.OnConnectCallback, this.listener);
+                ShowConsoleMessage("StartClient", "Waiting for server connection", false);
                 this.connected.WaitOne();
+                
 
-                var connectedHandler = this.Connected;
-
-                if (connectedHandler != null)
-                {
-                    connectedHandler(this);
-                }
             }
-            catch (SocketException)
+            catch (SocketException se)
             {
-                // TODO:
+                ShowConsoleMessage("StartClient", se.Message, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = false;
             }
-        }
-
-        public bool IsConnected()
-        {
-            return !(this.listener.Poll(1000, SelectMode.SelectRead) && this.listener.Available == 0);
+            catch (Exception e)
+            {
+                ShowConsoleMessage("StartClient", e.Message, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = false;
+            }
         }
 
         private void OnConnectCallback(IAsyncResult result)
@@ -86,56 +79,124 @@ namespace Show_song_text.PresentationServerUtilis
                 server.EndConnect(result);
                 this.connected.Set();
                 MessagingCenter.Send(this, Events.ConnectToServer, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = true;
+                ShowConsoleMessage("OnConnectCallback", "Connected to server, client side", false);
+
 
             }
-            catch (SocketException)
+            catch (SocketException se)
             {
+                ShowConsoleMessage("OnConnectCallback", se.Message, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = false;
+            }
+            catch (Exception e)
+            {
+                ShowConsoleMessage("OnConnectCallback", e.Message, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = false;
             }
         }
+
+
+        public bool IsConnected()
+        {
+            try
+            {
+                if (this.listener != null)
+                {
+                    Ping pingTest = new Ping();
+                    PingReply reply = pingTest.Send(IPAddress.Parse(Settings.ConnectedServerIP));
+                    Boolean status = reply.Status == IPStatus.Success;
+                    if (status) ItsConenctedToServer = Settings.ClientIsConnected = true;
+
+                    return status;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (PingException pe) 
+            {
+                ShowConsoleMessage("IsConnected", pe.Message, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = false;
+                return ItsConenctedToServer;
+            }
+            catch (Exception e)
+            {
+                ShowConsoleMessage("IsConnected", e.Message, true);
+                ItsConenctedToServer = Settings.ClientIsConnected = false;
+                return ItsConenctedToServer;
+            }
+        }
+
+        
 
         #region Receive data
         public void Receive()
         {
-            var state = new StateObject(this.listener);
-            try
+            if(IsConnected())
             {
-                state.Listener.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, this.ReceiveCallback, state);
+                var state = new StateObject(this.listener);
+                try
+                {
+                    state.Listener.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, this.ReceiveCallback, state);
+                    ShowConsoleMessage("Receive", "Beginning recive", false);
+                }
+                catch (Exception e)
+                {
+                    ShowConsoleMessage("Receive", "Client Recive: " + e.Message + " " + e.InnerException.Message, false);
+                }
             }
-            catch (Exception e)
-            {
 
-                Console.WriteLine("Client Recive: " + e.Message + " " + e.InnerException.Message);
-            }
-            
         }
 
         private void ReceiveCallback(IAsyncResult result)
         {
-            var state = (IStateObject)result.AsyncState;
-            var receive = state.Listener.EndReceive(result);
-
-            if (receive > 0)
+            try
             {
-                state.Append(Encoding.UTF8.GetString(state.Buffer, 0, receive));
-            }
+                var state = (IStateObject)result.AsyncState;
+                var receive = state.Listener.EndReceive(result);
 
-            if (receive == state.BufferSize)
-            {
-                state.Listener.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, this.ReceiveCallback, state);
-            }
-            else
-            {
-                var messageReceived = this.MessageReceived;
-
-                if (messageReceived != null)
+                if (receive > 0)
                 {
-                    messageReceived(this, state.Text);
+                    state.Append(Encoding.UTF8.GetString(state.Buffer, 0, receive));
+                    ShowConsoleMessage("ReceiveCallback", "Append message", false);
                 }
-                MessagingCenter.Send(this, Events.SendedText, state.Text);
 
-                state.Reset();
-                this.received.Set();
-                Receive();
+                if (receive == state.BufferSize)
+                {
+                    state.Listener.BeginReceive(state.Buffer, 0, state.BufferSize, SocketFlags.None, this.ReceiveCallback, state);
+                    ShowConsoleMessage("ReceiveCallback", "Big message, start new recive", false);
+                }
+                else
+                {
+                    if (state.Text.Equals("<EOC>"))
+                    {
+                        Close();
+                        Settings.ClientIsConnected = false;
+                        MessagingCenter.Send(this, Events.ConnectToServer, false);
+                        ShowConsoleMessage("ReceiveCallback", "Disconnect connection with server", false);
+                    }
+                    else if(!String.IsNullOrEmpty(state.Text))
+                    {
+                        MessagingCenter.Send(this, Events.SendedText, state.Text);
+                        state.Reset();
+                        Receive();
+                        ShowConsoleMessage("ReceiveCallback", "Recive message from server", false);
+                    }
+                }
+            }
+            catch (SocketException se)
+            {
+                ShowConsoleMessage("ReceiveCallback", se.Message, true);
+            }
+            catch (ObjectDisposedException ode)
+            {
+                ShowConsoleMessage("ReceiveCallback", ode.Message, true);
+            }
+            catch (Exception e)
+            {
+                ShowConsoleMessage("ReceiveCallback", e.Message, true);
             }
         }
         #endregion
@@ -145,40 +206,40 @@ namespace Show_song_text.PresentationServerUtilis
         {
             if (!this.IsConnected())
             {
+                ShowConsoleMessage("Send", "Destination socket is not connected.", true);
                 throw new Exception("Destination socket is not connected.");
             }
 
             var response = Encoding.UTF8.GetBytes(msg);
 
-            this.close = close;
             this.listener.BeginSend(response, 0, response.Length, SocketFlags.None, this.SendCallback, this.listener);
+            ShowConsoleMessage("Send", "Start sending", false);
         }
 
         private void SendCallback(IAsyncResult result)
         {
-            try
+            if (IsConnected())
             {
-                var resceiver = (Socket)result.AsyncState;
+                try
+                {
+                    var resceiver = (Socket)result.AsyncState;
 
-                resceiver.EndSend(result);
+                    resceiver.EndSend(result);
+                    ShowConsoleMessage("SendCallback", "Message sent", false);
+                }
+                catch (SocketException se)
+                {
+                    ShowConsoleMessage("SendCallback", se.Message, true);
+                }
+                catch (ObjectDisposedException ode)
+                {
+                    ShowConsoleMessage("SendCallback", ode.Message, true);
+                }
+                catch (Exception e)
+                {
+                    ShowConsoleMessage("SendCallback", e.Message, true);
+                }
             }
-            catch (SocketException)
-            {
-                // TODO:
-            }
-            catch (ObjectDisposedException)
-            {
-                // TODO;
-            }
-
-            var messageSubmitted = this.MessageSubmitted;
-
-            if (messageSubmitted != null)
-            {
-                messageSubmitted(this, this.close);
-            }
-
-            this.sent.Set();
         }
         #endregion
 
@@ -186,26 +247,46 @@ namespace Show_song_text.PresentationServerUtilis
         {
             try
             {
-                if (!this.IsConnected())
-                {
-                    return;
-                }
 
                 this.listener.Shutdown(SocketShutdown.Both);
                 this.listener.Close();
+                ShowConsoleMessage("Close", "Close connection with server", false);
             }
-            catch (SocketException)
+            catch (SocketException se)
             {
-                // TODO:
+                ShowConsoleMessage("Close", se.Message, true);
             }
+            catch (Exception e)
+            {
+                ShowConsoleMessage("Close", e.Message, true);
+            }
+        }
+
+        public void DisconnectWithServer()
+        {
+            Settings.ClientIsConnected = false;
+            MessagingCenter.Send(this, Events.ConnectToServer, false);
+            Close();
+            ShowConsoleMessage("DisconnectWithServer", "Close connection complete", false);
         }
 
         public void Dispose()
         {
             this.connected.Dispose();
-            this.sent.Dispose();
-            this.received.Dispose();
-            this.Close();
+            ShowConsoleMessage("Dispose", "Dispose event", false);
+        }
+
+        private void ShowConsoleMessage(string method, string text, bool exeption)
+        {
+            if (exeption)
+            {
+                Log.Debug(TAG, $"{method} exeption: {text}");
+            }
+            else
+            {
+                Log.Debug(TAG, $"{method} log: {text}");
+            }
+
         }
     }
 
