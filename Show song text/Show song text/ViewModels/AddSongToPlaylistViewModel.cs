@@ -2,6 +2,7 @@
 using Show_song_text.Database.Repository;
 using Show_song_text.Database.ViewModels;
 using Show_song_text.Interfaces;
+using Show_song_text.Resources.Languages;
 using Show_song_text.Utils;
 using System;
 using System.Collections.Generic;
@@ -62,8 +63,8 @@ namespace Show_song_text.ViewModels
             _pageService = new PageService();
 
             LoadSongsCommand = new Command(async () => await LoadSongs());
-            SelectSongCommand = new Command<SongViewModel>(async song => await SelectSong(song));
-            UnselectSongCommand = new Command<SongViewModel>(async song => await UnselectSong(song));
+            SelectSongCommand = new Command<SongViewModel>(song => SelectSong(song));
+            UnselectSongCommand = new Command<SongViewModel>(song => UnselectSong(song));
             AddSongsToPlaylistCommand = new Command(async () => await AddSongsToPlaylist());
 
             LoadSongsCommand.Execute(null);
@@ -86,11 +87,11 @@ namespace Show_song_text.ViewModels
             AllSongsCopy = Songs;
         }
 
-        private async Task SelectSong(SongViewModel songViewModel)
+        private void SelectSong(SongViewModel songViewModel)
         {
             SelectedSongs.Add(songViewModel);
         }
-        private async Task UnselectSong(SongViewModel songViewModel)
+        private void UnselectSong(SongViewModel songViewModel)
         {
             SelectedSongs.Remove(songViewModel);
         }

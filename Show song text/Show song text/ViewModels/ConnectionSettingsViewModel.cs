@@ -1,6 +1,7 @@
 ﻿using Show_song_text.Helpers;
 using Show_song_text.Interfaces;
 using Show_song_text.PresentationServerUtilis;
+using Show_song_text.Resources.Languages;
 using Show_song_text.Utils;
 using Show_song_text.Views;
 using System;
@@ -219,7 +220,7 @@ namespace Show_song_text.ViewModels
             }
             else
             {
-                await _pageService.DisplayAlert("Puste pola", "Proszę wpisać numer portu", "OK");
+                await _pageService.DisplayAlert(AppResources.ConnectionSettingsVM_EmptyField, AppResources.ConnectionSettingsVM_PortNumber, AppResources.AlertDialog_OK);
             }       
         }
 

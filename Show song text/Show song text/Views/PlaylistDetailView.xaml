@@ -4,8 +4,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:Show_song_text.CustomControls"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
-    Title="Szczegóły playlisty">
+    Title="{x:Static resources:AppResources.PlaylistDetail_Title}">
     <ContentPage.BindingContext>
         <vm:PlaylistDetailViewModel />
     </ContentPage.BindingContext>
@@ -25,7 +26,7 @@
             <Label
                 Grid.Column="0"
                 Style="{StaticResource LabelNormal}"
-                Text="Nazwa: " />
+                Text="{x:Static resources:AppResources.PlaylistDetail_Name}" />
             <Editor
                 Grid.Column="1"
                 Margin="0,0,5,0"
@@ -35,7 +36,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Style="{StaticResource LabelNormal}"
-                Text="Utwory:"
+                Text="{x:Static resources:AppResources.PlaylistDetail_Songs}"
                 VerticalOptions="EndAndExpand" />
             <StackLayout
                 Grid.Row="1"

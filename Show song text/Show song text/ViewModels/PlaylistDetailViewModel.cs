@@ -3,6 +3,7 @@ using Show_song_text.Database.Persistence;
 using Show_song_text.Database.Repository;
 using Show_song_text.Database.ViewModels;
 using Show_song_text.Interfaces;
+using Show_song_text.Resources.Languages;
 using Show_song_text.Utils;
 using Show_song_text.Views;
 using System;
@@ -127,7 +128,7 @@ namespace Show_song_text.ViewModels
         #region Commands methods
         private async Task DeletePlaylist()
         {
-            if (await _pageService.DisplayAlert("Ostrzeżenie", $"Jesteś pewny, że chcesz usunąć {Playlist.Name}?", "Tak", "Nie"))
+            if (await _pageService.DisplayAlert(AppResources.AlertDialog_Warning, $"{AppResources.AlertDialog_AreYouSureToDelete} {Playlist.Name}?", AppResources.AlertDialog_Yes, AppResources.AlertDialog_No))
             {
 
                 var playlistToDelete = await playlistRepository.GetPlaylist(Playlist.Id);
@@ -145,7 +146,7 @@ namespace Show_song_text.ViewModels
                 {
                     if (String.IsNullOrWhiteSpace(Playlist.Name))
                     {
-                        await _pageService.DisplayAlert("Bład", "Wprowadź nazwę.", "OK");
+                        await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_EnterName, AppResources.AlertDialog_OK);
                         return;
                     }
                     else
@@ -238,7 +239,7 @@ namespace Show_song_text.ViewModels
         {
             if (SelectedSongs.Count > 1)
             {
-                await _pageService.DisplayAlert("Uwaga", "Próbujesz przenieść dwa lub więcej utworów, proszę przenosić pojedyńczo!", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Warning, AppResources.AlertDialog_MoveMoreThanOneSong, AppResources.AlertDialog_OK);
             }
             else
             {
@@ -256,7 +257,7 @@ namespace Show_song_text.ViewModels
         {
             if (SelectedSongs.Count > 1)
             {
-                await _pageService.DisplayAlert("Uwaga", "Próbujesz przenieść dwa lub więcej utworów, proszę przenosić pojedyńczo!", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Warning, AppResources.AlertDialog_MoveMoreThanOneSong, AppResources.AlertDialog_OK);
             }
             else
             {

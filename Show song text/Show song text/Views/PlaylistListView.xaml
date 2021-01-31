@@ -3,9 +3,10 @@
     x:Class="Show_song_text.Views.PlaylistListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
-    Title="Listy odtwarzania">
+    Title="{x:Static resources:AppResources.PlaylistList_Title}">
     <ContentPage.BindingContext>
         <vm:PlaylistListViewModel />
     </ContentPage.BindingContext>

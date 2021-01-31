@@ -8,8 +8,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:conv="clr-namespace:Show_song_text.Converters"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
-    Title="Ustawienia połączeń">
+    Title="{x:Static resources:AppResources.ConnectionSettings_Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -29,12 +30,12 @@
                     Grid.Column="0"
                     GroupName="ServerClient"
                     IsChecked="{Binding ServerSectionVisibility}"
-                    Text="Serwer" />
+                    Text="{x:Static resources:AppResources.ConnectionSettingsHeaders_Server}" />
                 <RadioButton
                     Grid.Column="1"
                     GroupName="ServerClient"
                     IsChecked="{Binding ClientSectionVisibility}"
-                    Text="Klient" />
+                    Text="{x:Static resources:AppResources.ConnectionSettingsHeaders_Client}" />
             </Grid>
             <Grid IsVisible="{Binding ServerSectionVisibility}">
                 <Grid.RowDefinitions>
@@ -58,8 +59,9 @@
                     <Label
                         HorizontalOptions="End"
                         Style="{StaticResource LabelConnectionSettings}"
-                        Text="IP: " />
+                        Text="{x:Static resources:AppResources.ConnectionSettingsServer_IP}" />
                     <Label
+                        Grid.Column="1"
                         HorizontalOptions="StartAndExpand"
                         Style="{StaticResource LabelConnectionSettings}"
                         Text="{Binding IPServerAdress}" />
@@ -75,7 +77,7 @@
                         Grid.Column="0"
                         HorizontalOptions="End"
                         Style="{StaticResource LabelConnectionSettings}"
-                        Text="Port: "
+                        Text="{x:Static resources:AppResources.ConnectionSettingsServer_Port}"
                         VerticalOptions="Center" />
                     <Editor
                         Grid.Row="1"
@@ -91,7 +93,7 @@
                     Margin="0,20,0,0"
                     Command="{Binding StartServerCommand}"
                     IsVisible="{Binding ServerIsRunning, Converter={StaticResource InverseBoolConverter}}"
-                    Text="Uruchom serwer">
+                    Text="{x:Static resources:AppResources.ConnectionSettingsServer_StartServer}">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
@@ -117,7 +119,7 @@
                     HorizontalOptions="Center"
                     IsVisible="{Binding ServerIsRunning}"
                     Style="{StaticResource LabelConnectionSettings}"
-                    Text="Serwer uruchomiony" />
+                    Text="{x:Static resources:AppResources.ConnectionSettingsServer_ServerRunning}" />
 
                 <StackLayout
                     Grid.Row="4"
@@ -129,7 +131,7 @@
                         HorizontalTextAlignment="End"
                         IsVisible="{Binding ServerIsRunning}"
                         Style="{StaticResource LabelConnectionSettings}"
-                        Text="Podłączone urządzenia:" />
+                        Text="{x:Static resources:AppResources.ConnectionSettingsServer_ComnnectedDevices}" />
                     <Label
                         HorizontalTextAlignment="Start"
                         IsVisible="{Binding ServerIsRunning}"
@@ -142,7 +144,7 @@
                     Grid.ColumnSpan="2"
                     Command="{Binding StopServerCommand}"
                     IsVisible="{Binding ServerIsRunning}"
-                    Text="Zatrzymaj serwer">
+                    Text="{x:Static resources:AppResources.ConnectionSettingsServer_StopServer}">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
@@ -180,26 +182,26 @@
                     Grid.Column="0"
                     Margin="10,0,0,0"
                     Style="{StaticResource LabelConnectionSettings}"
-                    Text="IP: "
+                    Text="{x:Static resources:AppResources.ConnectionSettingsClient_IP}"
                     VerticalOptions="Center" />
                 <Editor
                     Grid.Row="0"
                     Grid.Column="1"
-                    Placeholder="wpisz IP serwera"
+                    Placeholder="{x:Static resources:AppResources.ConnectionSettingsClient_IPPlaceholder}"
                     Text="{Binding IpAdressToConnect}" />
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="10,0,0,0"
                     Style="{StaticResource LabelConnectionSettings}"
-                    Text="Port: "
+                    Text="{x:Static resources:AppResources.ConnectionSettingsClient_Port}"
                     VerticalOptions="Center" />
                 <Editor
                     Grid.Row="1"
                     Grid.Column="1"
                     AutoSize="TextChanges"
                     MaxLength="5"
-                    Placeholder="wpisz numer portu"
+                    Placeholder="{x:Static resources:AppResources.ConnectionSettingsClient_PortPlaceholder}"
                     Text="{Binding PortToConnect}" />
                 <Button
                     Grid.Row="2"
@@ -208,7 +210,7 @@
                     Margin="0,20,0,0"
                     Command="{Binding ConnectToServerCommand}"
                     IsVisible="{Binding IsConnectToServer, Converter={StaticResource InverseBoolConverter}}"
-                    Text="Połącz">
+                    Text="{x:Static resources:AppResources.ConnectionSettingsClient_Connect}">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
@@ -233,7 +235,7 @@
                     HorizontalOptions="Center"
                     IsVisible="{Binding IsConnectToServer}"
                     Style="{StaticResource LabelConnectionSettings}"
-                    Text="Połączono z serwerem"
+                    Text="{x:Static resources:AppResources.ConnectionSettingsClient_ConnectedToServer}"
                     VerticalOptions="Center" />
                 <Button
                     Grid.Row="4"
@@ -241,7 +243,7 @@
                     Grid.ColumnSpan="2"
                     Command="{Binding StartPresentationForCLientCommand}"
                     IsVisible="{Binding IsConnectToServer}"
-                    Text="Uruchom prezentacje">
+                    Text="{x:Static resources:AppResources.ConnectionSettingsClient_RunPresentations}">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
@@ -266,7 +268,7 @@
                     Grid.ColumnSpan="2"
                     Command="{Binding DisconnectWithServerCommand}"
                     IsVisible="{Binding IsConnectToServer}"
-                    Text="Rozłącz połączenie">
+                    Text="{x:Static resources:AppResources.ConnectionSettingsClient_DisconnectConnection}">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">

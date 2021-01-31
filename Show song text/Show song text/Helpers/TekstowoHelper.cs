@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Globalization;
 using Show_song_text.Utils;
+using Show_song_text.Resources.Languages;
 
 namespace Show_song_text.Helpers
 {
@@ -40,7 +41,7 @@ namespace Show_song_text.Helpers
             catch (HttpRequestException)
             {
                 
-                await _pageService.DisplayAlert("Nie znaleziono tekstu", "Nie udało sie znaleźć utworu dla: " + songToFind.Title + " " + songToFind.Artist + "\nProszę ręcznie wybrać artyste i utwór.", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_TextNotFound, $"{AppResources.AlertDialog_TextNotFoundFor} { songToFind.Title} { songToFind.Artist} \n{AppResources.AlertDialog_SelectArtistAndTrackManually}", AppResources.AlertDialog_OK);
                 return null;
             }
             finally
@@ -86,7 +87,7 @@ namespace Show_song_text.Helpers
             catch (HttpRequestException)
             {
 
-                await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Nie udało sie znaleźć utworów artysty: " + artistWithFirstCharUpper, "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldNotFindArtistsSongs} {artistWithFirstCharUpper}" ,AppResources.AlertDialog_OK);
                 return null;
             }
             finally
@@ -140,7 +141,7 @@ namespace Show_song_text.Helpers
                         catch (HttpRequestException)
                         {
 
-                            await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Nie udało sie znaleźć utworów artysty: " + artistWithFirstCharUpper, "OK");
+                            await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldNotFindArtistsSongs} {artistWithFirstCharUpper}", AppResources.AlertDialog_OK);
                             continue;
                         }
 
@@ -181,6 +182,7 @@ namespace Show_song_text.Helpers
             {
                 songToFind.WorkingArtist = songToFind.WorkingArtist.Replace("_", "+");
                 songToFind.WorkingArtist = songToFind.WorkingArtist.Replace("/", "_");
+                songToFind.WorkingArtist = songToFind.WorkingArtist.Replace("'", "%27");
                 if (!String.IsNullOrEmpty(songToFind.WorkingArtist))
                 {
                     url = $"https://www.tekstowo.pl/szukaj,wykonawca,{songToFind.WorkingArtist},tytul.html";
@@ -191,7 +193,7 @@ namespace Show_song_text.Helpers
             catch (HttpRequestException)
             {
 
-                await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Nie udało sie znaleźć pasujących artystów: " + artistWithFirstCharUpper, "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldntFindMachingArtists}: {artistWithFirstCharUpper}", AppResources.AlertDialog_OK);
                 return null;
             }
 
@@ -202,7 +204,7 @@ namespace Show_song_text.Helpers
 
             if (queryCheckIfToMany != null)
             {
-                await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Za dużo pasujacych wyników, sprecyzuj wyszukiwanie!", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, AppResources.AlertDialog_ToManyMachingResults, AppResources.AlertDialog_OK);
                 return null;
             }
             else
@@ -248,7 +250,7 @@ namespace Show_song_text.Helpers
                         catch (HttpRequestException)
                         {
 
-                            await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Nie udało sie znaleźć pasujących artystów.", "OK");
+                            await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldntFindMachingArtists}.", AppResources.AlertDialog_OK);
                             continue;
                         }
 
@@ -279,14 +281,14 @@ namespace Show_song_text.Helpers
                     }
                     else
                     {
-                        await _pageService.DisplayAlert("Nie znaleziono pasujących artystów", "Sprawdź jeszcze raz nazwę i spróbuj ponownie.", "OK");
+                        await _pageService.DisplayAlert(AppResources.AlertDialog_CouldntFindMachingArtists, AppResources.AlertDialog_CheckNameAndTryAgain, AppResources.AlertDialog_OK);
                         return null;
                     }
                 }
                 if(artistsList.Count > 0)
                 {
-                    string choosenArtist = await _pageService.DisplayPositionToChoose("Wybierz artystę:", "Anuluj", null, artistsList.Keys.ToArray());
-                    if (choosenArtist.Equals("Anuluj"))
+                    string choosenArtist = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseArtist, AppResources.AlertDialog_Cancel, null, artistsList.Keys.ToArray());
+                    if (choosenArtist.Equals(AppResources.AlertDialog_Cancel))
                     {
                         return null;
                     }
@@ -314,6 +316,7 @@ namespace Show_song_text.Helpers
             try
             {
                 songToFind.WorkingTitle = songToFind.WorkingTitle.Replace("_", "+");
+                songToFind.WorkingTitle = songToFind.WorkingTitle.Replace("'", "%27");
                 if (!String.IsNullOrEmpty(songToFind.WorkingTitle))
                 {
                     url = $"https://www.tekstowo.pl/szukaj,wykonawca,,tytul,{songToFind.WorkingTitle}.html";
@@ -324,7 +327,7 @@ namespace Show_song_text.Helpers
             catch (HttpRequestException)
             {
 
-                await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Nie udało sie znaleźć pasujących artystów.", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldntFindMachingArtists}.", AppResources.AlertDialog_OK);
                 return null;
             }
             HtmlDocument htmlDocumentSearchSong = new HtmlDocument();
@@ -334,7 +337,7 @@ namespace Show_song_text.Helpers
 
             if (queryCheckIfToMany != null)
             {
-                await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Za dużo pasujacych wyników, sprecyzuj wyszukiwanie!", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, AppResources.AlertDialog_ToManyMachingResults, AppResources.AlertDialog_OK);
                 return null;
             }
 
@@ -379,7 +382,7 @@ namespace Show_song_text.Helpers
                     catch (HttpRequestException)
                     {
 
-                        await _pageService.DisplayAlert("Problem przy wyszukiwaniu", "Nie udało sie znaleźć pasujących artystów.", "OK");
+                        await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldntFindMachingArtists}.", AppResources.AlertDialog_OK);
                         continue;
                     }
 
@@ -409,8 +412,8 @@ namespace Show_song_text.Helpers
                     }
                 }
             }
-            string choosenSong = await _pageService.DisplayPositionToChoose("Wybierz utwór:", "Anuluj", null, listOfSongs.Keys.ToArray());
-            if (choosenSong.Equals("Anuluj"))
+            string choosenSong = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseSong, AppResources.AlertDialog_Cancel, null, listOfSongs.Keys.ToArray());
+            if (choosenSong.Equals(AppResources.AlertDialog_Cancel))
             {
                 return null;
             }

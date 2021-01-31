@@ -3,6 +3,7 @@
     x:Class="Show_song_text.Views.SongAddAndDetailView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     Title="{Binding PageTitle}">
@@ -36,7 +37,7 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Style="{StaticResource LabelNormalBold}"
-                            Text="Autor: " />
+                            Text="{x:Static resources:AppResources.SongAddAndDetail_Author}" />
                         <Editor
                             Grid.Row="0"
                             Grid.Column="1"
@@ -46,7 +47,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Style="{StaticResource LabelNormalBold}"
-                            Text="Tytuł:" />
+                            Text="{x:Static resources:AppResources.SongAddAndDetail_TitleName}" />
                         <Editor
                             Grid.Row="1"
                             Grid.Column="1"
@@ -66,7 +67,7 @@
                             Grid.Column="0"
                             Margin="0,10,5,0"
                             Style="{StaticResource LabelNormalBold}"
-                            Text="Tekst:"
+                            Text="{x:Static resources:AppResources.SongAddAndDetail_Text}"
                             VerticalOptions="Start" />
                         <Editor
                             Grid.Column="1"
@@ -102,7 +103,7 @@
                     </Grid>
                 </rounded:RoundedCornerView>
 
-                <rounded:RoundedCornerView Grid.Row="2">
+                <rounded:RoundedCornerView Grid.Row="2" IsVisible="{Binding ItsDetailSongPage}">
                     <Grid Margin="10,10,10,10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -111,7 +112,7 @@
                         <Label
                             Grid.Row="0"
                             Style="{StaticResource LabelNormalBold}"
-                            Text="Playlisty:" />
+                            Text="{x:Static resources:AppResources.SongAddAndDetail_Playlists}" />
                         <ListView
                             Grid.Row="1"
                             HasUnevenRows="True"
@@ -177,7 +178,7 @@
                         Padding="14"
                         Command="{Binding DeleteSongCommand}"
                         HeightRequest="60"
-                        IsVisible="{Binding IsDeleteButtonVisible}"
+                        IsVisible="{Binding ItsDetailSongPage}"
                         Source="delete.png"
                         WidthRequest="60">
                         <VisualStateManager.VisualStateGroups>

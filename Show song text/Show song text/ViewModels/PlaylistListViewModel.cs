@@ -34,6 +34,7 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(SelectedPlaylist));
             }
         }
+
         #endregion
 
         #region Variables

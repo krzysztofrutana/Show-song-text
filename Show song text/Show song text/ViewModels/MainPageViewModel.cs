@@ -11,6 +11,7 @@ using Show_song_text.Database.Repository;
 using Show_song_text.Interfaces;
 using Show_song_text.Models;
 using Show_song_text.PresentationServerUtilis;
+using Show_song_text.Resources.Languages;
 using Show_song_text.Utils;
 using Show_song_text.Views;
 using Xamarin.Forms;
@@ -51,8 +52,6 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(IsPresent));
             }
         }
-
-        public string AppName { get; set; }
         #endregion
 
         #region Constructor
@@ -61,7 +60,6 @@ namespace Show_song_text.ViewModels
             _pageService = new PageService();
 
             CreateMenuList();
-            AppName = "Pomocnik wokalisty";
 
         }
         #endregion
@@ -71,11 +69,11 @@ namespace Show_song_text.ViewModels
         private void CreateMenuList()
         {
             MenuListItems = new List<MasterMenuItem>();
-            MenuListItems.Add(new MasterMenuItem() { Title = "Lista utworów", TargetType = typeof(SongListView), OptionIcon="note.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Dodaj utwór", TargetType = typeof(SongAddAndDetailView), OptionIcon = "plusRed.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Listy odtwarzania", TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia połączeń", TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = "Ustawienia", TargetType = typeof(SettingsView), OptionIcon = "settings.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.SongList_Title, TargetType = typeof(SongListView), OptionIcon="note.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.SongAddAndDetail_AddSong, TargetType = typeof(SongAddAndDetailView), OptionIcon = "plusRed.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.PlaylistList_Title, TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.ConnectionSettings_Title, TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.Settings_Title, TargetType = typeof(SettingsView), OptionIcon = "settings.png" });
         }
         #endregion
 
@@ -86,7 +84,7 @@ namespace Show_song_text.ViewModels
             {
                 if (masterMenuItem != null)
                 {
-                    if (masterMenuItem.Title == "Dodaj utwór")
+                    if (masterMenuItem.Title.Equals(AppResources.SongAddAndDetail_AddSong))
                     {
                         Page page = (Page)Activator.CreateInstance(masterMenuItem.TargetType);
                         await _pageService.ChangePageAsync(page);
@@ -102,11 +100,11 @@ namespace Show_song_text.ViewModels
             }
             catch (TargetInvocationException e)
             {
-                await _pageService.DisplayAlert("Błąd", e.InnerException.Message, "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, e.InnerException.Message, AppResources.AlertDialog_OK);
             }
             catch (Exception e)
             {
-                await _pageService.DisplayAlert("Błąd", e.Message, "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, e.Message, AppResources.AlertDialog_OK);
             }
         }
         #endregion

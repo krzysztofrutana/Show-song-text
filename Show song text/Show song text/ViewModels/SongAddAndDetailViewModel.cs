@@ -20,6 +20,7 @@ using System.Threading;
 using Show_song_text.PresentationServerUtilis;
 using Show_song_text.Models;
 using Show_song_text.Helpers;
+using Show_song_text.Resources.Languages;
 
 namespace Show_song_text.ViewModels
 {
@@ -75,22 +76,6 @@ namespace Show_song_text.ViewModels
             }
         }
 
-        private string _chords;
-        public string Chords
-        {
-            get
-            {
-                return _chords;
-
-            }
-            set
-            {
-                _chords = value;
-                Song.Chords = value;
-                OnPropertyChanged(nameof(Chords));
-            }
-        }
-
         private string _PageTitle;
 
         public string PageTitle
@@ -102,15 +87,15 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(PageTitle));
             }
         }
-        private Boolean _IsDeleteButtonVisible;
+        private Boolean _ItsDetailSongPage;
 
-        public Boolean IsDeleteButtonVisible
+        public Boolean ItsDetailSongPage
         {
-            get { return _IsDeleteButtonVisible; }
+            get { return _ItsDetailSongPage; }
             set
             {
-                _IsDeleteButtonVisible = value;
-                OnPropertyChanged(nameof(IsDeleteButtonVisible));
+                _ItsDetailSongPage = value;
+                OnPropertyChanged(nameof(ItsDetailSongPage));
             }
         }
 
@@ -169,9 +154,9 @@ namespace Show_song_text.ViewModels
             SearchTextCommand = new Command(async () => await SearchText());
             SelectPlaylistCommand = new Command<PlaylistViewModel>(async playlist => await SelectPlaylist(playlist));
 
-            IsDeleteButtonVisible = false;
+            ItsDetailSongPage = false;
             Song = new Song();
-            PageTitle = "Dodaj utwór";
+            PageTitle = AppResources.SongAddAndDetail_AddSong;
 
         }
         #endregion
@@ -179,7 +164,7 @@ namespace Show_song_text.ViewModels
         #region Commands methods
         private async Task DeleteSong()
         {
-            if (await _pageService.DisplayAlert("Ostrzeżenie", $"Jesteś pewny, że chcesz usunąć {Song.Artist} {Song.Title}?", "Tak", "Nie"))
+            if (await _pageService.DisplayAlert(AppResources.AlertDialog_Warning, $"{AppResources.AlertDialog_AreYouSureToDelete} {Song.Artist} {Song.Title}?", AppResources.AlertDialog_Yes, AppResources.AlertDialog_No))
             {
 
                 var songToDelete = await songRepository.GetSong(Song.Id);
@@ -200,7 +185,7 @@ namespace Show_song_text.ViewModels
             {
                 if (String.IsNullOrWhiteSpace(Song.Title) && String.IsNullOrWhiteSpace(Song.Artist))
                 {
-                    await _pageService.DisplayAlert("Błąd", "Wprowadź nazwę i autora.", "OK");
+                    await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_EnterNameAndTitle, AppResources.AlertDialog_OK);
                     return;
                 }
                 else
@@ -245,7 +230,7 @@ namespace Show_song_text.ViewModels
             }
             else
             {
-                await _pageService.DisplayAlert("Błąd", "Nieoczekiwany przypadek", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_CompleteAtLeastOneField, AppResources.AlertDialog_OK);
                 return;
             }
 
@@ -274,8 +259,8 @@ namespace Show_song_text.ViewModels
                             {
                                 listOfSongsFullName.Add(item.FullSongName);
                             }
-                            string choosenSong = await _pageService.DisplayPositionToChoose("Wybierz utwór:", "Anuluj", null, listOfSongsFullName.ToArray());
-                            if (choosenSong.Equals("Anuluj")){
+                            string choosenSong = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseSong, AppResources.AlertDialog_Cancel, null, listOfSongsFullName.ToArray());
+                            if (choosenSong.Equals(AppResources.AlertDialog_Cancel)){
                                 break;
                             }
                             songToFind = findedSongs[listOfSongsFullName.IndexOf(choosenSong)];
@@ -294,8 +279,8 @@ namespace Show_song_text.ViewModels
                         {
                             listOfSongsFullName.Add(item.FullSongName);
                         }
-                        string choosenSong = await _pageService.DisplayPositionToChoose("Wybierz utwór:", "Anuluj", null, listOfSongsFullName.ToArray());
-                        if (choosenSong.Equals("Anuluj")){
+                        string choosenSong = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseSong, AppResources.AlertDialog_Cancel, null, listOfSongsFullName.ToArray());
+                        if (choosenSong.Equals(AppResources.AlertDialog_Cancel)){
                             break;
                         }
                         songToFind = artistSongs[listOfSongsFullName.IndexOf(choosenSong)];
@@ -333,15 +318,14 @@ namespace Show_song_text.ViewModels
         {
             if (song != null)
             {
-                IsDeleteButtonVisible = true;
+                ItsDetailSongPage = true;
                 Song = await songRepository.GetSongWithChildren(song.Id);
                 Title = Song.Title;
                 Artist = Song.Artist;
                 Text = Song.Text;
-                Chords = Song.Chords;
                 Playlists = Song.Playlists;
             }
-            PageTitle = "Podgląd utworu";
+            PageTitle = AppResources.SongAddAndDetail_SongDetail;
             MessagingCenter.Unsubscribe<SongListViewModel, SongViewModel>(this, Events.SendSong);
         }
         #endregion

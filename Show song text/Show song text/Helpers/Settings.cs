@@ -28,6 +28,7 @@ namespace Show_song_text.Helpers
         private static readonly string FontSizeDefault = "20";
         private static readonly bool ClientIsConnectedDefault = false;
         private static readonly bool ServerIsRunningDefault = false;
+        private static readonly string DefaultLanguage = "none";
 
         #endregion
 
@@ -126,6 +127,18 @@ namespace Show_song_text.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue(nameof(ServerClientConnectedQty), value);
+            }
+        }
+
+        public static string ChoosenLanguage
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(nameof(ChoosenLanguage), DefaultLanguage);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(ChoosenLanguage), value);
             }
         }
 

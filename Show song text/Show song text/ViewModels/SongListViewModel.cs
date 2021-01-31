@@ -3,6 +3,7 @@ using Show_song_text.Database.Persistence;
 using Show_song_text.Database.Repository;
 using Show_song_text.Database.ViewModels;
 using Show_song_text.Interfaces;
+using Show_song_text.Resources.Languages;
 using Show_song_text.Utils;
 using Show_song_text.Views;
 using System;
@@ -89,8 +90,8 @@ namespace Show_song_text.ViewModels
             LoadSongsCommand = new Command(async () => await LoadSongs());
             SelectSongCommand = new Command<SongViewModel>(async song => await SelectSong(song));
             CreatePlaylistCommand = new Command(async () => await CreatePlaylist());
-            AddToPlaylistCommand = new Command<SongViewModel>(async song => await AddToPlaylist(song));
-            DeleteFromPlaylistCommand = new Command<SongViewModel>(async song => await DeleteFromPlaylist(song));
+            AddToPlaylistCommand = new Command<SongViewModel>(song => AddToPlaylist(song));
+            DeleteFromPlaylistCommand = new Command<SongViewModel>(song => DeleteFromPlaylist(song));
             StartSongPresentationCommand = new Command<int>(async id => await StartPresentation(id));
 
             MessagingCenter.Subscribe<SongAddAndDetailViewModel, Song>
@@ -140,10 +141,10 @@ namespace Show_song_text.ViewModels
                 Song song = await songRepository.GetSong(songViewModel.Id);
                 songsList.Add(song);
             }
-            string playlistName = await _pageService.DisplayEntry("Wpisz nazwę playlisty", "");
+            string playlistName = await _pageService.DisplayEntry(AppResources.DisplayEntry_EnterPlaylistName, "");
             if (String.IsNullOrEmpty(playlistName))
             {
-                await _pageService.DisplayAlert("Błąd", "Nazwa playlisty nie może być pusta", "OK");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_NameCannotBeEmpty,AppResources.AlertDialog_OK);
             }
             else
             {
@@ -155,18 +156,18 @@ namespace Show_song_text.ViewModels
                 };
                 await playlistRepository.AddPlaylist(playlist);
                 var songtenp = await songRepository.GetSongWithChildren(songsList[0].Id);
-                await _pageService.DisplayAlert("Sukces", "Playlista utworzona", "Ok");
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Success, AppResources.AlertDialog_PlaylistCreated, AppResources.AlertDialog_OK);
                 UnCheckAllSongs();
                 SetCheckBoxVisibility(false);
                 ShowChooseOption = false;
             } 
         }
 
-        private async Task AddToPlaylist(SongViewModel songViewModel)
+        private void AddToPlaylist(SongViewModel songViewModel)
         {
             SelectedSongs.Add(songViewModel);
         }
-        private async Task DeleteFromPlaylist(SongViewModel songViewModel)
+        private void DeleteFromPlaylist(SongViewModel songViewModel)
         {
             SelectedSongs.Remove(songViewModel);
         }

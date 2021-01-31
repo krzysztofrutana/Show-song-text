@@ -3,10 +3,11 @@
     x:Class="Show_song_text.Views.SongListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     x:Name="SongList"
-    Title="Lista utworów">
+    Title="{x:Static resources:AppResources.SongList_Title}">
     <ContentPage.BindingContext>
         <vm:SongListViewModel />
     </ContentPage.BindingContext>
@@ -105,7 +106,7 @@
                 Margin="0,0,0,10"
                 Command="{Binding CreatePlaylistCommand}"
                 IsVisible="{Binding ShowChooseOption}"
-                Text="Utwórz playlistę"
+                Text="{x:Static resources:AppResources.SongList_CreatePlaylist}"
                 VerticalOptions="End">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">

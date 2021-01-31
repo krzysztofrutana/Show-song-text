@@ -3,14 +3,16 @@
     x:Class="Show_song_text.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
-    Title="Ustawienia">
+    Title="{x:Static resources:AppResources.Settings_Title}">
     <ContentPage.BindingContext>
         <vm:SettingsViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid Padding="15,10,15,10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -22,7 +24,7 @@
             <Label
                 Grid.Column="0"
                 Style="{StaticResource LabelSettings}"
-                Text="Wielkość czcionki:"
+                Text="{x:Static resources:AppResources.Settings_FontSize}"
                 VerticalOptions="CenterAndExpand" />
             <Entry
                 Grid.Column="1"
@@ -31,6 +33,20 @@
                 TextColor="{StaticResource TextColor}"
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="40" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource LabelSettings}"
+                Text="{x:Static resources:AppResources.Settings_Language}"
+                VerticalOptions="CenterAndExpand" />
+            <Picker
+                Title="{x:Static resources:AppResources.Settings_SelectLanguage}"
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemDisplayBinding="{Binding FullName}"
+                ItemsSource="{Binding Languages}"
+                SelectedItem="{Binding SelectedLanguage}"
+                WidthRequest="70 " />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
