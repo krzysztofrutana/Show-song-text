@@ -129,6 +129,8 @@ namespace Show_song_text.ViewModels
         #region Variable
         private readonly SongRepository songRepository;
         private readonly IPageService _pageService;
+        private static readonly ILogInterface Log = DependencyService.Get<ILogInterface>();
+        private static string TAG = "SongAddAndDetailViewModel";
         #endregion
 
         #region Commands
@@ -207,108 +209,114 @@ namespace Show_song_text.ViewModels
         }
         async Task SearchText()
         {
-            int searchType;
-            FindedSongObject songToFind = new FindedSongObject() { Title = Title, Artist = Artist };
+            try
+            {
+                int searchType;
+                FindedSongObject songToFind = new FindedSongObject() { Title = Title, Artist = Artist };
 
 
 
-            if ((Title != null && !Title.Equals("")) && (Artist != null && !Artist.Equals("")))
-            {
-                songToFind.WorkingTitle = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Title.ToLower().Replace(" ", "_"));
-                songToFind.WorkingArtist = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Artist.ToLower().Replace(" ", "_"));
-                searchType = 1;
-            }
-            else if ((Artist != null && !Artist.Equals("")) && (Title == null || Title.Equals("")))
-            {
-                songToFind.WorkingArtist = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Artist.ToLower().Replace(" ", "_"));
-                searchType = 2;
-            }
-            else if ((Artist == null || Artist.Equals("")) && (Title != null && !Title.Equals("")))
-            {
-                songToFind.WorkingTitle = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Title.ToLower().Replace(" ", "_"));
-                searchType = 3;
-            }
-            else
-            {
-                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_CompleteAtLeastOneField, AppResources.AlertDialog_OK);
-                return;
-            }
+                if ((Title != null && !Title.Equals("")) && (Artist != null && !Artist.Equals("")))
+                {
+                    songToFind.WorkingTitle = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Title.ToLower().Replace(" ", "_"));
+                    songToFind.WorkingArtist = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Artist.ToLower().Replace(" ", "_"));
+                    searchType = 1;
+                }
+                else if ((Artist != null && !Artist.Equals("")) && (Title == null || Title.Equals("")))
+                {
+                    songToFind.WorkingArtist = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Artist.ToLower().Replace(" ", "_"));
+                    searchType = 2;
+                }
+                else if ((Artist == null || Artist.Equals("")) && (Title != null && !Title.Equals("")))
+                {
+                    songToFind.WorkingTitle = TekstowoHelper.NormalizeTextWithoutPolishSpecialChar(Title.ToLower().Replace(" ", "_"));
+                    searchType = 3;
+                }
+                else
+                {
+                    await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_CompleteAtLeastOneField, AppResources.AlertDialog_OK);
+                    return;
+                }
 
-            switch (searchType)
-            {
-                case 1:
-                    Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind);
-                    if(Text == null)
-                        goto case 2;
-                    else
-                        break;
-                case 2:
-                    List<FindedSongObject> artistSongs = await TekstowoHelper.SearchArtistSongs(songToFind);
-                    if (artistSongs.Count == 0)
-                    {
-                        songToFind = await TekstowoHelper.SearchArtist(songToFind);
-                        if (songToFind == null)
-                        {
+                switch (searchType)
+                {
+                    case 1:
+                        Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind);
+                        if (Text == null)
+                            goto case 2;
+                        else
                             break;
+                    case 2:
+                        List<FindedSongObject> artistSongs = await TekstowoHelper.SearchArtistSongs(songToFind);
+                        if (artistSongs.Count == 0)
+                        {
+                            songToFind = await TekstowoHelper.SearchArtist(songToFind);
+                            if (songToFind == null)
+                            {
+                                break;
+                            }
+                            List<FindedSongObject> findedSongs = await TekstowoHelper.SearchArtistSongs(songToFind, true);
+                            if (findedSongs.Count != 0)
+                            {
+                                List<string> listOfSongsFullName = new List<string>();
+                                foreach (var item in findedSongs)
+                                {
+                                    listOfSongsFullName.Add(item.FullSongName);
+                                }
+                                string choosenSong = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseSong, AppResources.AlertDialog_Cancel, null, listOfSongsFullName.ToArray());
+                                if (choosenSong.Equals(AppResources.AlertDialog_Cancel))
+                                {
+                                    break;
+                                }
+                                songToFind = findedSongs[listOfSongsFullName.IndexOf(choosenSong)];
+                                Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind, true);
+                                if (!String.IsNullOrEmpty(Text))
+                                {
+                                    Title = songToFind.Title;
+                                    Artist = songToFind.Artist;
+                                }
+                            }
                         }
-                        List<FindedSongObject> findedSongs = await TekstowoHelper.SearchArtistSongs(songToFind, true);
-                        if (findedSongs.Count != 0)
+                        else
                         {
                             List<string> listOfSongsFullName = new List<string>();
-                            foreach (var item in findedSongs)
+                            foreach (var item in artistSongs)
                             {
                                 listOfSongsFullName.Add(item.FullSongName);
                             }
                             string choosenSong = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseSong, AppResources.AlertDialog_Cancel, null, listOfSongsFullName.ToArray());
-                            if (choosenSong.Equals(AppResources.AlertDialog_Cancel)){
+                            if (choosenSong.Equals(AppResources.AlertDialog_Cancel))
+                            {
                                 break;
                             }
-                            songToFind = findedSongs[listOfSongsFullName.IndexOf(choosenSong)];
+                            songToFind = artistSongs[listOfSongsFullName.IndexOf(choosenSong)];
                             Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind, true);
                             if (!String.IsNullOrEmpty(Text))
                             {
                                 Title = songToFind.Title;
-                                Artist = songToFind.Artist;
                             }
                         }
-                    }
-                    else
-                    {
-                        List<string> listOfSongsFullName = new List<string>();
-                        foreach (var item in artistSongs)
-                        {
-                            listOfSongsFullName.Add(item.FullSongName);
-                        }
-                        string choosenSong = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseSong, AppResources.AlertDialog_Cancel, null, listOfSongsFullName.ToArray());
-                        if (choosenSong.Equals(AppResources.AlertDialog_Cancel)){
+                        break;
+                    case 3:
+                        songToFind = await TekstowoHelper.SearchSong(songToFind);
+                        if (songToFind == null)
                             break;
-                        }
-                        songToFind = artistSongs[listOfSongsFullName.IndexOf(choosenSong)];
                         Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind, true);
                         if (!String.IsNullOrEmpty(Text))
                         {
                             Title = songToFind.Title;
+                            Artist = songToFind.Artist;
                         }
-                    }
-                    break;
-                case 3:
-                    songToFind = await TekstowoHelper.SearchSong(songToFind);
-                    if (songToFind == null)
+
                         break;
-                    Text = await TekstowoHelper.FindTextFromArtistAndTitle(songToFind, true);
-                    if (!String.IsNullOrEmpty(Text))
-                    {
-                        Title = songToFind.Title;
-                        Artist = songToFind.Artist;
-                    }
-
-                    break;
-                default:
-                    break;
+                    default:
+                        break;
+                }
+            }catch (Exception e)
+            {
+                Log.Debug(TAG, e.Message);
+                await _pageService.DisplayAlert(AppResources.AlertDIalog_UnexpectedError, AppResources.AlertDIalog_UnexpectedErrorMessage, AppResources.AlertDialog_OK);
             }
-
-
-
         }
         #endregion
 

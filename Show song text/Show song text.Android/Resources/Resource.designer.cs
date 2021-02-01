@@ -24201,52 +24201,58 @@ namespace Show_song_text.Droid
 			public const int presentation = 2131165521;
 			
 			// aapt resource value: 0x7F070152
-			public const int save = 2131165522;
+			public const int raport_problem = 2131165522;
 			
 			// aapt resource value: 0x7F070153
-			public const int search = 2131165523;
+			public const int save = 2131165523;
 			
 			// aapt resource value: 0x7F070154
-			public const int selected_circle = 2131165524;
+			public const int search = 2131165524;
 			
 			// aapt resource value: 0x7F070155
-			public const int settings = 2131165525;
+			public const int selected_circle = 2131165525;
 			
 			// aapt resource value: 0x7F070156
-			public const int tooltip_frame_dark = 2131165526;
+			public const int settings = 2131165526;
 			
 			// aapt resource value: 0x7F070157
-			public const int tooltip_frame_light = 2131165527;
+			public const int support = 2131165527;
 			
 			// aapt resource value: 0x7F070158
-			public const int unselected_circle = 2131165528;
+			public const int tooltip_frame_dark = 2131165528;
 			
 			// aapt resource value: 0x7F070159
-			public const int upArrow = 2131165529;
+			public const int tooltip_frame_light = 2131165529;
 			
 			// aapt resource value: 0x7F07015A
-			public const int xf_arrow_dropdown = 2131165530;
+			public const int unselected_circle = 2131165530;
 			
 			// aapt resource value: 0x7F07015B
-			public const int xf_check = 2131165531;
+			public const int upArrow = 2131165531;
 			
 			// aapt resource value: 0x7F07015C
-			public const int xf_checkbox_selected = 2131165532;
+			public const int xf_arrow_dropdown = 2131165532;
 			
 			// aapt resource value: 0x7F07015D
-			public const int xf_checkbox_unselected = 2131165533;
+			public const int xf_check = 2131165533;
 			
 			// aapt resource value: 0x7F07015E
-			public const int xf_clear = 2131165534;
+			public const int xf_checkbox_selected = 2131165534;
 			
 			// aapt resource value: 0x7F07015F
-			public const int xf_error = 2131165535;
+			public const int xf_checkbox_unselected = 2131165535;
 			
 			// aapt resource value: 0x7F070160
-			public const int xf_radio_button_selected = 2131165536;
+			public const int xf_clear = 2131165536;
 			
 			// aapt resource value: 0x7F070161
-			public const int xf_radio_button_unselected = 2131165537;
+			public const int xf_error = 2131165537;
+			
+			// aapt resource value: 0x7F070162
+			public const int xf_radio_button_selected = 2131165538;
+			
+			// aapt resource value: 0x7F070163
+			public const int xf_radio_button_unselected = 2131165539;
 			
 			static Drawable()
 			{

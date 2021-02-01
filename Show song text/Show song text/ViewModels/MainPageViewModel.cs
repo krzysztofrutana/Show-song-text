@@ -74,6 +74,8 @@ namespace Show_song_text.ViewModels
             MenuListItems.Add(new MasterMenuItem() { Title = AppResources.PlaylistList_Title, TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" });
             MenuListItems.Add(new MasterMenuItem() { Title = AppResources.ConnectionSettings_Title, TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
             MenuListItems.Add(new MasterMenuItem() { Title = AppResources.Settings_Title, TargetType = typeof(SettingsView), OptionIcon = "settings.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.RaportProblem_Title, TargetType = typeof(RaportProblemView), OptionIcon = "raport_problem.png" });
+            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.SupportMe_Title, TargetType = typeof(SupportMeView), OptionIcon = "support.png" });
         }
         #endregion
 

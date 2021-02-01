@@ -183,6 +183,12 @@
   <data name="AlertDialog_ToManyMachingResults" xml:space="preserve">
     <value>Too many matching results, please refine your search!</value>
   </data>
+  <data name="AlertDIalog_UnexpectedError" xml:space="preserve">
+    <value>Unexpected error</value>
+  </data>
+  <data name="AlertDIalog_UnexpectedErrorMessage" xml:space="preserve">
+    <value>The program encountered an unexpected error, please describe the situation in which it occurred and submit a report via the Report a problem option.</value>
+  </data>
   <data name="AlertDialog_Warning" xml:space="preserve">
     <value>Warning</value>
   </data>
@@ -273,6 +279,24 @@
   <data name="PlaylistList_Title" xml:space="preserve">
     <value>Playlists</value>
   </data>
+  <data name="RaportProblem_ButtonText" xml:space="preserve">
+    <value>Send message</value>
+  </data>
+  <data name="RaportProblem_DescribeProblem" xml:space="preserve">
+    <value>Describe the problem and send a message.</value>
+  </data>
+  <data name="RaportProblem_DoYouHaveProblem" xml:space="preserve">
+    <value>Have a problem with the app?</value>
+  </data>
+  <data name="RaportProblem_Subject" xml:space="preserve">
+    <value>Subject:</value>
+  </data>
+  <data name="RaportProblem_Text" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="RaportProblem_Title" xml:space="preserve">
+    <value>Report a problem</value>
+  </data>
   <data name="Settings_FontSize" xml:space="preserve">
     <value>Font size:</value>
   </data>
@@ -308,5 +332,47 @@
   </data>
   <data name="SongList_Title" xml:space="preserve">
     <value>Song list</value>
+  </data>
+  <data name="SupportMe_AccountDetails" xml:space="preserve">
+    <value>Account details:</value>
+  </data>
+  <data name="SupportMe_AccountName" xml:space="preserve">
+    <value>Krzysztof Rutana</value>
+  </data>
+  <data name="SupportMe_AccountNameLabel" xml:space="preserve">
+    <value>Account name:</value>
+  </data>
+  <data name="SupportMe_AccountNumber" xml:space="preserve">
+    <value>IBAN:</value>
+  </data>
+  <data name="SupportMe_BicSwift" xml:space="preserve">
+    <value>BIC/SWIFT:</value>
+  </data>
+  <data name="SupportMe_BicSwift_number" xml:space="preserve">
+    <value>PKOPPLPW</value>
+  </data>
+  <data name="SupportMe_Donate" xml:space="preserve">
+    <value>Any financial aid is also appreciated! </value>
+  </data>
+  <data name="SupportMe_IBAN" xml:space="preserve">
+    <value>PL27 1240 5110 1111 0010 5758 5342</value>
+  </data>
+  <data name="SupportMe_Rate" xml:space="preserve">
+    <value>Please rate in the Google Store:</value>
+  </data>
+  <data name="SupportMe_RateButtonText" xml:space="preserve">
+    <value>Open on the Play Store</value>
+  </data>
+  <data name="SupportMe_SupportMyWork" xml:space="preserve">
+    <value>Support my work!</value>
+  </data>
+  <data name="SupportMe_Thanks" xml:space="preserve">
+    <value>Thanks!</value>
+  </data>
+  <data name="SupportMe_Title" xml:space="preserve">
+    <value>Support my work</value>
+  </data>
+  <data name="SupportMe_YouLikeApplication" xml:space="preserve">
+    <value>Do you like the app?</value>
   </data>
 </root>

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Show_song_text.Views.RaportProblemView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
+    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    Title="{x:Static resources:AppResources.RaportProblem_Title}">
+    <ContentPage.BindingContext>
+        <vm:RaportProblemViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="15" BackgroundColor="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelRaportProblemMain}"
+                    Text="{x:Static resources:AppResources.RaportProblem_DoYouHaveProblem}" />
+                <Label
+                    Grid.Row="1"
+                    Margin="0,10,0,0"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelRaportProblemSecond}"
+                    Text="{x:Static resources:AppResources.RaportProblem_DescribeProblem}" />
+                <Label
+                    Grid.Row="2"
+                    Margin="0,20,0,0"
+                    Style="{StaticResource LabelRaportProblem}"
+                    Text="{x:Static resources:AppResources.RaportProblem_Subject}" />
+                <Editor
+                    Grid.Row="3"
+                    AutoSize="TextChanges"
+                    Text="{Binding SubjectMessage}" />
+                <Label
+                    Grid.Row="4"
+                    Margin="0,20,0,0"
+                    Style="{StaticResource LabelRaportProblem}"
+                    Text="{x:Static resources:AppResources.RaportProblem_Text}" />
+                <Editor
+                    Grid.Row="5"
+                    AutoSize="TextChanges"
+                    Text="{Binding MessageText}"
+                    VerticalOptions="StartAndExpand" />
+                <Button
+                    Grid.Row="6"
+                    Margin="0,20,0,10"
+                    Command="{Binding SendMessageCommand}"
+                    Text="{x:Static resources:AppResources.RaportProblem_ButtonText}"
+                    VerticalOptions="End">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

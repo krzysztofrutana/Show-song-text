@@ -259,6 +259,24 @@ namespace Show_song_text.Resources.Languages {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Unexpected error.
+        /// </summary>
+        public static string AlertDIalog_UnexpectedError {
+            get {
+                return ResourceManager.GetString("AlertDIalog_UnexpectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu The program encountered an unexpected error, please describe the situation in which it occurred and submit a report via the Report a problem option..
+        /// </summary>
+        public static string AlertDIalog_UnexpectedErrorMessage {
+            get {
+                return ResourceManager.GetString("AlertDIalog_UnexpectedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Warning.
         /// </summary>
         public static string AlertDialog_Warning {
@@ -529,6 +547,60 @@ namespace Show_song_text.Resources.Languages {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Send message.
+        /// </summary>
+        public static string RaportProblem_ButtonText {
+            get {
+                return ResourceManager.GetString("RaportProblem_ButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Describe the problem and send a message..
+        /// </summary>
+        public static string RaportProblem_DescribeProblem {
+            get {
+                return ResourceManager.GetString("RaportProblem_DescribeProblem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Have a problem with the app?.
+        /// </summary>
+        public static string RaportProblem_DoYouHaveProblem {
+            get {
+                return ResourceManager.GetString("RaportProblem_DoYouHaveProblem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Subject:.
+        /// </summary>
+        public static string RaportProblem_Subject {
+            get {
+                return ResourceManager.GetString("RaportProblem_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Text:.
+        /// </summary>
+        public static string RaportProblem_Text {
+            get {
+                return ResourceManager.GetString("RaportProblem_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Report a problem.
+        /// </summary>
+        public static string RaportProblem_Title {
+            get {
+                return ResourceManager.GetString("RaportProblem_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Font size:.
         /// </summary>
         public static string Settings_FontSize {
@@ -633,6 +705,132 @@ namespace Show_song_text.Resources.Languages {
         public static string SongList_Title {
             get {
                 return ResourceManager.GetString("SongList_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Account details:.
+        /// </summary>
+        public static string SupportMe_AccountDetails {
+            get {
+                return ResourceManager.GetString("SupportMe_AccountDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Krzysztof Rutana.
+        /// </summary>
+        public static string SupportMe_AccountName {
+            get {
+                return ResourceManager.GetString("SupportMe_AccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Account name:.
+        /// </summary>
+        public static string SupportMe_AccountNameLabel {
+            get {
+                return ResourceManager.GetString("SupportMe_AccountNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IBAN:.
+        /// </summary>
+        public static string SupportMe_AccountNumber {
+            get {
+                return ResourceManager.GetString("SupportMe_AccountNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu BIC/SWIFT:.
+        /// </summary>
+        public static string SupportMe_BicSwift {
+            get {
+                return ResourceManager.GetString("SupportMe_BicSwift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu PKOPPLPW.
+        /// </summary>
+        public static string SupportMe_BicSwift_number {
+            get {
+                return ResourceManager.GetString("SupportMe_BicSwift_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Any financial aid is also appreciated! .
+        /// </summary>
+        public static string SupportMe_Donate {
+            get {
+                return ResourceManager.GetString("SupportMe_Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu PL27 1240 5110 1111 0010 5758 5342.
+        /// </summary>
+        public static string SupportMe_IBAN {
+            get {
+                return ResourceManager.GetString("SupportMe_IBAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Please rate in the Google Store:.
+        /// </summary>
+        public static string SupportMe_Rate {
+            get {
+                return ResourceManager.GetString("SupportMe_Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Open on the Play Store.
+        /// </summary>
+        public static string SupportMe_RateButtonText {
+            get {
+                return ResourceManager.GetString("SupportMe_RateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Support my work!.
+        /// </summary>
+        public static string SupportMe_SupportMyWork {
+            get {
+                return ResourceManager.GetString("SupportMe_SupportMyWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Thanks!.
+        /// </summary>
+        public static string SupportMe_Thanks {
+            get {
+                return ResourceManager.GetString("SupportMe_Thanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Support my work.
+        /// </summary>
+        public static string SupportMe_Title {
+            get {
+                return ResourceManager.GetString("SupportMe_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Do you like the app?.
+        /// </summary>
+        public static string SupportMe_YouLikeApplication {
+            get {
+                return ResourceManager.GetString("SupportMe_YouLikeApplication", resourceCulture);
             }
         }
     }

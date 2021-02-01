@@ -34,5 +34,46 @@
         <Setter Property="FontSize" Value="Medium" />
     </Style>
 
+    <Style x:Key="LabelRaportProblemMain" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="28" />
+    </Style>
+
+    <Style x:Key="LabelRaportProblemSecond" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
+    <Style x:Key="LabelRaportProblem" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="Subtitle" />
+    </Style>
+
+    <Style x:Key="LabelSupportMeMain" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="28" />
+    </Style>
+
+    <Style x:Key="LabelSupportSecond" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+    <Style x:Key="LabelSupport" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="Subtitle" />
+    </Style>
+
+    <Style x:Key="LabelSupportNormal" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="FontSize" Value="Subtitle" />
+    </Style>
+
 
 </ResourceDictionary>

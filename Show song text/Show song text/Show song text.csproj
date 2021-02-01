@@ -7,9 +7,12 @@
     <RootNamespace>Show_song_text</RootNamespace>
     <Authors>Krzysztof Rutana</Authors>
     <Product>Singer's assistant</Product>
-    <PackageId>Pomocnik wokalisty</PackageId>
+    <PackageId>Asystent wokalisty</PackageId>
     <PackageIcon>logo.png</PackageIcon>
     <SignAssembly>false</SignAssembly>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
+    <Version>0.9.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,10 +32,12 @@
     <None Remove="Resources\Icons\plus.png" />
     <None Remove="Resources\Icons\plusRed.png" />
     <None Remove="Resources\Icons\presentation.png" />
+    <None Remove="Resources\Icons\raport_problem.png" />
     <None Remove="Resources\Icons\save.png" />
     <None Remove="Resources\Icons\search.png" />
     <None Remove="Resources\Icons\selected_circle.png" />
     <None Remove="Resources\Icons\settings.png" />
+    <None Remove="Resources\Icons\support.png" />
     <None Remove="Resources\Icons\unselected_circle.png" />
     <None Remove="Resources\Icons\upArrow.png" />
     <None Remove="ViewModels\MainPageViewModel.cs~RF14f34754.TMP" />
@@ -54,10 +59,12 @@
     <EmbeddedResource Include="Resources\Icons\plus.png" />
     <EmbeddedResource Include="Resources\Icons\plusRed.png" />
     <EmbeddedResource Include="Resources\Icons\presentation.png" />
+    <EmbeddedResource Include="Resources\Icons\raport_problem.png" />
     <EmbeddedResource Include="Resources\Icons\save.png" />
     <EmbeddedResource Include="Resources\Icons\search.png" />
     <EmbeddedResource Include="Resources\Icons\selected_circle.png" />
     <EmbeddedResource Include="Resources\Icons\settings.png" />
+    <EmbeddedResource Include="Resources\Icons\support.png" />
     <EmbeddedResource Include="Resources\Icons\unselected_circle.png" />
     <EmbeddedResource Include="Resources\Icons\upArrow.png" />
   </ItemGroup>
@@ -85,6 +92,9 @@
     </Compile>
     <Compile Update="Views\MainPageView.xaml.cs">
       <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RaportProblemView.xaml.cs">
+      <DependentUpon>RaportProblemView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -117,6 +127,9 @@
     <EmbeddedResource Update="Views\MainPageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\RaportProblemView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\SettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -133,6 +146,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SongTextPresentationView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SupportMeView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

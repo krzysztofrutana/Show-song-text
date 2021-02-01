@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Show_song_text.Views.SupportMeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
+    Title="{x:Static resources:AppResources.SupportMe_Title}">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="15" BackgroundColor="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelSupportMeMain}"
+                    Text="{x:Static resources:AppResources.SupportMe_YouLikeApplication}" />
+                <Label
+                    Grid.Row="1"
+                    Margin="0,10,0,0"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelSupportSecond}"
+                    Text="{x:Static resources:AppResources.SupportMe_SupportMyWork}" />
+                <Label
+                    Grid.Row="2"
+                    Margin="0,20,0,0"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelSupport}"
+                    Text="{x:Static resources:AppResources.SupportMe_Rate}" />
+                <Button
+                    Grid.Row="3"
+                    Margin="0,10,0,0"
+                    Text="{x:Static resources:AppResources.SupportMe_RateButtonText}">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+                <Label
+                    Grid.Row="4"
+                    Margin="0,30,0,20"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelSupport}"
+                    Text="{x:Static resources:AppResources.SupportMe_Donate}" />
+                <Label
+                    Grid.Row="5"
+                    Margin="0,0,0,10"
+                    Style="{StaticResource LabelSupport}"
+                    Text="{x:Static resources:AppResources.SupportMe_AccountDetails}" />
+                <StackLayout Grid.Row="6" Orientation="Horizontal">
+                    <Label Style="{StaticResource LabelSupport}" Text="{x:Static resources:AppResources.SupportMe_AccountNameLabel}" />
+                    <Label Style="{StaticResource LabelSupportNormal}" Text="{x:Static resources:AppResources.SupportMe_AccountName}" />
+                </StackLayout>
+                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                    <Label Style="{StaticResource LabelSupport}" Text="{x:Static resources:AppResources.SupportMe_BicSwift}" />
+                    <Label Style="{StaticResource LabelSupportNormal}" Text="{x:Static resources:AppResources.SupportMe_BicSwift_number}" />
+                </StackLayout>
+                <StackLayout Grid.Row="8" Orientation="Vertical">
+                    <Label Style="{StaticResource LabelSupport}" Text="{x:Static resources:AppResources.SupportMe_AccountNumber}" />
+                    <Label Style="{StaticResource LabelSupportNormal}" Text="{x:Static resources:AppResources.SupportMe_IBAN}" />
+                </StackLayout>
+                <Label
+                    Grid.Row="9"
+                    Margin="0,10,0,50"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelSupportMeMain}"
+                    Text="{x:Static resources:AppResources.SupportMe_Thanks}"
+                    VerticalTextAlignment="End" />
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
