@@ -102,11 +102,11 @@ namespace Show_song_text.ViewModels
             DeletePlaylistCommand = new Command(async () => await DeletePlaylist());
             StartPresentationCommand = new Command(async () => await StartPresentation());
             ShowEditOptionsCommand = new Command(ShowEditOptions);
-            DeleteSongsFromPlaylistCommand = new Command(async songs => await DeleteSongsFromPlaylist());
+            DeleteSongsFromPlaylistCommand = new Command(() => DeleteSongsFromPlaylist());
             AddSongsToPlaylistCommand = new Command(async () => await AddSongsToPlaylist());
 
-            SelectAsToDeleteCommand = new Command<SongViewModel>(async song => await SelectAsToDelete(song));
-            UnselectAsToDeleteCommand = new Command<SongViewModel>(async song => await UnselectAsToDelete(song));
+            SelectAsToDeleteCommand = new Command<SongViewModel>(song => SelectAsToDelete(song));
+            UnselectAsToDeleteCommand = new Command<SongViewModel>(song => UnselectAsToDelete(song));
 
             MoveUpCommand = new Command(MoveUp);
             MoveDownCommand = new Command(MoveDown);
@@ -212,7 +212,7 @@ namespace Show_song_text.ViewModels
             }
         }
 
-        async Task DeleteSongsFromPlaylist()
+        void DeleteSongsFromPlaylist()
         {
             foreach (SongViewModel song in SelectedSongs)
             {
@@ -224,13 +224,13 @@ namespace Show_song_text.ViewModels
             await _pageService.ChangePageAsync(new AddSongToPlaylistView());
         }
 
-        async Task SelectAsToDelete(SongViewModel song)
+        void SelectAsToDelete(SongViewModel song)
         {
             if (!SelectedSongs.Contains(song))
                 SelectedSongs.Add(song);
         }
 
-        async Task UnselectAsToDelete(SongViewModel song)
+        void UnselectAsToDelete(SongViewModel song)
         {
             SelectedSongs.Remove(song);
         }
@@ -318,7 +318,7 @@ namespace Show_song_text.ViewModels
             //MessagingCenter.Unsubscribe<SongAddAndDetailView, PlaylistViewModel>(this, Events.SendPlaylist);  // TODO
         }
 
-        private async void OnSongsAdded(AddSongToPlaylistViewModel source, ObservableCollection<SongViewModel> songs)
+        private void OnSongsAdded(AddSongToPlaylistViewModel source, ObservableCollection<SongViewModel> songs)
         {
             foreach (SongViewModel song in songs)
             {

@@ -23,6 +23,7 @@ namespace Show_song_text.Database.Models
         [MaxLength(255)]
         public string Text { get; set; }
         [MaxLength(255)]
+        public string SongKey { get; set; }
         public string Chords { get; set; }
         public Boolean IsChecked { get; set; }
         public Boolean IsCheckBoxVisible { get; set; }

@@ -68,14 +68,16 @@ namespace Show_song_text.ViewModels
         #region Initialize
         private void CreateMenuList()
         {
-            MenuListItems = new List<MasterMenuItem>();
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.SongList_Title, TargetType = typeof(SongListView), OptionIcon="note.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.SongAddAndDetail_AddSong, TargetType = typeof(SongAddAndDetailView), OptionIcon = "plusRed.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.PlaylistList_Title, TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.ConnectionSettings_Title, TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.Settings_Title, TargetType = typeof(SettingsView), OptionIcon = "settings.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.RaportProblem_Title, TargetType = typeof(RaportProblemView), OptionIcon = "raport_problem.png" });
-            MenuListItems.Add(new MasterMenuItem() { Title = AppResources.SupportMe_Title, TargetType = typeof(SupportMeView), OptionIcon = "support.png" });
+            MenuListItems = new List<MasterMenuItem>
+            {
+                new MasterMenuItem() { Title = AppResources.SongList_Title, TargetType = typeof(SongListView), OptionIcon = "note.png" },
+                new MasterMenuItem() { Title = AppResources.SongAddAndDetail_AddSong, TargetType = typeof(SongAddAndDetailView), OptionIcon = "plusRed.png" },
+                new MasterMenuItem() { Title = AppResources.PlaylistList_Title, TargetType = typeof(PlaylistListView), OptionIcon = "playlist.png" },
+                new MasterMenuItem() { Title = AppResources.ConnectionSettings_Title, TargetType = typeof(ConnectionSettingsView), OptionIcon = "connectionSettings.png" },
+                new MasterMenuItem() { Title = AppResources.Settings_Title, TargetType = typeof(SettingsView), OptionIcon = "settings.png" },
+                new MasterMenuItem() { Title = AppResources.RaportProblem_Title, TargetType = typeof(RaportProblemView), OptionIcon = "raport_problem.png" },
+                new MasterMenuItem() { Title = AppResources.SupportMe_Title, TargetType = typeof(SupportMeView), OptionIcon = "support.png" }
+            };
         }
         #endregion
 

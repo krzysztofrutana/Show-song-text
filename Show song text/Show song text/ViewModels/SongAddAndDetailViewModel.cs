@@ -21,6 +21,8 @@ using Show_song_text.PresentationServerUtilis;
 using Show_song_text.Models;
 using Show_song_text.Helpers;
 using Show_song_text.Resources.Languages;
+using Xamarin.Essentials;
+using System.Collections.ObjectModel;
 
 namespace Show_song_text.ViewModels
 {
@@ -76,6 +78,52 @@ namespace Show_song_text.ViewModels
             }
         }
 
+        private bool addChords;
+
+        public bool AddChords
+        {
+            get { return addChords; }
+            set
+            {
+                addChords = value;
+                if(value == true && String.IsNullOrWhiteSpace(Chords))
+                {
+                    PrepareTextToAddChords();
+                }else if(value == false)
+                {
+                    SplitTextWithChordsToTextAndChords();
+                }
+                else
+                {
+                    PrepareTextWithChordsList();
+                }
+                OnPropertyChanged(nameof(AddChords));
+            }
+        }
+
+        private string chords;
+
+        public string Chords
+        {
+            get { return chords; }
+            set { chords = value;
+                OnPropertyChanged(nameof(Chords));
+            }
+        }
+
+
+        private String songKey;
+
+        public String SongKey
+        {
+            get { return songKey; }
+            set { songKey = value;
+                Song.SongKey = value;
+                OnPropertyChanged(nameof(SongKey)); }
+        }
+
+
+
         private string _PageTitle;
 
         public string PageTitle
@@ -111,6 +159,24 @@ namespace Show_song_text.ViewModels
             }
         }
 
+
+        public ObservableCollection<TextLineWithChords> TextWithChords { get; set; } = new ObservableCollection<TextLineWithChords>();
+
+        private TextLineWithChords selectedRowInTextWithChordsList;
+
+        public TextLineWithChords SelectedRowInTextWithChordsList
+        {
+            get { return selectedRowInTextWithChordsList; }
+            set {
+                if(value != selectedRowInTextWithChordsList)
+                    selectedRowInTextWithChordsList = value;
+                OnPropertyChanged(nameof(SelectedRowInTextWithChordsList));
+            }
+        }
+
+
+
+
         private Playlist _selectedPlaylist;
 
         public Playlist SelectedPlaylist
@@ -139,8 +205,10 @@ namespace Show_song_text.ViewModels
 
         public ICommand SearchTextCommand { get; set; }
         public ICommand SelectPlaylistCommand { get; private set; }
-        #endregion
 
+        public ICommand PasteTextFromClipboardCommand { get; private set; }
+        public ICommand SetSelectedItemCommand { get; private set; }
+        #endregion
 
         #region Constructor
         public SongAddAndDetailViewModel()
@@ -155,6 +223,8 @@ namespace Show_song_text.ViewModels
             DeleteSongCommand = new Command(async () => await DeleteSong());
             SearchTextCommand = new Command(async () => await SearchText());
             SelectPlaylistCommand = new Command<PlaylistViewModel>(async playlist => await SelectPlaylist(playlist));
+            PasteTextFromClipboardCommand = new Command(async () => await PasteTextFromClipboard());
+            SetSelectedItemCommand = new Command<TextLineWithChords>((item) => { SelectedRowInTextWithChordsList = item; });
 
             ItsDetailSongPage = false;
             Song = new Song();
@@ -192,6 +262,8 @@ namespace Show_song_text.ViewModels
                 }
                 else
                 {
+
+                    SplitTextWithChordsToTextAndChords();
                     await songRepository.UpdateSong(Song);
                     MessagingCenter.Send(this, Events.SongUpdated, Song);
                 }
@@ -206,6 +278,18 @@ namespace Show_song_text.ViewModels
             await _pageService.ChangePageAsync(new PlaylistDetailView());
             MessagingCenter.Send(this, Events.SendPlaylist, playlist);
             SelectedPlaylist = null;
+        }
+
+        async Task PasteTextFromClipboard()
+        {
+            if (Clipboard.HasText)
+            {
+                var text = await Clipboard.GetTextAsync();
+                if (text.Length > 0)
+                {
+                    Text = text;
+                }
+            }
         }
         async Task SearchText()
         {
@@ -312,14 +396,14 @@ namespace Show_song_text.ViewModels
                     default:
                         break;
                 }
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Log.Debug(TAG, e.Message);
                 await _pageService.DisplayAlert(AppResources.AlertDIalog_UnexpectedError, AppResources.AlertDIalog_UnexpectedErrorMessage, AppResources.AlertDialog_OK);
             }
         }
         #endregion
-
 
         #region Message center methods
         private async void OnSongSended(SongListViewModel source, SongViewModel song)
@@ -332,6 +416,15 @@ namespace Show_song_text.ViewModels
                 Artist = Song.Artist;
                 Text = Song.Text;
                 Playlists = Song.Playlists;
+                SongKey = Song.SongKey;
+                Chords = Song.Chords;
+
+                if (!String.IsNullOrWhiteSpace(Chords))
+                {
+                    AddChords = true;
+                    PrepareTextWithChordsList();
+                }
+
             }
             PageTitle = AppResources.SongAddAndDetail_SongDetail;
             MessagingCenter.Unsubscribe<SongListViewModel, SongViewModel>(this, Events.SendSong);
@@ -342,6 +435,68 @@ namespace Show_song_text.ViewModels
         private void OnPlaylistSelected(object page)
         {
             SelectPlaylistCommand.Execute(page);
+        }
+
+        private void PrepareTextWithChordsList()
+        {
+            TextWithChords.Clear();
+                string[] chords = Chords.Split(Environment.NewLine.ToCharArray());
+                string[] text = Text.Split(Environment.NewLine.ToCharArray());
+
+                for (int i = 0; i < text.Length; i++)
+                {
+                    TextWithChords.Add(new TextLineWithChords() {
+                    Chords = chords[i],
+                    TextLine = text[i]
+                    });
+                }
+        }
+
+        private void PrepareTextToAddChords()
+        {
+
+            TextWithChords.Clear();
+                string[] text = Text.Split(Environment.NewLine.ToCharArray());
+
+                for (int i = 0; i < text.Length; i++)
+                {
+                    TextWithChords.Add(new TextLineWithChords()
+                    {
+                        Chords = "",
+                        TextLine = text[i]
+                    });
+                }
+            
+
+        }
+
+        private void SplitTextWithChordsToTextAndChords()
+        {
+            if(TextWithChords.Count == 0)
+            {
+                return;
+            }
+            StringBuilder chords = new StringBuilder();
+            StringBuilder text = new StringBuilder();
+            foreach(TextLineWithChords textLineWithChords in TextWithChords)
+            {
+                chords.AppendLine(textLineWithChords.Chords);
+                text.AppendLine(textLineWithChords.TextLine);
+            }
+
+            if (!String.IsNullOrWhiteSpace(Text) && !Text.Equals(text.ToString()))
+            {
+                Text = text.ToString();
+                Song.Text = Text;
+            }
+                
+
+            if (!String.IsNullOrWhiteSpace(Chords) && !Chords.Equals(chords.ToString()))
+            {
+                Chords = chords.ToString();
+                Song.Chords = Chords;
+            }
+                
         }
         #endregion
 

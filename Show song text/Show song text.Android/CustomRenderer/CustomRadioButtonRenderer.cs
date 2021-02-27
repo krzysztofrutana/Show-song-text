@@ -24,7 +24,7 @@ namespace Show_song_text.Droid.CustomRenderer
 
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.RadioButton> e)
         {
             base.OnElementChanged(e);
 

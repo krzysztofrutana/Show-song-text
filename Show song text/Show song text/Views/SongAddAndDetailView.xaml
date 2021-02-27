@@ -3,13 +3,20 @@
     x:Class="Show_song_text.Views.SongAddAndDetailView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:Show_song_text.Converters"
     xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    x:Name="SongAddAndDetail"
     Title="{Binding PageTitle}">
     <ContentPage.BindingContext>
         <vm:SongAddAndDetailViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
             <Grid>
@@ -61,45 +68,141 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding AddChords}" Style="{StaticResource CheckboxNormal}" />
+                            <Label
+                                LineBreakMode="WordWrap"
+                                MaxLines="2"
+                                Text="{x:Static resources:AppResources.SongAddAndDetail_Chords}"
+                                VerticalOptions="Center" />
+                            <Button
+                                Command="{Binding PasteTextFromClipboardCommand}"
+                                HeightRequest="50"
+                                Text="{x:Static resources:AppResources.SongAddAndDetail_PasteButton}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Scale" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Property="Scale" Value="0.8" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Button>
+                            <ImageButton
+                                Margin="5,5,5,5"
+                                Padding="5"
+                                Command="{Binding SearchTextCommand}"
+                                HeightRequest="40"
+                                Source="search.png"
+                                VerticalOptions="Start"
+                                WidthRequest="40">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Scale" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Property="Scale" Value="0.8" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </ImageButton>
+                        </StackLayout>
+
+
                         <Label
+                            Grid.Row="1"
                             Grid.Column="0"
                             Margin="0,10,5,0"
                             Style="{StaticResource LabelNormalBold}"
                             Text="{x:Static resources:AppResources.SongAddAndDetail_Text}"
                             VerticalOptions="Start" />
                         <Editor
+                            Grid.Row="1"
                             Grid.Column="1"
                             AutoSize="TextChanges"
+                            IsVisible="{Binding AddChords, Converter={StaticResource InverseBoolConverter}}"
                             Text="{Binding Text, Mode=TwoWay}" />
 
-                        <ImageButton
-                            Grid.Column="2"
-                            Margin="5,5,5,5"
-                            Padding="5"
-                            Command="{Binding SearchTextCommand}"
-                            HeightRequest="40"
-                            Source="search.png"
-                            VerticalOptions="Start"
-                            WidthRequest="40">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Property="Scale" Value="1" />
-                                        </VisualState.Setters>
-                                    </VisualState>
+                        <ListView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HasUnevenRows="True"
+                            IsVisible="{Binding AddChords}"
+                            ItemSelected="ListView_ItemSelected"
+                            ItemsSource="{Binding TextWithChords}"
+                            SeparatorColor="Black"
+                            SeparatorVisibility="Default"
+                            VerticalOptions="Fill">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <Grid Margin="0,10,0,10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Editor
+                                                    Grid.Row="0"
+                                                    AutoSize="TextChanges"
+                                                    Focused="Editor_Focused"
+                                                    Text="{Binding Chords}" />
+                                                <Editor
+                                                    Grid.Row="1"
+                                                    AutoSize="TextChanges"
+                                                    Focused="Editor_Focused"
+                                                    Text="{Binding TextLine}" />
 
-                                    <VisualState x:Name="Pressed">
-                                        <VisualState.Setters>
-                                            <Setter Property="Scale" Value="0.8" />
-                                        </VisualState.Setters>
-                                    </VisualState>
+                                            </Grid>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </ImageButton>
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="0,10,5,0"
+                            Style="{StaticResource LabelNormalBold}"
+                            Text="{x:Static resources:AppResources.SongAddAndDetail_SongKey}"
+                            VerticalOptions="Center" />
+                        <Editor
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="20,10,200,0"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{Binding SongKey, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+
                     </Grid>
                 </rounded:RoundedCornerView>
 
@@ -116,7 +219,6 @@
                         <ListView
                             Grid.Row="1"
                             HasUnevenRows="True"
-                            ItemSelected="ListView_ItemSelected"
                             ItemsSource="{Binding Playlists, Mode=TwoWay}"
                             VerticalOptions="FillAndExpand">
                             <ListView.ItemTemplate>

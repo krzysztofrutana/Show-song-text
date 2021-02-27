@@ -3,7 +3,10 @@
     x:Class="Show_song_text.Views.SongTextPresentationView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cc="clr-namespace:Show_song_text.CustomControls"
     xmlns:conv="clr-namespace:Show_song_text.Converters"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:utils="clr-namespace:Show_song_text.Utils"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     x:Name="PresentationPage">
@@ -25,22 +28,47 @@
                     Position="{Binding Position, Mode=TwoWay}">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="20,20,20,20">
+                            <Grid Padding="20,10,20,20">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
                                 <Label
                                     Grid.Row="0"
+                                    Grid.Column="0"
                                     Padding="0,0,0,10"
                                     FontAttributes="Bold"
                                     FontSize="22"
                                     Text="{Binding Title}"
                                     TextColor="{StaticResource TextColor}" />
+                                <Grid Grid.Row="0" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        Grid.Row="0"
+                                        FontSize="18"
+                                        Text="{x:Static resources:AppResources.SongAddAndDetail_SongKey}"
+                                        TextColor="{StaticResource TextColor}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="18"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="{Binding SongKey}"
+                                        TextColor="{StaticResource TextColor}" />
+
+                                </Grid>
                                 <Label
-                                    x:Name="Label_Text_Server"
                                     Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     FontSize="{Binding FontSize}"
+                                    IsEnabled="{Binding ChordsAboveTextOrOnRight}"
                                     LineBreakMode="WordWrap"
                                     Text="{Binding Text}"
                                     TextColor="{StaticResource TextColor}"
@@ -51,8 +79,8 @@
                     </CarouselView.ItemTemplate>
                 </CarouselView>
                 <utils:CarouselIndicators
-                    IndicatorHeight="16"
-                    IndicatorWidth="16"
+                    IndicatorHeight="10"
+                    IndicatorWidth="10"
                     ItemsSource="{Binding Pages}"
                     Position="{Binding Position}"
                     SelectedIndicator="selected_circle.png"

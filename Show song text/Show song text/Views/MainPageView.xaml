@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<MasterDetailPage
+<FlyoutPage
     x:Class="Show_song_text.Views.MainPageView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -9,7 +9,7 @@
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     Title="MasterPage"
     IsPresented="{Binding IsPresent}">
-    <MasterDetailPage.Master>
+    <FlyoutPage.Flyout>
         <ContentPage Title="Master" NavigationPage.HasNavigationBar="False">
             <ContentPage.BindingContext>
                 <vm:MainPageViewModel />
@@ -85,12 +85,12 @@
             </ContentPage.Content>
         </ContentPage>
 
-    </MasterDetailPage.Master>
-    <MasterDetailPage.Detail>
+    </FlyoutPage.Flyout>
+    <FlyoutPage.Detail>
         <NavigationPage>
             <x:Arguments>
                 <pages:SongListView />
             </x:Arguments>
         </NavigationPage>
-    </MasterDetailPage.Detail>
-</MasterDetailPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

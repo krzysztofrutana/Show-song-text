@@ -229,7 +229,7 @@ namespace Show_song_text.ViewModels
             await _pageService.ChangePageAsync(new SongTextPresentationView());
             MessagingCenter.Send(this, Events.ConnectToServer, true);
         }
-        private async void DisconnectWithServer()
+        private void DisconnectWithServer()
         {
             asyncClient.Send("<EOC>", true);
             asyncClient.DisconnectWithServer();

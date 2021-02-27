@@ -23,7 +23,6 @@ namespace Show_song_text.Droid
             Xamarin.Forms.Forms.SetFlags("RadioButton_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            Forms9Patch.Droid.Settings.Initialize(this);
             LoadApplication(new App());
 
             App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);

@@ -297,6 +297,9 @@
   <data name="RaportProblem_Title" xml:space="preserve">
     <value>Zgłoś problem</value>
   </data>
+  <data name="Settings_ChordsPosition" xml:space="preserve">
+    <value>Akordy powyżej/po prawej tekstu:</value>
+  </data>
   <data name="Settings_FontSize" xml:space="preserve">
     <value>Wielkość czcionki:</value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="Settings_SelectLanguage" xml:space="preserve">
     <value>Wybierz język:</value>
+  </data>
+  <data name="Settings_ShowChords" xml:space="preserve">
+    <value>Wyświetlać akordy?</value>
   </data>
   <data name="Settings_Title" xml:space="preserve">
     <value>Ustawienia</value>
@@ -315,11 +321,20 @@
   <data name="SongAddAndDetail_Author" xml:space="preserve">
     <value>Autor:</value>
   </data>
+  <data name="SongAddAndDetail_Chords" xml:space="preserve">
+    <value>Dodać akordy?</value>
+  </data>
+  <data name="SongAddAndDetail_PasteButton" xml:space="preserve">
+    <value>Wklej tekst</value>
+  </data>
   <data name="SongAddAndDetail_Playlists" xml:space="preserve">
     <value>Playlisty:</value>
   </data>
   <data name="SongAddAndDetail_SongDetail" xml:space="preserve">
     <value>Podgląd utworu</value>
+  </data>
+  <data name="SongAddAndDetail_SongKey" xml:space="preserve">
+    <value>Tonacja:</value>
   </data>
   <data name="SongAddAndDetail_Text" xml:space="preserve">
     <value>Tekst:</value>
@@ -332,6 +347,9 @@
   </data>
   <data name="SongList_Title" xml:space="preserve">
     <value>Lista utworów</value>
+  </data>
+  <data name="SongTextPresentation_EmptyText" xml:space="preserve">
+    <value>Brak tekstu.</value>
   </data>
   <data name="SupportMe_AccountDetails" xml:space="preserve">
     <value>Szczegóły konta:</value>

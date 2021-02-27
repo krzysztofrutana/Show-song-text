@@ -47,14 +47,14 @@ namespace Show_song_text.Utils
             return await DetailPage.Navigation.PopAsync();
         }
 
-        private MasterDetailPage MainPage
+        private FlyoutPage MainPage
         {
-            get { return (Application.Current.MainPage as MasterDetailPage); }
+            get { return (Application.Current.MainPage as FlyoutPage); }
         }
 
         private NavigationPage DetailPage
         {
-            get { return (NavigationPage)((MasterDetailPage)Application.Current.MainPage).Detail; }
+            get { return (NavigationPage)((FlyoutPage)Application.Current.MainPage).Detail; }
         }
     }
 }

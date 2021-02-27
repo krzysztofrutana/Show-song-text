@@ -601,6 +601,15 @@ namespace Show_song_text.Resources.Languages {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Chords above / to the right of the text:.
+        /// </summary>
+        public static string Settings_ChordsPosition {
+            get {
+                return ResourceManager.GetString("Settings_ChordsPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Font size:.
         /// </summary>
         public static string Settings_FontSize {
@@ -624,6 +633,15 @@ namespace Show_song_text.Resources.Languages {
         public static string Settings_SelectLanguage {
             get {
                 return ResourceManager.GetString("Settings_SelectLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Show chords?.
+        /// </summary>
+        public static string Settings_ShowChords {
+            get {
+                return ResourceManager.GetString("Settings_ShowChords", resourceCulture);
             }
         }
         
@@ -655,6 +673,24 @@ namespace Show_song_text.Resources.Languages {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Add chords?.
+        /// </summary>
+        public static string SongAddAndDetail_Chords {
+            get {
+                return ResourceManager.GetString("SongAddAndDetail_Chords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Paste text.
+        /// </summary>
+        public static string SongAddAndDetail_PasteButton {
+            get {
+                return ResourceManager.GetString("SongAddAndDetail_PasteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Playlists:.
         /// </summary>
         public static string SongAddAndDetail_Playlists {
@@ -669,6 +705,15 @@ namespace Show_song_text.Resources.Languages {
         public static string SongAddAndDetail_SongDetail {
             get {
                 return ResourceManager.GetString("SongAddAndDetail_SongDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Song key:.
+        /// </summary>
+        public static string SongAddAndDetail_SongKey {
+            get {
+                return ResourceManager.GetString("SongAddAndDetail_SongKey", resourceCulture);
             }
         }
         
@@ -705,6 +750,15 @@ namespace Show_song_text.Resources.Languages {
         public static string SongList_Title {
             get {
                 return ResourceManager.GetString("SongList_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Text is empty..
+        /// </summary>
+        public static string SongTextPresentation_EmptyText {
+            get {
+                return ResourceManager.GetString("SongTextPresentation_EmptyText", resourceCulture);
             }
         }
         

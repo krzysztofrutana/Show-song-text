@@ -297,6 +297,9 @@
   <data name="RaportProblem_Title" xml:space="preserve">
     <value>Report a problem</value>
   </data>
+  <data name="Settings_ChordsPosition" xml:space="preserve">
+    <value>Chords above / to the right of the text:</value>
+  </data>
   <data name="Settings_FontSize" xml:space="preserve">
     <value>Font size:</value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="Settings_SelectLanguage" xml:space="preserve">
     <value>Select language:</value>
+  </data>
+  <data name="Settings_ShowChords" xml:space="preserve">
+    <value>Show chords?</value>
   </data>
   <data name="Settings_Title" xml:space="preserve">
     <value>Settings</value>
@@ -315,11 +321,20 @@
   <data name="SongAddAndDetail_Author" xml:space="preserve">
     <value>Author:</value>
   </data>
+  <data name="SongAddAndDetail_Chords" xml:space="preserve">
+    <value>Add chords?</value>
+  </data>
+  <data name="SongAddAndDetail_PasteButton" xml:space="preserve">
+    <value>Paste text</value>
+  </data>
   <data name="SongAddAndDetail_Playlists" xml:space="preserve">
     <value>Playlists:</value>
   </data>
   <data name="SongAddAndDetail_SongDetail" xml:space="preserve">
     <value>Song details</value>
+  </data>
+  <data name="SongAddAndDetail_SongKey" xml:space="preserve">
+    <value>Song key:</value>
   </data>
   <data name="SongAddAndDetail_Text" xml:space="preserve">
     <value>Text:</value>
@@ -332,6 +347,9 @@
   </data>
   <data name="SongList_Title" xml:space="preserve">
     <value>Song list</value>
+  </data>
+  <data name="SongTextPresentation_EmptyText" xml:space="preserve">
+    <value>Text is empty.</value>
   </data>
   <data name="SupportMe_AccountDetails" xml:space="preserve">
     <value>Account details:</value>

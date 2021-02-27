@@ -6,19 +6,19 @@ namespace Show_song_text.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SongTextPresentationView : ContentPage
     {
-        private static Label label;
+        private static Label labelText;
         public SongTextPresentationView()
         {
             
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
-            label = ghostLabel;
+            labelText = ghostLabel;
 
         }
 
         public static Label GetGhostLabelInstance()
         {
-            return label;
+            return labelText;
         }
     }
 }

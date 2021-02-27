@@ -3,15 +3,23 @@
     x:Class="Show_song_text.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:Show_song_text.Converters"
     xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
     xmlns:vm="clr-namespace:Show_song_text.ViewModels"
     Title="{x:Static resources:AppResources.Settings_Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.BindingContext>
         <vm:SettingsViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid Padding="15,10,15,10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -46,7 +54,19 @@
                 ItemDisplayBinding="{Binding FullName}"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding SelectedLanguage}"
+                TextColor="Black"
                 WidthRequest="70 " />
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Style="{StaticResource LabelSettings}"
+                Text="{x:Static resources:AppResources.Settings_ShowChords}"
+                VerticalOptions="CenterAndExpand" />
+            <Switch
+                x:Name="Switch_ShowChords"
+                Grid.Row="2"
+                Grid.Column="1"
+                IsToggled="{Binding ShowChords}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -7,6 +7,7 @@ namespace XamarinLabelFontSizer
     {
         public double FontSize { private set; get; }
         public double TextHeight { private set; get; }
+        public double TextWidth { private set; get; }
 
         public FontCalc(Label label, double fontSize, double containerWidth)
             : this()
@@ -21,6 +22,7 @@ namespace XamarinLabelFontSizer
 
             // Save that height.
             TextHeight = sizeRequest.Request.Height;
+            TextWidth = sizeRequest.Request.Width;
         }
     }
 }

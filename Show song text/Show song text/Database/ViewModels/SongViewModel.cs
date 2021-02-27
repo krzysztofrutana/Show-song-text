@@ -22,6 +22,7 @@ namespace Show_song_text.Database.ViewModels
             Playlist = song.Playlists;
             IsCheckBoxVisible = song.IsCheckBoxVisible;
             Positions = song.Positions;
+            SongKey = song.SongKey;
 
 
         }
@@ -111,6 +112,18 @@ namespace Show_song_text.Database.ViewModels
                 OnPropertyChanged(nameof(IsCheckBoxVisible));
             }
         }
+
+        private string _songKey;
+
+        public string SongKey
+        {
+            get { return _songKey; }
+            set {
+                _songKey = value;
+                OnPropertyChanged(nameof(SongKey));
+            }
+        }
+
 
 
 

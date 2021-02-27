@@ -29,6 +29,10 @@ namespace Show_song_text.Helpers
         private static readonly bool ClientIsConnectedDefault = false;
         private static readonly bool ServerIsRunningDefault = false;
         private static readonly string DefaultLanguage = "none";
+        private static readonly string DefaultGeniusClientID = "i56qNUJopP-mVbw8KpN002UsYMjsxCFFXxIOp1YXc43tTIPIdB82D-Gjj3aznjij";
+        private static readonly string DefaultGeniusSecretKey = "UPwwGF9XLFqYUE5JuWKc3MLzOwlocWCbQOrThv8F9Jtx3f6zgnpL9afYqKSBFAyI6J6EPmorpLGTOPkUAvEuwg";
+        private static readonly string DefaultGeniusToken = "3ng8PEukcc1t31mEzHBFuSP-Njxp-Rb7_rybYRZDgPF-iu0z4pBr9wlzNIYCHwaP";
+        private static readonly bool DefaultShowChords = true;
 
         #endregion
 
@@ -142,6 +146,52 @@ namespace Show_song_text.Helpers
             }
         }
 
+        public static string GeniusClientID
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(nameof(GeniusClientID), DefaultGeniusClientID);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(GeniusClientID), value);
+            }
+        }
 
+        public static string GeniusSecretKey
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(nameof(GeniusSecretKey), DefaultGeniusSecretKey);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(GeniusSecretKey), value);
+            }
+        }
+
+        public static string GeniusToken
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(nameof(GeniusToken), DefaultGeniusToken);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(GeniusToken), value);
+            }
+        }
+
+        public static bool ShowChords
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(nameof(ShowChords), DefaultShowChords);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(ShowChords), value);
+            }
+        }
     }
 }

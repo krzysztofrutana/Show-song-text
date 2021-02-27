@@ -115,7 +115,7 @@ namespace Show_song_text.Helpers
                             continue;
                         if (indexStartLink != 0 && indexEndLink != 0)
                         {
-                            string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
+                            string link = div.InnerHtml[indexStartLink..indexEndLink];
                             if (!String.IsNullOrEmpty(link))
                             {
                                 Console.WriteLine(link);
@@ -174,10 +174,10 @@ namespace Show_song_text.Helpers
         public static async Task<FindedSongObject> SearchArtist(FindedSongObject songToFind)
         {
             IPageService _pageService = new PageService();
-            string html = null;
             string url = null;
             string artistWithFirstCharUpper = char.ToUpper(songToFind.Artist[0]) + songToFind.Artist.Substring(1);
             Dictionary<string, string> artistsList = new Dictionary<string, string>();
+            string html;
             try
             {
                 songToFind.WorkingArtist = songToFind.WorkingArtist.Replace("_", "+");
@@ -226,7 +226,7 @@ namespace Show_song_text.Helpers
                             continue;
                         if (indexStartLink != 0 && indexEndLink != 0)
                         {
-                            string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
+                            string link = div.InnerHtml[indexStartLink..indexEndLink];
                             if (!String.IsNullOrEmpty(link))
                             {
                                 Console.WriteLine(link);
@@ -309,10 +309,9 @@ namespace Show_song_text.Helpers
         public static async Task<FindedSongObject> SearchSong(FindedSongObject songToFind)
         {
             IPageService _pageService = new PageService();
-            string html = null;
             string url = null;
-            List<FindedSongObject> songs = new List<FindedSongObject>();
             Dictionary<string, string> listOfSongs = new Dictionary<string, string>();
+            string html;
             try
             {
                 songToFind.WorkingTitle = songToFind.WorkingTitle.Replace("_", "+");
@@ -358,7 +357,7 @@ namespace Show_song_text.Helpers
                         continue;
                     if (indexStartLink != 0 && indexEndLink != 0)
                     {
-                        string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
+                        string link = div.InnerHtml[indexStartLink..indexEndLink];
                         if (!String.IsNullOrEmpty(link))
                         {
                             Console.WriteLine(link);
@@ -443,8 +442,8 @@ namespace Show_song_text.Helpers
                     int indexEndLink = div.InnerHtml.IndexOf("class=\"title\" title=") - 2;
                     int indexStartArtist = div.InnerHtml.IndexOf("title=\"") + 7;
                     int indexEndArtist = div.InnerHtml.IndexOf("\">");
-                    string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
-                    string artist = div.InnerHtml.Substring(indexStartArtist, indexEndArtist - indexStartArtist);
+                    string link = div.InnerHtml[indexStartLink..indexEndLink];
+                    string artist = div.InnerHtml[indexStartArtist..indexEndArtist];
                     if (!String.IsNullOrEmpty(artist))
                     {
                         Console.WriteLine(artist);
@@ -473,7 +472,7 @@ namespace Show_song_text.Helpers
                     string tempTitle = div.InnerHtml.Substring(indexStartTitle);
                     int indexEndTitle = tempTitle.IndexOf("\">");
                     string title = tempTitle.Substring(0, indexEndTitle);
-                    string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
+                    string link = div.InnerHtml[indexStartLink..indexEndLink];
 
                     if (!String.IsNullOrEmpty(title))
                     {
@@ -503,7 +502,7 @@ namespace Show_song_text.Helpers
                     string tempArtistTitle = div.InnerHtml.Substring(indexStartArtistTitle);
                     int indexEndTitle = tempArtistTitle.IndexOf("\">");
                     string artistTitle = tempArtistTitle.Substring(0, indexEndTitle);
-                    string link = div.InnerHtml.Substring(indexStartLink, indexEndLink - indexStartLink);
+                    string link = div.InnerHtml[indexStartLink..indexEndLink];
                     if (!String.IsNullOrEmpty(artistTitle) && artistTitle.Contains(ReverseReplaceCodeOfCharOnSpeciaChar(songToFind.Artist)) && !String.IsNullOrEmpty(link))
                     {
                         Console.WriteLine(artistTitle);
@@ -545,10 +544,10 @@ namespace Show_song_text.Helpers
                                         int numberOfLinesToRemove,
                                         bool startFromBottom = false)
         {
-            string toReturn = "";
             string[] allLines = stringToRemoveLinesFrom.Split(
                     separator: Environment.NewLine.ToCharArray(),
                     options: StringSplitOptions.RemoveEmptyEntries);
+            string toReturn;
             if (startFromBottom)
                 toReturn = String.Join(Environment.NewLine, allLines.Take(allLines.Length - numberOfLinesToRemove));
             else

@@ -52,6 +52,17 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(null);
             }
         }
+        public bool ShowChords
+        {
+            get { return Settings.ShowChords; }
+            set {
+                if (Settings.ShowChords == value)
+                    return;
+
+                Settings.ShowChords = value;
+                OnPropertyChanged(nameof(ShowChords));
+            }
+        }
 
 
         #endregion
@@ -89,7 +100,7 @@ namespace Show_song_text.ViewModels
             Thread.CurrentThread.CurrentUICulture = language;
             AppResources.Culture = language;
             Settings.ChoosenLanguage = languageModel.ShortName;
-            Application.Current.MainPage = new MainPageView();
+            Application.Current.MainPage = new FlyoutPage();
         }
 
         private void CheckLanguage()

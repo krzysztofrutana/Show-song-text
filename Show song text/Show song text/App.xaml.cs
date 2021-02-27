@@ -18,7 +18,6 @@ namespace Show_song_text
 
         public App()
         {
-            string uiLanguage = Thread.CurrentThread.CurrentUICulture.Name;
             if (!Settings.ChoosenLanguage.Equals("none"))
             {
                 CultureInfo language = new CultureInfo(Settings.ChoosenLanguage);

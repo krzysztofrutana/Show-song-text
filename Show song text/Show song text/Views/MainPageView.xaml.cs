@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace Show_song_text.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPageView : MasterDetailPage
+    public partial class MainPageView : FlyoutPage
     {
 
         public MainPageView()

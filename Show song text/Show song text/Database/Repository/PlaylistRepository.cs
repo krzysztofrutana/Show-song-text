@@ -20,6 +20,8 @@ namespace Show_song_text.Database.Repository
             _connection.CreateTableAsync<Position>().Wait();
             _connection.CreateTableAsync<SongPlaylist>().Wait();
             _connection.CreateTableAsync<SongPosition>().Wait();
+
+            
         }
         public async Task AddPlaylist(Playlist playlist)
         {
@@ -57,5 +59,7 @@ namespace Show_song_text.Database.Repository
         {
             await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(_connection, playlist);
         }
+
+        
     }
 }

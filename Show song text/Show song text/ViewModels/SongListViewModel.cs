@@ -155,7 +155,6 @@ namespace Show_song_text.ViewModels
                     CustomSongsOrder = false
                 };
                 await playlistRepository.AddPlaylist(playlist);
-                var songtenp = await songRepository.GetSongWithChildren(songsList[0].Id);
                 await _pageService.DisplayAlert(AppResources.AlertDialog_Success, AppResources.AlertDialog_PlaylistCreated, AppResources.AlertDialog_OK);
                 UnCheckAllSongs();
                 SetCheckBoxVisibility(false);

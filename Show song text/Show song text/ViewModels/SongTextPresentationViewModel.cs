@@ -21,6 +21,7 @@ using System.Windows.Input;
 using XamarinLabelFontSizer;
 using Show_song_text.Views;
 using Show_song_text.Helpers;
+using Show_song_text.Resources.Languages;
 
 namespace Show_song_text.ViewModels
 {
@@ -36,7 +37,6 @@ namespace Show_song_text.ViewModels
             get
             {
                 return _Name;
-
             }
             set
             {
@@ -53,7 +53,6 @@ namespace Show_song_text.ViewModels
             get
             {
                 return _CurrentPage;
-
             }
             set
             {
@@ -87,7 +86,6 @@ namespace Show_song_text.ViewModels
             get
             {
                 return _TextOfSongWhennConnectToServer;
-
             }
             set
             {
@@ -102,7 +100,6 @@ namespace Show_song_text.ViewModels
             get
             {
                 return _TitleOfSongWhennConnectToServer;
-
             }
             set
             {
@@ -123,6 +120,20 @@ namespace Show_song_text.ViewModels
             }
         }
 
+        private bool showChords;
+
+        public bool ShowChords
+        {
+            get { return showChords; }
+            set
+            {
+                showChords = value;
+                OnPropertyChanged(nameof(ShowChords));
+            }
+        }
+
+
+
         #endregion
 
         #region Variable
@@ -130,7 +141,6 @@ namespace Show_song_text.ViewModels
         private readonly IAsyncClient asyncClient;
         private readonly SongRepository songRepository;
         #endregion
-
 
         #region Constructor
         public SongTextPresentationViewModel()
@@ -148,10 +158,13 @@ namespace Show_song_text.ViewModels
 
             MessagingCenter.Subscribe<SongListViewModel, SongViewModel>
            (this, Events.SendSongToPresentation, OnSongSended);
+
             asyncSocketListener = AsyncSocketListener.Instance;
             asyncClient = AsyncClient.Instance;
 
             FontSize = Double.Parse(Settings.FontSize);
+
+            ShowChords = Settings.ShowChords;
         }
         #endregion
 
@@ -185,21 +198,26 @@ namespace Show_song_text.ViewModels
                 SongsList.Add(song);
             }
             PreparePresentation();
+            MessagingCenter.Unsubscribe<PlaylistDetailViewModel, PlaylistViewModel>
+           (this, Events.SendPlaylistToPresentation);
         }
 
-        async void OnSongSended(SongListViewModel source, SongViewModel songViewModel)
+        void OnSongSended(SongListViewModel source, SongViewModel songViewModel)
         {
             Song = songViewModel;
-            
+
             SongsList.Add(Song);
 
             PreparePresentation();
+
+            MessagingCenter.Unsubscribe<SongListViewModel, SongViewModel>
+           (this, Events.SendSongToPresentation);
         }
 
         void OnConnectToServer(ConnectionSettingsViewModel source, Boolean isConnected)
         {
             IsConnectedToServer = true;
-            
+
         }
 
         void OnTextRecive(AsyncClient source, string text)
@@ -217,7 +235,7 @@ namespace Show_song_text.ViewModels
                         testLabel.Text = TextOfSongWhenConnectedToServer;
                         testLabel.FontSize = FontSize;
                         FontCalc checkIfShortText = new FontCalc(testLabel, 25, App.ScreenWidth);
-                        if(checkIfShortText.TextHeight < App.ScreenHeight * 0.5)
+                        if (checkIfShortText.TextHeight < App.ScreenHeight * 0.5)
                         {
                             FontSize = checkIfShortText.FontSize;
                         }
@@ -246,7 +264,7 @@ namespace Show_song_text.ViewModels
 
                             }
                             FontSize = lowerFontCalc.FontSize;
-                        }  
+                        }
                     });
                 }
             }
@@ -258,35 +276,88 @@ namespace Show_song_text.ViewModels
         {
             if (SongsList.Count > 0)
             {
-                Label testLabel = SongTextPresentationView.GetGhostLabelInstance();
                 foreach (SongViewModel song in SongsList)
                 {
-                    string[] allText = song.Text.Split(Environment.NewLine.ToCharArray());
-                    int linesLeft = allText.Length;
-                    List<string> leftText = allText.ToList();
-
-
-
-                    while (linesLeft > 0)
+                    if (ShowChords)
                     {
-                        int linesFitted = PresentationPageHelper.GetFitPageModel(leftText.ToArray(), testLabel, song.Title, FontSize);
-                        if (linesFitted != -1)
+                        if (!String.IsNullOrWhiteSpace(song.Chords))
                         {
-                            Pages.Add(PresentationPageHelper.presentationPageModel);
-                            linesLeft -= linesFitted +1;
-                            leftText.RemoveRange(0, linesFitted + 1);
+                            CreatePagesWithChords(song);
+                        }
+                        else
+                        {
+                            CreatePagesWithoutChords(song);
                         }
                     }
+                    else
+                    {
+                        CreatePagesWithoutChords(song);
 
-            
+                    }
                 }
             }
 
+        }
 
+        private void CreatePagesWithoutChords(SongViewModel song)
+        {
+            if (String.IsNullOrWhiteSpace(Song.Text))
+            {
+                Pages.Add(new PresentationPageModel()
+                {
+                    Title = song.Title,
+                    Text = AppResources.SongTextPresentation_EmptyText,
+                    SongKey = song.SongKey,
+                    FontSize = FontSize
+                });
+                return;
+            }
+
+            Label testLabel = SongTextPresentationView.GetGhostLabelInstance();
+
+            string[] allText = song.Text.Split(Environment.NewLine.ToCharArray());
+            int linesLeft = allText.Length;
+            List<string> leftText = allText.ToList();
+
+            while (linesLeft > 0)
+            {
+                int linesFitted = PresentationPageHelper.GetFitPageModel(leftText.ToArray(), testLabel, song.Title, FontSize, song.SongKey);
+                if (linesFitted != -1)
+                {
+                    Pages.Add(PresentationPageHelper.PresentationPageModel);
+                    linesLeft -= linesFitted + 1;
+                    leftText.RemoveRange(0, linesFitted + 1);
+                }
+            }
+
+        }
+
+
+        private void CreatePagesWithChords(SongViewModel song)
+        {
+            Label testLabel = SongTextPresentationView.GetGhostLabelInstance();
+            string[] allText = song.Text.Split(Environment.NewLine.ToCharArray());
+            string[] allChords = song.Chords.Split(Environment.NewLine.ToCharArray());
+            int linesLeft = allText.Length;
+            List<string> leftText = allText.ToList();
+            List<string> leftChords = allChords.ToList();
+
+
+
+            while (linesLeft > 0)
+            {
+                int linesFitted = PresentationPageHelper.GetFitPageModel(leftText.ToArray(), testLabel, song.Title, FontSize, song.SongKey, addChords: true, chordsToFit: leftChords.ToArray());
+                if (linesFitted != -1)
+                {
+                    Pages.Add(PresentationPageHelper.PresentationPageModel);
+                    linesLeft -= linesFitted;
+                    leftText.RemoveRange(0, linesFitted);
+                    leftChords.RemoveRange(0, linesFitted);
+                }
+            }
 
         }
         #endregion
-
 
         #region Share text method
         void SendText(string text)
@@ -297,7 +368,6 @@ namespace Show_song_text.ViewModels
             }
 
         }
-
         #endregion
 
     }

@@ -3,7 +3,10 @@ using Show_song_text.Database.Models;
 using Show_song_text.Database.Persistence;
 using SQLite;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +22,8 @@ namespace Show_song_text.Database.Repository
             _connection.CreateTableAsync<Position>().Wait();
             _connection.CreateTableAsync<SongPlaylist>().Wait();
             _connection.CreateTableAsync<SongPosition>().Wait();
+
+            //bool update =  CheckIfUpdateIsNeeded();
         }
         public async Task AddSong(Song song)
         {
@@ -54,6 +59,31 @@ namespace Show_song_text.Database.Repository
         {
             await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(_connection, song);
         }
+
+        //private Boolean CheckIfUpdateIsNeeded()
+        //{
+
+        //    IEnumerable<TableMapping> result =  _connection.TableMappings.Where(map => map.TableName == "Song");
+
+        //    int tableColumnsQty = result.First<TableMapping>().Columns.Length;
+
+
+        //    Type type = typeof(Song);
+        //    PropertyInfo[] properties = type.GetProperties();
+
+        //    int modelColumnsQty = 0;
+
+        //    foreach(PropertyInfo property in properties)
+        //    {
+        //        if (!(property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType)))
+        //        {
+        //            modelColumnsQty += 1;
+        //        }
+        //    }
+
+        //    return !(tableColumnsQty == modelColumnsQty);
+
+        //}
 
     }
 }

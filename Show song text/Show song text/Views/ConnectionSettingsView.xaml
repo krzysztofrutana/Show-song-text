@@ -26,16 +26,24 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <RadioButton
+                <StackLayout
                     Grid.Column="0"
-                    GroupName="ServerClient"
-                    IsChecked="{Binding ServerSectionVisibility}"
-                    Text="{x:Static resources:AppResources.ConnectionSettingsHeaders_Server}" />
-                <RadioButton
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal">
+                    <RadioButton GroupName="ServerClient" IsChecked="{Binding ServerSectionVisibility}" />
+                    <Label Text="{x:Static resources:AppResources.ConnectionSettingsHeaders_Server}" VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout
                     Grid.Column="1"
-                    GroupName="ServerClient"
-                    IsChecked="{Binding ClientSectionVisibility}"
-                    Text="{x:Static resources:AppResources.ConnectionSettingsHeaders_Client}" />
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal">
+                    <RadioButton
+                        Grid.Column="1"
+                        GroupName="ServerClient"
+                        IsChecked="{Binding ClientSectionVisibility}" />
+                    <Label Text="{x:Static resources:AppResources.ConnectionSettingsHeaders_Client}" VerticalOptions="Center" />
+                </StackLayout>
+
             </Grid>
             <Grid IsVisible="{Binding ServerSectionVisibility}">
                 <Grid.RowDefinitions>
