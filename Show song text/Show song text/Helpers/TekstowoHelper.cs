@@ -56,6 +56,7 @@ namespace Show_song_text.Helpers
 
                     text = DeleteLines(text, 2, false);
                     text = DeleteLines(text, 4, true);
+                    text = DeleteStartAndEndEmptyLines(text);
                 }
 
             }
@@ -540,22 +541,19 @@ namespace Show_song_text.Helpers
             return newString;
         }
 
-        private static  string DeleteLines(string stringToRemoveLinesFrom,
+        public static  string DeleteLines(string stringToRemoveLinesFrom,
                                         int numberOfLinesToRemove,
                                         bool startFromBottom = false)
         {
             string[] allLines = stringToRemoveLinesFrom.Split(
-                    separator: Environment.NewLine.ToCharArray(),
-                    options: StringSplitOptions.RemoveEmptyEntries);
-            string toReturn;
+                    separator: Environment.NewLine.ToCharArray());
             if (startFromBottom)
-                toReturn = String.Join(Environment.NewLine, allLines.Take(allLines.Length - numberOfLinesToRemove));
+                return String.Join(Environment.NewLine, allLines.Take(allLines.Length - numberOfLinesToRemove));
             else
-                toReturn = String.Join(Environment.NewLine, allLines.Skip(numberOfLinesToRemove));
-            return toReturn;
+                return String.Join(Environment.NewLine, allLines.Skip(numberOfLinesToRemove));
         }
 
-        private static string ReplaceCodeOfCharOnSpeciaChar(string text)
+        public static string ReplaceCodeOfCharOnSpeciaChar(string text)
         {
             text = text.Replace("&amp;", "&");
             text = text.Replace("&#039;", "'");
@@ -563,12 +561,44 @@ namespace Show_song_text.Helpers
             return text;
         }
 
-        private static string ReverseReplaceCodeOfCharOnSpeciaChar(string text)
+        public static string ReverseReplaceCodeOfCharOnSpeciaChar(string text)
         {
             text = text.Replace("&", "&amp;");
             text = text.Replace("'", "&#039;");
 
             return text;
+        }
+
+        public static string DeleteStartAndEndEmptyLines(string text)
+        {
+            List<string> textLines = text.Split(
+                   separator: Environment.NewLine.ToCharArray()).ToList();
+            List<string> readyText = text.Split(
+                   separator: Environment.NewLine.ToCharArray()).ToList();
+
+            for (int i = 0; i < textLines.Count; i++)
+            {
+                if (String.IsNullOrWhiteSpace(textLines[i]))
+                {
+                    readyText.Remove(textLines[i]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (int i = textLines.Count -1; i > 0; i--)
+            {
+                if (String.IsNullOrWhiteSpace(textLines[i]))
+                {
+                    readyText.Remove(textLines[i]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return String.Join(Environment.NewLine, readyText.ToArray()); ;
         }
         // OTHER METHOD END
     }

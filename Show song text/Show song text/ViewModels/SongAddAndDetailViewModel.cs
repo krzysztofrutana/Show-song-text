@@ -86,10 +86,11 @@ namespace Show_song_text.ViewModels
             set
             {
                 addChords = value;
-                if(value == true && String.IsNullOrWhiteSpace(Chords))
+                if (value == true && String.IsNullOrWhiteSpace(Chords))
                 {
                     PrepareTextToAddChords();
-                }else if(value == false)
+                }
+                else if (value == false)
                 {
                     SplitTextWithChordsToTextAndChords();
                 }
@@ -106,7 +107,9 @@ namespace Show_song_text.ViewModels
         public string Chords
         {
             get { return chords; }
-            set { chords = value;
+            set
+            {
+                chords = value;
                 OnPropertyChanged(nameof(Chords));
             }
         }
@@ -117,9 +120,12 @@ namespace Show_song_text.ViewModels
         public String SongKey
         {
             get { return songKey; }
-            set { songKey = value;
+            set
+            {
+                songKey = value;
                 Song.SongKey = value;
-                OnPropertyChanged(nameof(SongKey)); }
+                OnPropertyChanged(nameof(SongKey));
+            }
         }
 
 
@@ -167,8 +173,9 @@ namespace Show_song_text.ViewModels
         public TextLineWithChords SelectedRowInTextWithChordsList
         {
             get { return selectedRowInTextWithChordsList; }
-            set {
-                if(value != selectedRowInTextWithChordsList)
+            set
+            {
+                if (value != selectedRowInTextWithChordsList)
                     selectedRowInTextWithChordsList = value;
                 OnPropertyChanged(nameof(SelectedRowInTextWithChordsList));
             }
@@ -440,45 +447,45 @@ namespace Show_song_text.ViewModels
         private void PrepareTextWithChordsList()
         {
             TextWithChords.Clear();
-                string[] chords = Chords.Split(Environment.NewLine.ToCharArray());
-                string[] text = Text.Split(Environment.NewLine.ToCharArray());
+            string[] chords = Chords.Split(Environment.NewLine.ToCharArray());
+            string[] text = Text.Split(Environment.NewLine.ToCharArray());
 
-                for (int i = 0; i < text.Length; i++)
-                {
-                    TextWithChords.Add(new TextLineWithChords() {
-                    Chords = chords[i],
+            for (int i = 0; i < text.Length; i++)
+            {
+                TextWithChords.Add(new TextLineWithChords() {
+                    Chords = chords.ElementAtOrDefault(i) == null || String.IsNullOrWhiteSpace(chords[i]) ? "" : chords[i],
                     TextLine = text[i]
-                    });
-                }
+                });
+            }
         }
 
         private void PrepareTextToAddChords()
         {
 
             TextWithChords.Clear();
-                string[] text = Text.Split(Environment.NewLine.ToCharArray());
+            string[] text = Text.Split(Environment.NewLine.ToCharArray());
 
-                for (int i = 0; i < text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
+            {
+                TextWithChords.Add(new TextLineWithChords()
                 {
-                    TextWithChords.Add(new TextLineWithChords()
-                    {
-                        Chords = "",
-                        TextLine = text[i]
-                    });
-                }
-            
+                    Chords = "",
+                    TextLine = text[i]
+                });
+            }
+
 
         }
 
         private void SplitTextWithChordsToTextAndChords()
         {
-            if(TextWithChords.Count == 0)
+            if (TextWithChords.Count == 0)
             {
                 return;
             }
             StringBuilder chords = new StringBuilder();
             StringBuilder text = new StringBuilder();
-            foreach(TextLineWithChords textLineWithChords in TextWithChords)
+            foreach (TextLineWithChords textLineWithChords in TextWithChords)
             {
                 chords.AppendLine(textLineWithChords.Chords);
                 text.AppendLine(textLineWithChords.TextLine);
@@ -486,17 +493,17 @@ namespace Show_song_text.ViewModels
 
             if (!String.IsNullOrWhiteSpace(Text) && !Text.Equals(text.ToString()))
             {
-                Text = text.ToString();
+                Text = TekstowoHelper.DeleteStartAndEndEmptyLines(text.ToString());
                 Song.Text = Text;
             }
-                
+
 
             if (!String.IsNullOrWhiteSpace(Chords) && !Chords.Equals(chords.ToString()))
             {
                 Chords = chords.ToString();
                 Song.Chords = Chords;
             }
-                
+
         }
         #endregion
 
