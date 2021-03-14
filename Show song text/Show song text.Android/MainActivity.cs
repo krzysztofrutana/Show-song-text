@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using System.Runtime.Remoting.Contexts;
 using Android.Content.Res;
+using System.IO;
 
 namespace Show_song_text.Droid
 {
@@ -32,6 +33,8 @@ namespace Show_song_text.Droid
             {
                 Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 254, 26, 26)); //here
             }
+
+            App.DocumentsFolderPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDocuments);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {

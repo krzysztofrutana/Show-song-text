@@ -22,6 +22,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -67,6 +69,23 @@
                 Grid.Row="2"
                 Grid.Column="1"
                 IsToggled="{Binding ShowChords}" />
+            <Label
+                Grid.Row="3"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Style="{StaticResource LabelSettings}"
+                Text="{x:Static resources:AppResources.Settings_Backup}"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Grid.Row="3"
+                Grid.Column="1"
+                Command="{Binding CreateBackupCommand}"
+                Text="{x:Static resources:AppResources.Settings_Backup_MakeBackupBtn}" />
+            <Button
+                Grid.Row="4"
+                Grid.Column="1"
+                Command="{Binding RestoreBackupCommand}"
+                Text="{x:Static resources:AppResources.Settings_Backup_RestoreBackupBtn}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -9,6 +9,8 @@ namespace Show_song_text.Database.DAO
     public interface IPlaylistDAO
     {
         Task<IEnumerable<Playlist>> GetAllPlaylistAsync();
+
+        Task<Playlist[]> GetAllPlaylistArrayAsync();
         Task<IEnumerable<Playlist>> GetaAllPlaylistWithChildrenAsync();
         Task<Playlist> GetPlaylist(int id);
         Task<Playlist> GetPlaylistWithSongs(int id);

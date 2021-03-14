@@ -96,6 +96,7 @@
     <Compile Include="CustomRenderer\CustomRadioButtonRenderer.cs" />
     <Compile Include="CustomRenderer\DroidTouchListener.cs" />
     <Compile Include="CustomRenderer\RoundedCornerViewRenderer.cs" />
+    <Compile Include="CustomRenderer\WirteFileService.cs" />
     <Compile Include="LogImplementation.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Persistence\SQLiteDB.cs" />

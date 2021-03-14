@@ -1,14 +1,22 @@
-﻿using Show_song_text.Helpers;
+﻿using Newtonsoft.Json;
+using Show_song_text.Database.Persistence;
+using Show_song_text.Database.Repository;
+using Show_song_text.Helpers;
+using Show_song_text.Interfaces;
 using Show_song_text.Models;
+using Show_song_text.Models.DatabaseBackup;
 using Show_song_text.Resources.Languages;
-using Show_song_text.Views;
+using Show_song_text.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Text;
+using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Serialization;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Show_song_text.ViewModels
@@ -55,7 +63,8 @@ namespace Show_song_text.ViewModels
         public bool ShowChords
         {
             get { return Settings.ShowChords; }
-            set {
+            set
+            {
                 if (Settings.ShowChords == value)
                     return;
 
@@ -67,15 +76,104 @@ namespace Show_song_text.ViewModels
 
         #endregion
 
+        #region Variables
+        private readonly PlaylistRepository playlistRepository;
+        private readonly PositionRepository positionRepository;
+        private readonly SongPlaylistRepository songPlaylistRepository;
+        private readonly SongPositionRepository songPositionRepository;
+        private readonly SongRepository songRepository;
+        private readonly IPageService _pageService;
+        #endregion
+
         #region Commands
 
+        public ICommand CreateBackupCommand { get; private set; }
+        public ICommand RestoreBackupCommand { get; private set; }
         #endregion
 
         #region Constructor
         public SettingsViewModel()
         {
+            playlistRepository = new PlaylistRepository(DependencyService.Get<ISQLiteDb>());
+            positionRepository = new PositionRepository(DependencyService.Get<ISQLiteDb>());
+            songPlaylistRepository = new SongPlaylistRepository(DependencyService.Get<ISQLiteDb>());
+            songPositionRepository = new SongPositionRepository(DependencyService.Get<ISQLiteDb>());
+            songRepository = new SongRepository(DependencyService.Get<ISQLiteDb>());
+            _pageService = new PageService();
+
+            CreateBackupCommand = new Command(async () => await CreateBackup());
+            RestoreBackupCommand = new Command(async () => await RestoreBackup());
+
             InitializeLanguageList();
             CheckLanguage();
+        }
+        #endregion
+
+        #region Commands methods
+        // Write file with current date to json file in external download folder
+        private async Task CreateBackup()
+        {
+            string filename = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + ".json";
+
+            DatabaseModel dm = new DatabaseModel();
+
+            dm.Playlists = await playlistRepository.GetAllPlaylistArrayAsync();
+            dm.Positions = await positionRepository.GetAllPositionArrayAsync();
+            dm.SongPlaylists = await songPlaylistRepository.GetAllArrayAsync();
+            dm.SongPositions = await songPositionRepository.GetAllArrayAsync();
+            dm.Songs = await songRepository.GetAllSongArrayAsync();
+
+            var json = JsonConvert.SerializeObject(dm);
+
+            DependencyService.Get<IWirteService>().wirteFile(filename, json);
+        }
+
+        private async Task RestoreBackup()
+        {
+            try
+            {
+
+                var options = new PickOptions
+                {
+                    PickerTitle = "Please select a json file",
+                };
+
+                var result = await FilePicker.PickAsync(options);
+                if (result != null)
+                {
+                    Stream stream = await result.OpenReadAsync();
+                    StreamReader streamReader = new StreamReader(stream);
+                    string json = streamReader.ReadToEnd();
+                    var db = JsonConvert.DeserializeObject<DatabaseModel>(json);
+
+                    foreach (var item in db.Playlists)
+                    {
+                        playlistRepository.AddPlaylist(item);
+                    }
+                    foreach(var item in db.Positions)
+                    {
+                        positionRepository.AddPosition(item);
+                    }
+                    foreach (var item in db.SongPlaylists)
+                    {
+                        songPlaylistRepository.AddSongPlaylistRelation(item);
+                    }
+                    foreach(var item in db.SongPositions)
+                    {
+                        songPositionRepository.AddSongPositionRelation(item);
+                    }
+                    foreach (var item in db.Songs)
+                    {
+                        songRepository.AddSong(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            
+            
         }
         #endregion
 
@@ -105,7 +203,7 @@ namespace Show_song_text.ViewModels
 
         private void CheckLanguage()
         {
-            
+
             if (!Settings.ChoosenLanguage.Equals("none"))
             {
                 if (Settings.ChoosenLanguage.Equals("pl"))

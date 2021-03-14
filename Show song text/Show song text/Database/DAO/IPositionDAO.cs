@@ -9,6 +9,7 @@ namespace Show_song_text.Database.DOA
     public interface IPositionDAO
     {
         Task<IEnumerable<Position>> GetAllPositionAsync();
+        Task<Position[]> GetAllPositionArrayAsync();
         Task<IEnumerable<Position>> GetAllPositionWithChildrenAsync();
         Task<Position> GetPosition(int id);
         Task<Position> GetPositionWithChildren(int id);

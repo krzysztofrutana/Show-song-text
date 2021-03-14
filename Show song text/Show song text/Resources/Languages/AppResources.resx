@@ -297,6 +297,15 @@
   <data name="RaportProblem_Title" xml:space="preserve">
     <value>Report a problem</value>
   </data>
+  <data name="Settings_Backup" xml:space="preserve">
+    <value>Database backup</value>
+  </data>
+  <data name="Settings_Backup_MakeBackupBtn" xml:space="preserve">
+    <value>Create backup</value>
+  </data>
+  <data name="Settings_Backup_RestoreBackupBtn" xml:space="preserve">
+    <value>Restore backup</value>
+  </data>
   <data name="Settings_ChordsPosition" xml:space="preserve">
     <value>Chords above / to the right of the text:</value>
   </data>

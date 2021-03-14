@@ -36,6 +36,11 @@ namespace Show_song_text.Database.Repository
             return await _connection.Table<Position>().ToListAsync();
         }
 
+        public async Task<Position[]> GetAllPositionArrayAsync()
+        {
+            return await _connection.Table<Position>().ToArrayAsync();
+        }
+
         public async Task<IEnumerable<Position>> GetAllPositionWithChildrenAsync()
         {
             return await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<Position>(_connection);

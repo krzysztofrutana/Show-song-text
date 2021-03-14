@@ -601,6 +601,33 @@ namespace Show_song_text.Resources.Languages {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Database backup.
+        /// </summary>
+        public static string Settings_Backup {
+            get {
+                return ResourceManager.GetString("Settings_Backup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Create backup.
+        /// </summary>
+        public static string Settings_Backup_MakeBackupBtn {
+            get {
+                return ResourceManager.GetString("Settings_Backup_MakeBackupBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Restore backup.
+        /// </summary>
+        public static string Settings_Backup_RestoreBackupBtn {
+            get {
+                return ResourceManager.GetString("Settings_Backup_RestoreBackupBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Chords above / to the right of the text:.
         /// </summary>
         public static string Settings_ChordsPosition {

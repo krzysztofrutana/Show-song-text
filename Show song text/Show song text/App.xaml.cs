@@ -16,6 +16,8 @@ namespace Show_song_text
         public static int ScreenHeight { get; set; }
         public static int ScreenWidth { get; set; }
 
+        public static string DocumentsFolderPath { get; set; }
+
         public App()
         {
             if (!Settings.ChoosenLanguage.Equals("none"))
