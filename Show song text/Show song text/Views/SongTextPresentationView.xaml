@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="Show_song_text.Views.SongTextPresentationView"
+    x:Class="ShowSongText.Views.SongTextPresentationView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:cc="clr-namespace:Show_song_text.CustomControls"
-    xmlns:conv="clr-namespace:Show_song_text.Converters"
+    xmlns:cc="clr-namespace:ShowSongText.CustomControls"
+    xmlns:conv="clr-namespace:ShowSongText.Converters"
     xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
-    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
-    xmlns:utils="clr-namespace:Show_song_text.Utils"
-    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    xmlns:resources="clr-namespace:ShowSongText.Resources.Languages"
+    xmlns:utils="clr-namespace:ShowSongText.Utils"
+    xmlns:vm="clr-namespace:ShowSongText.ViewModels"
     x:Name="PresentationPage">
     <ContentPage.Resources>
         <ResourceDictionary>

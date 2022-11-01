@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <FlyoutPage
-    x:Class="Show_song_text.Views.MainPageView"
+    x:Class="ShowSongText.Views.MainPageView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:Show_song_text.Views"
-    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
-    xmlns:rounded="clr-namespace:Show_song_text.CustomControls"
-    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    xmlns:pages="clr-namespace:ShowSongText.Views"
+    xmlns:resources="clr-namespace:ShowSongText.Resources.Languages"
+    xmlns:rounded="clr-namespace:ShowSongText.CustomControls"
+    xmlns:vm="clr-namespace:ShowSongText.ViewModels"
     Title="MasterPage"
     IsPresented="{Binding IsPresent}">
     <FlyoutPage.Flyout>

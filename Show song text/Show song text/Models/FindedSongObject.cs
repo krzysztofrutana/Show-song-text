@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Show_song_text.Models
+namespace ShowSongText.Models
 {
     public class FindedSongObject
     {

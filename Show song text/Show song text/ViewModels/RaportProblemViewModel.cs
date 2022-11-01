@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class RaportProblemViewModel : ViewModelBase
     {

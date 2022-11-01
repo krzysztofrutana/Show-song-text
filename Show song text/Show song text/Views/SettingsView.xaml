@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="Show_song_text.Views.SettingsView"
+    x:Class="ShowSongText.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:conv="clr-namespace:Show_song_text.Converters"
-    xmlns:resources="clr-namespace:Show_song_text.Resources.Languages"
-    xmlns:vm="clr-namespace:Show_song_text.ViewModels"
+    xmlns:conv="clr-namespace:ShowSongText.Converters"
+    xmlns:resources="clr-namespace:ShowSongText.Resources.Languages"
+    xmlns:vm="clr-namespace:ShowSongText.ViewModels"
     Title="{x:Static resources:AppResources.Settings_Title}">
     <ContentPage.Resources>
         <ResourceDictionary>

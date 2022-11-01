@@ -1,7 +1,7 @@
-﻿using Show_song_text.Helpers;
-using Show_song_text.Models;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Views;
+﻿using ShowSongText.Helpers;
+using ShowSongText.Models;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Views;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Show_song_text
+namespace ShowSongText
 {
     public partial class App : Application
     {

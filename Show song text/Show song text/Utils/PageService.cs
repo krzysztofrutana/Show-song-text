@@ -1,11 +1,8 @@
-﻿using Show_song_text.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using ShowSongText.Abstraction;
 using Xamarin.Forms;
 
-namespace Show_song_text.Utils
+namespace ShowSongText.Utils
 {
     public class PageService : IPageService
     {
@@ -31,7 +28,7 @@ namespace Show_song_text.Utils
 
         public void ChangePage(Page page)
         {
-            
+
             MainPage.Detail = new NavigationPage(page);
             MainPage.IsPresented = false;
         }

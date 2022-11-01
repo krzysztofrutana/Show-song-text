@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Show_song_text.Database.DOA;
-using Show_song_text.Database.Persistence;
-using Show_song_text.Database.Repository;
-using Show_song_text.Interfaces;
-using Show_song_text.Models;
-using Show_song_text.PresentationServerUtilis;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Utils;
-using Show_song_text.Views;
+using ShowSongText.Abstraction;
+using ShowSongText.Models;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
+using ShowSongText.Views;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

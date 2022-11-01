@@ -1,19 +1,17 @@
-﻿using Show_song_text.Helpers;
-using Show_song_text.Interfaces;
-using Show_song_text.PresentationServerUtilis;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Utils;
-using Show_song_text.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ShowSongText.Abstraction;
+using ShowSongText.Helpers;
+using ShowSongText.PresentationServerUtilis;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
+using ShowSongText.Views;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class ConnectionSettingsViewModel : ViewModelBase
     {
@@ -161,7 +159,7 @@ namespace Show_song_text.ViewModels
 
             ServerIsRunning = Settings.ServerIsRunning;
             IsConnectToServer = Settings.ClientIsConnected;
-            ServerPort = Settings.ServerPort ;
+            ServerPort = Settings.ServerPort;
             ClientConnectedCount = Settings.ServerClientConnectedQty;
 
             StartServerCommand = new Command(() => StartServer());
@@ -170,10 +168,10 @@ namespace Show_song_text.ViewModels
             StartPresentationForCLientCommand = new Command(async () => await StartPresentationForCLient());
             DisconnectWithServerCommand = new Command(() => DisconnectWithServer());
 
-            
+
             IPServerAdress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
 
-            
+
 
             MessagingCenter.Subscribe<AsyncSocketListener, Boolean>
             (this, Events.SendPlaylist, OnServerIsRunning);
@@ -221,7 +219,7 @@ namespace Show_song_text.ViewModels
             else
             {
                 await _pageService.DisplayAlert(AppResources.ConnectionSettingsVM_EmptyField, AppResources.ConnectionSettingsVM_PortNumber, AppResources.AlertDialog_OK);
-            }       
+            }
         }
 
         async Task StartPresentationForCLient()

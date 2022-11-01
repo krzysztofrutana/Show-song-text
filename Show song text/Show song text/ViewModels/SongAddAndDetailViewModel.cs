@@ -1,30 +1,24 @@
-﻿using Show_song_text.Database.DOA;
-using Show_song_text.Database.Models;
-using Show_song_text.Database.ViewModels;
-using Show_song_text.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
-using Show_song_text.Utils;
-using Show_song_text.Database.Repository;
-using Show_song_text.Database.Persistence;
-using System.Net.Http;
-using HtmlAgilityPack;
-using System.Linq;
-using System.Globalization;
-using Show_song_text.Views;
-using System.Threading;
-using Show_song_text.PresentationServerUtilis;
-using Show_song_text.Models;
-using Show_song_text.Helpers;
-using Show_song_text.Resources.Languages;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Models;
+using ShowSongText.Database.Repository;
+using ShowSongText.Helpers;
+using ShowSongText.Models;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels.DTO;
+using ShowSongText.Views;
 using Xamarin.Essentials;
-using System.Collections.ObjectModel;
+using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class SongAddAndDetailViewModel : ViewModelBase
     {
@@ -452,7 +446,8 @@ namespace Show_song_text.ViewModels
 
             for (int i = 0; i < text.Length; i++)
             {
-                TextWithChords.Add(new TextLineWithChords() {
+                TextWithChords.Add(new TextLineWithChords()
+                {
                     Chords = chords.ElementAtOrDefault(i) == null || String.IsNullOrWhiteSpace(chords[i]) ? "" : chords[i],
                     TextLine = text[i]
                 });

@@ -1,0 +1,165 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <AssemblyName>Show song text</AssemblyName>
+    <RootNamespace>ShowSongText</RootNamespace>
+    <Authors>Krzysztof Rutana</Authors>
+    <Product>Singer's assistant</Product>
+    <PackageId>Asystent wokalisty</PackageId>
+    <PackageIcon>logo.png</PackageIcon>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
+    <Version>0.9.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icons\connectionSettings.png" />
+    <None Remove="Resources\Icons\delete.png" />
+    <None Remove="Resources\Icons\downArrow.png" />
+    <None Remove="Resources\Icons\edit.png" />
+    <None Remove="Resources\Icons\logo.png" />
+    <None Remove="Resources\Icons\minus.png" />
+    <None Remove="Resources\Icons\note.png" />
+    <None Remove="Resources\Icons\playlist.png" />
+    <None Remove="Resources\Icons\plus.png" />
+    <None Remove="Resources\Icons\plusRed.png" />
+    <None Remove="Resources\Icons\presentation.png" />
+    <None Remove="Resources\Icons\raport_problem.png" />
+    <None Remove="Resources\Icons\save.png" />
+    <None Remove="Resources\Icons\search.png" />
+    <None Remove="Resources\Icons\selected_circle.png" />
+    <None Remove="Resources\Icons\settings.png" />
+    <None Remove="Resources\Icons\support.png" />
+    <None Remove="Resources\Icons\unselected_circle.png" />
+    <None Remove="Resources\Icons\upArrow.png" />
+    <None Remove="ViewModels\MainPageViewModel.cs~RF14f34754.TMP" />
+    <None Include="Resources\Icons\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Icons\connectionSettings.png" />
+    <EmbeddedResource Include="Resources\Icons\delete.png" />
+    <EmbeddedResource Include="Resources\Icons\downArrow.png" />
+    <EmbeddedResource Include="Resources\Icons\edit.png" />
+    <EmbeddedResource Include="Resources\Icons\logo.png" />
+    <EmbeddedResource Include="Resources\Icons\minus.png" />
+    <EmbeddedResource Include="Resources\Icons\note.png" />
+    <EmbeddedResource Include="Resources\Icons\playlist.png" />
+    <EmbeddedResource Include="Resources\Icons\plus.png" />
+    <EmbeddedResource Include="Resources\Icons\plusRed.png" />
+    <EmbeddedResource Include="Resources\Icons\presentation.png" />
+    <EmbeddedResource Include="Resources\Icons\raport_problem.png" />
+    <EmbeddedResource Include="Resources\Icons\save.png" />
+    <EmbeddedResource Include="Resources\Icons\search.png" />
+    <EmbeddedResource Include="Resources\Icons\selected_circle.png" />
+    <EmbeddedResource Include="Resources\Icons\settings.png" />
+    <EmbeddedResource Include="Resources\Icons\support.png" />
+    <EmbeddedResource Include="Resources\Icons\unselected_circle.png" />
+    <EmbeddedResource Include="Resources\Icons\upArrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Genius.NET" Version="4.0.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
+    <PackageReference Include="Sigil" Version="5.0.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+    <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="XF.Material" Version="1.7.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ShowSongText.Data\ShowSongText.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Languages\AppResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ConnectionSettingsView.xaml.cs">
+      <DependentUpon>ConnectionSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RaportProblemView.xaml.cs">
+      <DependentUpon>RaportProblemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SongAddAndDetailView.xaml.cs">
+      <DependentUpon>SongAddAndDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SongListView.xaml.cs">
+      <DependentUpon>SongListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PlaylistListView.xaml.cs">
+      <DependentUpon>PlaylistListView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Languages\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Styles\ButtonStyle.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AddSongToPlaylistView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ConnectionSettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainPageView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RaportProblemView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PlaylistDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SongAddAndDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SongListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PlaylistListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SongTextPresentationView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SupportMeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

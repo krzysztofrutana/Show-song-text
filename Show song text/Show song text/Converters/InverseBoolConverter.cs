@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 
-namespace Show_song_text.Converters
+namespace ShowSongText.Converters
 {
     public class InverseBoolConverter : IValueConverter
     {
@@ -16,7 +14,6 @@ namespace Show_song_text.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value;
-            //throw new NotImplementedException();
         }
     }
 }

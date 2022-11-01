@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Content;
 using Android.Text.Method;
 using Android.Views;
-using Android.Widget;
-using Show_song_text.Droid.CustomRenderer;
+using ShowSongText.Droid.CustomRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 // This is neccesary to fix Editor scrolling bug in android when Editr is in ScrollView
 
 [assembly: ExportRenderer(typeof(Editor), typeof(CustomEditorRenderer))]
-namespace Show_song_text.Droid.CustomRenderer
+namespace ShowSongText.Droid.CustomRenderer
 {
     public class CustomEditorRenderer : EditorRenderer
     {
@@ -50,9 +41,9 @@ namespace Show_song_text.Droid.CustomRenderer
             if (Control != null)
             {
                 //Control.SetBackground(null);
-                Control.SetBackgroundResource(Resource.Drawable.et_underline_selector);
+                //Control.SetBackgroundResource(Resource.Drawable.et_underline_selector);
             }
         }
-     
+
     }
 }

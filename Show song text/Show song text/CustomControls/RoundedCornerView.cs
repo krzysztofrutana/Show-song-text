@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 /*
  * Thanks for Venkata Swamy Balaraju for this solution
  * WWW: https://www.c-sharpcorner.com/article/how-to-set-corner-radius-for-view-layout-cell-grid-stack-listview-in-xamar/
  */
-namespace Show_song_text.CustomControls
+namespace ShowSongText.CustomControls
 {
     public class RoundedCornerView : Grid
     {

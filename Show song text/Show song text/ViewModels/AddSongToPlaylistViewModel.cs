@@ -1,19 +1,16 @@
-﻿using Show_song_text.Database.Persistence;
-using Show_song_text.Database.Repository;
-using Show_song_text.Database.ViewModels;
-using Show_song_text.Interfaces;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Utils;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Repository;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels.DTO;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class AddSongToPlaylistViewModel : ViewModelBase
     {
@@ -83,7 +80,7 @@ namespace Show_song_text.ViewModels
             {
                 song.IsCheckBoxVisible = true;
                 Songs.Add(new SongViewModel(song));
-            } 
+            }
             AllSongsCopy = Songs;
         }
 

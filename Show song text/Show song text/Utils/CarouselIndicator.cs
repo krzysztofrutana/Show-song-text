@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 
 // https://github.com/adamped/CarouselView/blob/master/CarouselViewSample/CarouselViewSample/MainPage.xaml.cs
-namespace Show_song_text.Utils
+namespace ShowSongText.Utils
 {
     public class CarouselIndicators : Grid
     {

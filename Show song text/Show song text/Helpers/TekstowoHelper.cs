@@ -1,21 +1,21 @@
-﻿using HtmlAgilityPack;
-using Show_song_text.Interfaces;
-using Show_song_text.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Globalization;
-using Show_song_text.Utils;
-using Show_song_text.Resources.Languages;
+using HtmlAgilityPack;
+using ShowSongText.Abstraction;
+using ShowSongText.Models;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
 
-namespace Show_song_text.Helpers
+namespace ShowSongText.Helpers
 {
     public class TekstowoHelper
     {
-        public static async Task<string> FindTextFromArtistAndTitle(FindedSongObject songToFind, Boolean useLinkFromObject = false)
+        public static async Task<string> FindTextFromArtistAndTitle(FindedSongObject songToFind, bool useLinkFromObject = false)
         {
             IPageService _pageService = new PageService();
             string html = null;
@@ -35,13 +35,11 @@ namespace Show_song_text.Helpers
                 else { return null; }
                 HttpClient httpClient = new HttpClient();
                 html = await httpClient.GetStringAsync(url);
-
-
             }
             catch (HttpRequestException)
             {
-                
-                await _pageService.DisplayAlert(AppResources.AlertDialog_TextNotFound, $"{AppResources.AlertDialog_TextNotFoundFor} { songToFind.Title} { songToFind.Artist} \n{AppResources.AlertDialog_SelectArtistAndTrackManually}", AppResources.AlertDialog_OK);
+
+                await _pageService.DisplayAlert(AppResources.AlertDialog_TextNotFound, $"{AppResources.AlertDialog_TextNotFoundFor} {songToFind.Title} {songToFind.Artist} \n{AppResources.AlertDialog_SelectArtistAndTrackManually}", AppResources.AlertDialog_OK);
                 return null;
             }
             finally
@@ -63,7 +61,7 @@ namespace Show_song_text.Helpers
             return text;
         }
 
-        public static async Task<List<FindedSongObject>> SearchArtistSongs(FindedSongObject songToFind, Boolean useLinkToSongs = false)
+        public static async Task<List<FindedSongObject>> SearchArtistSongs(FindedSongObject songToFind, bool useLinkToSongs = false)
         {
             IPageService _pageService = new PageService();
             List<FindedSongObject> songs = new List<FindedSongObject>();
@@ -72,7 +70,6 @@ namespace Show_song_text.Helpers
             string url = "";
             try
             {
-
                 if (useLinkToSongs && !String.IsNullOrEmpty(songToFind.LinkToArtistSongs))
                 {
                     url = $"https://www.tekstowo.pl/{songToFind.LinkToArtistSongs}";
@@ -87,13 +84,11 @@ namespace Show_song_text.Helpers
             }
             catch (HttpRequestException)
             {
-
-                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldNotFindArtistsSongs} {artistWithFirstCharUpper}" ,AppResources.AlertDialog_OK);
+                await _pageService.DisplayAlert(AppResources.AlertDialog_SearchProblem, $"{AppResources.AlertDialog_CouldNotFindArtistsSongs} {artistWithFirstCharUpper}", AppResources.AlertDialog_OK);
                 return null;
             }
             finally
             {
-
                 HtmlDocument htmlDocument = new HtmlDocument();
                 htmlDocument.LoadHtml(html);
 
@@ -286,7 +281,7 @@ namespace Show_song_text.Helpers
                         return null;
                     }
                 }
-                if(artistsList.Count > 0)
+                if (artistsList.Count > 0)
                 {
                     string choosenArtist = await _pageService.DisplayPositionToChoose(AppResources.DisplayPositionToChoose_ChooseArtist, AppResources.AlertDialog_Cancel, null, artistsList.Keys.ToArray());
                     if (choosenArtist.Equals(AppResources.AlertDialog_Cancel))
@@ -301,7 +296,7 @@ namespace Show_song_text.Helpers
                 {
                     return null;
                 }
-                
+
             }
             return songToFind;
         }
@@ -487,7 +482,7 @@ namespace Show_song_text.Helpers
             return tempFindedSongs;
         }
 
-        private static  List<FindedSongObject> GetArtistSongFromCurrentPage(HtmlDocument htmlDocument, FindedSongObject songToFind)
+        private static List<FindedSongObject> GetArtistSongFromCurrentPage(HtmlDocument htmlDocument, FindedSongObject songToFind)
         {
             HtmlNodeCollection querySongs = htmlDocument.DocumentNode.SelectNodes("//div[@class='box-przeboje']");
 
@@ -530,7 +525,7 @@ namespace Show_song_text.Helpers
 
         // OTHER METHOD START
 
-        public  static  string NormalizeTextWithoutPolishSpecialChar(string text)
+        public static string NormalizeTextWithoutPolishSpecialChar(string text)
         {
             var decomposed = text.Normalize(NormalizationForm.FormD);
             var filtered = decomposed.Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark);
@@ -541,7 +536,7 @@ namespace Show_song_text.Helpers
             return newString;
         }
 
-        public static  string DeleteLines(string stringToRemoveLinesFrom,
+        public static string DeleteLines(string stringToRemoveLinesFrom,
                                         int numberOfLinesToRemove,
                                         bool startFromBottom = false)
         {
@@ -587,7 +582,7 @@ namespace Show_song_text.Helpers
                     break;
                 }
             }
-            for (int i = textLines.Count -1; i > 0; i--)
+            for (int i = textLines.Count - 1; i > 0; i--)
             {
                 if (String.IsNullOrWhiteSpace(textLines[i]))
                 {

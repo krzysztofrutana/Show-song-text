@@ -1,20 +1,17 @@
-﻿using Show_song_text.Database.Models;
-using Show_song_text.Database.Persistence;
-using Show_song_text.Database.Repository;
-using Show_song_text.Database.ViewModels;
-using Show_song_text.Interfaces;
-using Show_song_text.Utils;
-using Show_song_text.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Models;
+using ShowSongText.Database.Repository;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels.DTO;
+using ShowSongText.Views;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class PlaylistListViewModel : ViewModelBase
     {

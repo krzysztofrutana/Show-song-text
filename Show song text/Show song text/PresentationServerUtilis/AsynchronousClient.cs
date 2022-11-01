@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using System.Text;
-using Show_song_text.Interfaces;
-using Show_song_text.Models;
-using Xamarin.Forms;
-using Show_song_text.Utils;
-using Show_song_text.Helpers;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using ShowSongText.Abstraction;
+using ShowSongText.Helpers;
+using ShowSongText.Models;
+using ShowSongText.Utils;
+using Xamarin.Forms;
 
 /*
  * Thanks for Jesse C. Slicer and Jamal for this soluion from https://codereview.stackexchange.com/questions/24758/tcp-async-socket-server-client-communication
  * Not everything is needed for me, but this solution work perfect and exactly as I want. I add only messegingcanter to send information and recive text from this class. 
  */
 
-namespace Show_song_text.PresentationServerUtilis
+namespace ShowSongText.PresentationServerUtilis
 {
 
     public sealed class AsyncClient : IAsyncClient
@@ -57,7 +57,7 @@ namespace Show_song_text.PresentationServerUtilis
                 this.listener.BeginConnect(endpoint, this.OnConnectCallback, this.listener);
                 ShowConsoleMessage("StartClient", "Waiting for server connection", false);
                 this.connected.WaitOne();
-                
+
 
             }
             catch (SocketException se)
@@ -118,7 +118,7 @@ namespace Show_song_text.PresentationServerUtilis
                     return false;
                 }
             }
-            catch (PingException pe) 
+            catch (PingException pe)
             {
                 ShowConsoleMessage("IsConnected", pe.Message, true);
                 ItsConenctedToServer = Settings.ClientIsConnected = false;
@@ -137,7 +137,7 @@ namespace Show_song_text.PresentationServerUtilis
         #region Receive data
         public void Receive()
         {
-            if(IsConnected())
+            if (IsConnected())
             {
                 var state = new StateObject(this.listener);
                 try
@@ -180,7 +180,7 @@ namespace Show_song_text.PresentationServerUtilis
                         MessagingCenter.Send(this, Events.ConnectToServer, false);
                         ShowConsoleMessage("ReceiveCallback", "Disconnect connection with server", false);
                     }
-                    else if(!String.IsNullOrEmpty(state.Text))
+                    else if (!String.IsNullOrEmpty(state.Text))
                     {
                         MessagingCenter.Send(this, Events.SendedText, state.Text);
                         state.Reset();
@@ -293,7 +293,7 @@ namespace Show_song_text.PresentationServerUtilis
             }
 
         }
-       
+
     }
 
 }

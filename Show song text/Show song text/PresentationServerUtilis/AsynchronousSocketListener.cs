@@ -1,22 +1,22 @@
-﻿using Show_song_text.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using Show_song_text.Models;
+using ShowSongText.Abstraction;
+using ShowSongText.Helpers;
+using ShowSongText.Models;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels;
 using Xamarin.Forms;
-using Show_song_text.Utils;
-using Show_song_text.ViewModels;
-using Show_song_text.Helpers;
 
 /*
  * Thanks for Jesse C. Slicer and Jamal for this soluion from https://codereview.stackexchange.com/questions/24758/tcp-async-socket-server-client-communication
  * Not everything is needed for me, but this solution work perfect and exactly as I want. I add only messegingcanter to send information and recive text from this class. 
  */
-namespace Show_song_text.PresentationServerUtilis
+namespace ShowSongText.PresentationServerUtilis
 {
 
     public sealed class AsyncSocketListener : ViewModelBase, IAsyncSocketListener
@@ -67,7 +67,7 @@ namespace Show_song_text.PresentationServerUtilis
                         MessagingCenter.Send(this, Events.SendPlaylist, true);
                         ShowConsoleMessage("StartListening", "Waiting for client", false);
                         this.mre.WaitOne();
-                        
+
                     }
                 }
 
@@ -182,7 +182,8 @@ namespace Show_song_text.PresentationServerUtilis
             catch (ObjectDisposedException ode)
             {
                 ShowConsoleMessage("ReceiveCallback", ode.Message, true);
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 ShowConsoleMessage("ReceiveCallback", e.Message, true);
             }
@@ -205,7 +206,7 @@ namespace Show_song_text.PresentationServerUtilis
 
                 if (!this.IsConnected(state.Id))
                 {
-                    ShowConsoleMessage("Send", "Destination socket is not connected" , true);
+                    ShowConsoleMessage("Send", "Destination socket is not connected", true);
                     throw new Exception("Destination socket is not connected.");
                 }
 
@@ -227,7 +228,7 @@ namespace Show_song_text.PresentationServerUtilis
                         state.Listener.BeginSend(send, 0, send.Length, SocketFlags.None, this.SendCallback, state);
                         ShowConsoleMessage("Send", "Start sending message", false);
                     }
-                    
+
                 }
                 catch (SocketException se)
                 {
@@ -283,7 +284,7 @@ namespace Show_song_text.PresentationServerUtilis
                 {
                     state.Listener.EndSend(result);
                     ShowConsoleMessage("SendCallback", "Message sent", false);
-                    foreach(int id in this.clients.Keys.ToArray())
+                    foreach (int id in this.clients.Keys.ToArray())
                     {
                         Close(id);
                     }

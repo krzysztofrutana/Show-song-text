@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Show_song_text.Utils
+namespace ShowSongText.Utils
 {
     public static class Events
     {

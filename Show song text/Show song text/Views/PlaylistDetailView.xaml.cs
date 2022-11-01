@@ -1,5 +1,5 @@
-﻿using Show_song_text.Database.ViewModels;
-using Show_song_text.ViewModels;
+﻿using ShowSongText.ViewModels;
+using ShowSongText.ViewModels.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Show_song_text.Views
+namespace ShowSongText.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlaylistDetailView : ContentPage

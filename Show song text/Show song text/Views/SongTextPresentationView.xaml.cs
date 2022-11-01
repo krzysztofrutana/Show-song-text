@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Show_song_text.Views
+namespace ShowSongText.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SongTextPresentationView : ContentPage

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

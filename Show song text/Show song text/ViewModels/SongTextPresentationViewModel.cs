@@ -1,29 +1,22 @@
-﻿using Show_song_text.Database.Models;
-using Show_song_text.Database.ViewModels;
-using Show_song_text.Models;
-using Show_song_text.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using System.Net;
-using System.Threading;
-using System.IO;
-using Show_song_text.PresentationServerUtilis;
-using Show_song_text.Interfaces;
-using Show_song_text.Database.Repository;
 using System.Linq;
-using Show_song_text.Database.Persistence;
-using System.Windows.Input;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Models;
+using ShowSongText.Database.Repository;
+using ShowSongText.Helpers;
+using ShowSongText.Models;
+using ShowSongText.PresentationServerUtilis;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels.DTO;
+using ShowSongText.Views;
+using Xamarin.Forms;
 using XamarinLabelFontSizer;
-using Show_song_text.Views;
-using Show_song_text.Helpers;
-using Show_song_text.Resources.Languages;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class SongTextPresentationViewModel : ViewModelBase
     {

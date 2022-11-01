@@ -1,7 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
-namespace Show_song_text.Helpers
+namespace ShowSongText.Helpers
 {
     /// <summary>
     /// This is the Settings static class that can be used in your Core solution or in any

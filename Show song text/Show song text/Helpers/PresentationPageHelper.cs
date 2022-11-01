@@ -1,12 +1,9 @@
-﻿using Show_song_text.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System;
+using ShowSongText.Models;
 using Xamarin.Forms;
 using XamarinLabelFontSizer;
 
-namespace Show_song_text.Helpers
+namespace ShowSongText.Helpers
 {
     public static class PresentationPageHelper
     {
@@ -117,7 +114,7 @@ namespace Show_song_text.Helpers
 
                 int songTextLines = textToFit.Length;
 
-                if(songTextLines == 1 && String.IsNullOrWhiteSpace(textToFit[0]))
+                if (songTextLines == 1 && String.IsNullOrWhiteSpace(textToFit[0]))
                 {
                     return songTextLines;
                 }

@@ -1,18 +1,15 @@
-﻿using System;
-
+﻿using System.IO;
 using Android.App;
 using Android.Content.PM;
+using Android.Content.Res;
+using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
-using Android.OS;
-using System.Runtime.Remoting.Contexts;
-using Android.Content.Res;
-using System.IO;
+using Show_song_text.Droid;
 
-namespace Show_song_text.Droid
+namespace ShowSongText.Droid
 {
-    [Activity(Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

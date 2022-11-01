@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Show_song_text.Droid.Persistence;
-using Show_song_text.Database.Persistence;
+﻿using System.IO;
+using ShowSongText.Droid.Persistence;
 using SQLite;
 using Xamarin.Forms;
 using Environment = System.Environment;
 
 [assembly: Dependency(typeof(SQLiteDB))]
-namespace Show_song_text.Droid.Persistence
+namespace ShowSongText.Droid.Persistence
 {
     public class SQLiteDB : ISQLiteDb
     {

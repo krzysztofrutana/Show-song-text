@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Show_song_text.CustomControls;
-using Show_song_text.Droid.CustomRenderer;
+using ShowSongText.CustomControls;
+using ShowSongText.Droid.CustomRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -20,7 +11,7 @@ using Xamarin.Forms.Platform.Android;
 * WWW: https://www.c-sharpcorner.com/article/how-to-set-corner-radius-for-view-layout-cell-grid-stack-listview-in-xamar/
 */
 [assembly: ExportRenderer(typeof(RoundedCornerView), typeof(RoundedCornerViewRenderer))]
-namespace Show_song_text.Droid.CustomRenderer
+namespace ShowSongText.Droid.CustomRenderer
 {
     public class RoundedCornerViewRenderer : ViewRenderer
     {

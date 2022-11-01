@@ -1,25 +1,23 @@
-﻿using Newtonsoft.Json;
-using Show_song_text.Database.Persistence;
-using Show_song_text.Database.Repository;
-using Show_song_text.Helpers;
-using Show_song_text.Interfaces;
-using Show_song_text.Models;
-using Show_song_text.Models.DatabaseBackup;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Utils;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Repository;
+using ShowSongText.Helpers;
+using ShowSongText.Models;
+using ShowSongText.Models.DatabaseBackup;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
@@ -125,7 +123,7 @@ namespace Show_song_text.ViewModels
 
             var json = JsonConvert.SerializeObject(dm);
 
-            DependencyService.Get<IWirteService>().wirteFile(filename, json);
+            DependencyService.Get<IWirteService>().WirteFile(filename, json);
         }
 
         private async Task RestoreBackup()
@@ -150,7 +148,7 @@ namespace Show_song_text.ViewModels
                     {
                         playlistRepository.AddPlaylist(item);
                     }
-                    foreach(var item in db.Positions)
+                    foreach (var item in db.Positions)
                     {
                         positionRepository.AddPosition(item);
                     }
@@ -158,7 +156,7 @@ namespace Show_song_text.ViewModels
                     {
                         songPlaylistRepository.AddSongPlaylistRelation(item);
                     }
-                    foreach(var item in db.SongPositions)
+                    foreach (var item in db.SongPositions)
                     {
                         songPositionRepository.AddSongPositionRelation(item);
                     }
@@ -172,8 +170,8 @@ namespace Show_song_text.ViewModels
             {
             }
 
-            
-            
+
+
         }
         #endregion
 

@@ -1,22 +1,21 @@
-﻿using Show_song_text.Database.Models;
-using Show_song_text.Database.Persistence;
-using Show_song_text.Database.Repository;
-using Show_song_text.Database.ViewModels;
-using Show_song_text.Interfaces;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Utils;
-using Show_song_text.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Models;
+using ShowSongText.Database.Repository;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels.DTO;
+using ShowSongText.Views;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
     public class PlaylistDetailViewModel : ViewModelBase
     {
@@ -296,7 +295,7 @@ namespace Show_song_text.ViewModels
 
                             Console.WriteLine(e.Message);
                         }
-                        
+
                     }
                     else
                     {

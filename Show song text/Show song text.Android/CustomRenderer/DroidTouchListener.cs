@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Android.Views;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
-namespace Show_song_text.Droid.CustomRenderer
+namespace ShowSongText.Droid.CustomRenderer
 {
-    public  class DroidTouchListener : Java.Lang.Object, View.IOnTouchListener
+    public class DroidTouchListener : Java.Lang.Object, View.IOnTouchListener
     {
         public bool OnTouch(View v, MotionEvent e)
         {

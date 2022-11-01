@@ -1,29 +1,30 @@
-﻿using Show_song_text.Database.Models;
-using Show_song_text.Database.Persistence;
-using Show_song_text.Database.Repository;
-using Show_song_text.Database.ViewModels;
-using Show_song_text.Interfaces;
-using Show_song_text.Resources.Languages;
-using Show_song_text.Utils;
-using Show_song_text.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ShowSongText.Abstraction;
+using ShowSongText.Database.Abstraction;
+using ShowSongText.Database.Models;
+using ShowSongText.Database.Repository;
+using ShowSongText.Resources.Languages;
+using ShowSongText.Utils;
+using ShowSongText.ViewModels.DTO;
+using ShowSongText.Views;
 using Xamarin.Forms;
 
-namespace Show_song_text.ViewModels
+namespace ShowSongText.ViewModels
 {
-    
+
     public class SongListViewModel : ViewModelBase
     {
         #region Property
         private ObservableCollection<SongViewModel> AllSongsCopy { get; set; } = new ObservableCollection<SongViewModel>();
 
         private String _searchBarText;
-        public String SearchBarText { 
+        public String SearchBarText
+        {
             get
             {
                 return _searchBarText;
@@ -35,15 +36,18 @@ namespace Show_song_text.ViewModels
                 OnPropertyChanged(nameof(SearchBarText));
             }
         }
-        
+
         private SongViewModel _selectedSong;
 
         public SongViewModel SelectedSong
         {
             get { return _selectedSong; }
-            set { _selectedSong = value;
+            set
+            {
+                _selectedSong = value;
                 OnSongSelected(value);
-                OnPropertyChanged(nameof(SelectedSong)); }
+                OnPropertyChanged(nameof(SelectedSong));
+            }
         }
 
         private Boolean _showChooseOption;
@@ -51,7 +55,9 @@ namespace Show_song_text.ViewModels
         public Boolean ShowChooseOption
         {
             get { return _showChooseOption; }
-            set { _showChooseOption = value;
+            set
+            {
+                _showChooseOption = value;
                 SetCheckBoxVisibility(value);
                 OnPropertyChanged(nameof(ShowChooseOption));
 
@@ -113,7 +119,7 @@ namespace Show_song_text.ViewModels
         #region Commands methods
         private async Task LoadSongs()
         {
-            if(Songs != null && Songs.Count  > 0)
+            if (Songs != null && Songs.Count > 0)
             {
                 Songs.Clear();
             }
@@ -144,7 +150,7 @@ namespace Show_song_text.ViewModels
             string playlistName = await _pageService.DisplayEntry(AppResources.DisplayEntry_EnterPlaylistName, "");
             if (String.IsNullOrEmpty(playlistName))
             {
-                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_NameCannotBeEmpty,AppResources.AlertDialog_OK);
+                await _pageService.DisplayAlert(AppResources.AlertDialog_Error, AppResources.AlertDialog_NameCannotBeEmpty, AppResources.AlertDialog_OK);
             }
             else
             {
@@ -159,7 +165,7 @@ namespace Show_song_text.ViewModels
                 UnCheckAllSongs();
                 SetCheckBoxVisibility(false);
                 ShowChooseOption = false;
-            } 
+            }
         }
 
         private void AddToPlaylist(SongViewModel songViewModel)
@@ -194,7 +200,7 @@ namespace Show_song_text.ViewModels
             songInList.Title = song.Title;
             songInList.Text = song.Text;
             songInList.Chords = song.Chords;
-          
+
         }
 
         private void OnSongDeleted(SongAddAndDetailViewModel source, Song song)
@@ -230,9 +236,9 @@ namespace Show_song_text.ViewModels
 
         private void UnCheckAllSongs()
         {
-            foreach(SongViewModel songViewModel in Songs)
+            foreach (SongViewModel songViewModel in Songs)
             {
-                if(songViewModel.IsChecked == true)
+                if (songViewModel.IsChecked == true)
                 {
                     songViewModel.IsChecked = false;
                 }

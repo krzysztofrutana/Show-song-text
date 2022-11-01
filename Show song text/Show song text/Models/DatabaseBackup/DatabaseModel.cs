@@ -1,10 +1,7 @@
-﻿using Show_song_text.Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using ShowSongText.Database.Models;
 
-namespace Show_song_text.Models.DatabaseBackup
+namespace ShowSongText.Models.DatabaseBackup
 {
     [XmlRoot("Database", Namespace = "http://www.krzysztofrutana.pl",
    IsNullable = false)]

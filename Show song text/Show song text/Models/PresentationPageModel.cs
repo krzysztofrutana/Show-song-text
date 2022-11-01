@@ -1,9 +1,9 @@
-﻿using Show_song_text.ViewModels;
+﻿using ShowSongText.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Show_song_text.Models
+namespace ShowSongText.Models
 {
     public class PresentationPageModel : ViewModelBase
     {

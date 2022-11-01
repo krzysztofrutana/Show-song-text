@@ -1,10 +1,8 @@
-﻿using Genius;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Genius;
 
 
-namespace Show_song_text.Helpers
+namespace ShowSongText.Helpers
 {
     public class GeniusAPIHelper
     {
@@ -12,13 +10,13 @@ namespace Show_song_text.Helpers
 
         public GeniusAPIHelper()
         {
-           client = new GeniusClient(Settings.GeniusToken);
+            client = new GeniusClient(Settings.GeniusToken);
         }
 
         public async void Search(String text)
         {
             var search = await client.SongClient.GetSong(378195);
         }
-        
+
     }
 }
